@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import Navleft from "./component/navleft";
+import Header from "./component/header";
+import Control from "./component/control";
+import Kanban from "./component/Kanban";
+import "./CSS/app.css"
+import Seconddir from "./component/seconddir";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container">
+        <Navleft></Navleft>
+        <Seconddir></Seconddir>
+        <div className="mainpart">
+        <Header></Header>
+        <Control></Control>
+        <Kanban></Kanban>
+        </div>
+        
+      </div>
+      
     </div>
   );
 }

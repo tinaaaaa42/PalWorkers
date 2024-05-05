@@ -1,10 +1,31 @@
 import "../iconfont1/iconfont.css"
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 function Navleft(){
-    const [activeId, setActiveId] = useState("1");
+    const location = useLocation();
+    const [activeId, setActiveId] = useState(getActiveId(location.pathname));
+    function getActiveId(pathname) {
+        if (pathname.startsWith('/project')) {
+                return '1';
+        }
+        switch(pathname) {
+            case '/':
+                return '1';
+            case '/week':
+                return '3';
+            default:
+                return '1'; // 默认激活第一个 id
+        }
+    }
+    const navigate = useNavigate();
     const handleClick = (id, e) => {
         e.preventDefault(); // 阻止默认行为
-        setActiveId(id); // 更新 activeId 状态为当前点击元素的 id
+        switch(id){
+            case '1':   navigate('/');
+                        break;
+            case '3':   navigate('/week');
+                        break;
+        }
       };
     return (
     <div className="Navleft">

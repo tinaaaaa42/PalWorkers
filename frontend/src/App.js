@@ -4,11 +4,12 @@ import Control from "./component/control";
 import Kanban from "./component/Kanban";
 import "./CSS/app.css"
 import Seconddir from "./component/seconddir";
-
+import router from './Router';
+import {RouterProvider} from 'react-router-dom'
 function App() {
   return (
     <div className="App">
-      <div className="container">
+      {/* <div className="container">
         <Navleft></Navleft>
         <Seconddir></Seconddir>
         <div className="mainpart">
@@ -16,9 +17,8 @@ function App() {
         <Control></Control>
         <Kanban></Kanban>
         </div>
-        
-      </div>
-      
+      </div> */}
+      <RouterProvider router={router}></RouterProvider>
     </div>
   );
 }

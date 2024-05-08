@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { Projects ,Tasks,Tag,WeekTasks,DayTasks} from '../Data/data';
+=======
+import { Projects ,Tasks,Tag,WeekTasks} from '../Data/data';
+>>>>>>> 1813fc609af227b7b37ed41548dadee124846eb0
 import { useLocation, useNavigate } from 'react-router-dom';
 function Seconddir(){
     const [expanded, setExpanded] = useState(false);
@@ -43,8 +47,11 @@ function Seconddir(){
         switch (location.pathname) {
         case '/week':
             return <h1 className='week'>Week</h1>;
+<<<<<<< HEAD
         case '/day':
             return <h1 className='day'>Day</h1>;
+=======
+>>>>>>> 1813fc609af227b7b37ed41548dadee124846eb0
         case '/':
             return <h1 className='kanban'>Kanban</h1>;
         default:
@@ -101,6 +108,7 @@ function Seconddir(){
                         {Tag.map(tag=>(<div className={`content`} key={tag.name}>{tag.name}</div>))}
                     </div>
                     </>);
+<<<<<<< HEAD
               case '/day':
                   return (<>
                     <div className={`title ${active3 ? '':'active'}`} onClick={(e)=>toggleExpanded(e,"3")}>Tasks</div>
@@ -112,6 +120,8 @@ function Seconddir(){
                                     {DayTasks.map(tasks=>(<div className={`content`} key={tasks.title}>{tasks.tag}</div>))}
                           </div>
                             </>);
+=======
+>>>>>>> 1813fc609af227b7b37ed41548dadee124846eb0
             default:
                 return <h1>Page Not Found</h1>;
             }

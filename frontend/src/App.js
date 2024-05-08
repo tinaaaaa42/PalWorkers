@@ -6,7 +6,10 @@ import "./CSS/app.css"
 import Seconddir from "./component/seconddir";
 import router from './Router';
 import {RouterProvider} from 'react-router-dom'
+<<<<<<< HEAD
 import { ModalProvider } from './context/ModalContext';
+=======
+>>>>>>> 1813fc609af227b7b37ed41548dadee124846eb0
 function App() {
   return (
     <div className="App">
@@ -19,9 +22,13 @@ function App() {
         <Kanban></Kanban>
         </div>
       </div> */}
+<<<<<<< HEAD
       <ModalProvider>
       <RouterProvider router={router}></RouterProvider>
       </ModalProvider>
+=======
+      <RouterProvider router={router}></RouterProvider>
+>>>>>>> 1813fc609af227b7b37ed41548dadee124846eb0
     </div>
   );
 }

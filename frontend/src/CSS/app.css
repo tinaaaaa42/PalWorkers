@@ -123,7 +123,11 @@
 .Seconddir .collapsed{
     max-height: 0;
 }
+<<<<<<< HEAD
 .Seconddir .kanban,.Seconddir .week,.Seconddir .day,.Seconddir .project{
+=======
+.Seconddir .kanban,.Seconddir .week,.Seconddir .project{
+>>>>>>> 1813fc609af227b7b37ed41548dadee124846eb0
     padding-left: 16px;
 }
 .Seconddir .title{
@@ -338,6 +342,7 @@
     font-size: 18px;
     padding-left: 10px;
     color: rgb(97, 96, 96);
+<<<<<<< HEAD
 }
 .two-columns {
     column-count: 2; /* 创建两列 */
@@ -618,4 +623,6 @@ textarea:focus {
 }
 .Modal-button {
     font-size: 40px;
+=======
+>>>>>>> 1813fc609af227b7b37ed41548dadee124846eb0
 }

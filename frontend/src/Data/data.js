@@ -52,6 +52,7 @@ const Tag=[
     {name:"Lab"},
     {name:"HW"}
 ]
+<<<<<<< HEAD
 const DayTasks=[
     {key:1,title:"Lab1",tag:"Lab",completed: false},
     {key:2,title:"做家务",tag:"家庭",completed: false},
@@ -60,3 +61,6 @@ const DayTasks=[
     {key:5,title:"体侧",tag:"体育",completed: true}
 ]
 export {CurUser,Tasks,Tag,Projects,WeekTasks,DayTasks};
+=======
+export {CurUser,Tasks,Tag,Projects,WeekTasks};
+>>>>>>> 1813fc609af227b7b37ed41548dadee124846eb0

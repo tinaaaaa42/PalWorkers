@@ -1,0 +1,621 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.Navleft{
+    background-color: #1b1d22;
+    /* background-color: aliceblue; */
+    width: 5.4rem;
+    height: 1000px;
+    box-sizing: border-box;
+    z-index: 0;
+}
+.Navleft .top{
+    display: flex;
+    height: 0.8rem;
+    text-align: center;
+    padding-top: 4.76px;
+    margin-left: 23px;
+}
+
+.Navleft .top div{
+    height: 4.93px;
+    width: 4.93px;
+    background-color: black;
+    border-radius: 50%;
+    margin-right: 0.3rem;
+}
+.Navleft .top div:nth-child(1){
+    background-color: white;
+}
+.Navleft .top div:nth-child(2){
+    background-color: gray;
+}
+.Navleft .top div:nth-child(3){
+    background-color: rgb(102, 99, 99);
+}
+.Navleft .logo{
+    margin-left: 23.5px;
+    z-index: 1;
+    color: rgba(255, 255, 255, 0.363);
+}
+.Navleft a{
+    text-decoration: none;
+}
+.Navleft .active{
+    color: white;
+}
+.Navleft .planlogo{
+    margin-top: 18px;
+}
+.Navleft .month{ 
+    margin-top: 17px;
+}
+.Navleft .week ,.Navleft .day ,.Navleft .zhongbao,.Navleft .profile,.Navleft .set{
+    margin-top: 8px;
+}
+.Navleft .exit{
+    position: fixed;
+    bottom: 0;
+}
+.container{
+    display: flex;
+}
+.Header {
+    margin-top: 10px;
+    display: flex;
+    height: 80px;
+    line-height: 80px;
+    padding-left: 25px;
+    font-size: 28px;
+}
+.Header .logo{
+    font-size: 25px;
+    cursor: pointer;
+}
+.Header .userlogo{
+    padding-top: 12px;
+    cursor: pointer;
+}
+.Header .userlogo img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    position: absolute;
+    right: 20px;
+}
+.Header .tixing{
+    font-size: 38px;
+    color: gray;
+}
+.Header .welcome{
+    margin-right: 420px;
+    width: 480px;
+    height: 80px;
+    box-sizing: border-box;
+    
+}
+.Header .jizhang{
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
+    padding-top: 15px;
+    cursor: pointer;
+}
+.Header .rili,.Header .search,.Header .tixing,.Header .time{
+    margin-right:12px;
+}
+.Header .rili{
+    margin-right: 38px;
+}
+.Seconddir{
+    width: 220px;
+    box-sizing: border-box;
+}
+.Seconddir .expandable-content {
+    overflow: hidden;
+    max-height: 0; 
+    transition: max-height 0.8s ease; 
+}
+.Seconddir .expanded{
+    max-height: 200px;
+}
+.Seconddir .collapsed{
+    max-height: 0;
+}
+.Seconddir .kanban,.Seconddir .week,.Seconddir .day,.Seconddir .project{
+    padding-left: 16px;
+}
+.Seconddir .title{
+    padding-left: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.Seconddir .title.active{
+    color: rgb(178, 173, 173);
+}
+.Seconddir .content{
+    padding-left: 24px;
+}
+.Seconddir .Projecttitle{
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.Seconddir .Projecttitle button{
+    width: 50px;
+    height: 24px;
+    /* border: none; */
+    margin-top: 12px;
+}
+.App .container .mainpart{
+    display: flex;
+    flex-direction: column;
+}
+.Control {
+    display: flex;
+    height: 45px;
+    box-sizing: border-box;
+    font-size: 25px;
+}
+.Control select{
+    margin-top: 3px;
+    padding-left: 5px;
+    height: 34px;
+    width: 84px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(62, 62, 62, 0.1);
+}
+.Control .title{
+    margin-right: 8px;
+    margin-left: 25px;
+}
+.Control .placeholder{
+    width: 660px;
+}
+.Control .rounded-button{
+    border-radius:10px;
+    margin-right: 20px;
+    width: 100px;
+    height: 42px;
+    background-color:rgba(30, 143, 255, 0.151);
+}
+.Kanban,.Projectdetail {
+    display: flex;
+}
+
+.Kanban .column ,.Projectdetail .column{
+    flex: 1; /* 列等宽 */
+    background-color: white;
+    /* background-color: #f4f4f4;  */
+    padding: 10px ;
+    margin: 20px 10px 0;
+    border-radius: 8px; 
+    min-height: 700px;
+    text-align: center;
+    border: 1.8px dashed #0000002d; 
+}
+.Kanban a,.Projectdetail a{
+    text-decoration: none;
+    color: black;
+}
+.Kanban .card,.Projectdetail .card{
+    height: 134px;
+    width: 236px;
+    margin: 16px auto;
+    border-radius: 4px; /* 圆角 */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    display: flex;
+    box-sizing: border-box;
+    font-size: 20px;
+    cursor: pointer;
+}
+.Kanban .card.empty,.Projectdetail .card.empty{
+    border: 1px dashed #60606076;
+}
+.Kanban .colorbar,.Projectdetail .colorbar{
+    width: 12px;
+    background-color: pink;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+.Kanban .title,.Projectdetail .title{
+    display: flex;
+    justify-content: space-between;
+}
+.Kanban .detail,.Projectdetail .detail{
+    display: flex;
+}
+.Kanban .tag,.Projectdetail .tag{
+    margin-top: 8px;
+    margin-bottom: 30px;
+    display: flex;
+
+}
+.Kanban .tag div,.Projectdetail .tag div{
+    width: 35px;
+    /* border: #1b1d22 solid 1px; */
+    border-radius: 11px;
+    background-color: rgba(255, 192, 203, 0.427);
+}
+.Kanban .title .delete,.Projectdetail .title .delete{
+    width: 40px;
+    position: relative;
+    padding-top: 5px;
+    margin-left: 65px;
+}
+.Kanban .Date,.Projectdetail .Date{
+    border-radius: 11px;
+    background-color: rgb(250, 250, 206);
+    padding: 2px 3px;
+    
+}
+.Kanban .comment,.Projectdetail .comment{
+    display: flex;
+    margin-left: 36px;
+    padding-top: 4px;
+}
+.Kanban .comment div,.Projectdetail .comment div{
+    padding-right: 3px;
+    font-size: 26px;
+}
+.Kanban .add,.Projectdetail .add{
+    font-size: 45px;
+    color: darkgray;
+    box-sizing: border-box;
+    margin: auto;
+}
+.Progressbar {
+    width: 200px;
+    height: 5px;  
+    border: 1px solid #0000002c; 
+    border-radius: 5px;
+    position: relative; 
+    background-color: rgba(128, 128, 128, 0.167);
+    margin-bottom: 10px;
+}
+.Progressbar div{
+    height: 100%; 
+    position: 'absolute';
+    top: 0;
+    left: 0;
+}
+.Projectcard .grouptag{
+    color:rgba(128, 128, 128, 0.626);
+    position: relative;
+    text-align: left;
+    font-size: 18px;
+}
+.Projectcard .rate{
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    color: rgb(78, 77, 77);
+}
+.Projectcard .rate .ratenum{
+    margin-right: 10px;
+}
+.firstline{
+    padding-top: 20px;
+}
+.firstline,.secondline {
+    padding-left: 50px;
+    display: flex;
+}
+.Quadrant {
+    display: flex;
+    height: 400px;
+    width: 500px;
+    border: 1px solid #0000002d;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: rgba(163, 164, 161, 0.123);
+}
+.Quadrant .colorbar{
+    height: 28px;
+    width: 500px;
+    border-radius: 8px;
+    
+    font-size: 22px;
+    text-align: center;
+    color: white;
+}
+.Weekcard {
+    height: 70px;
+    width: 180px;
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 3px 0px 3px 0px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.Weekcard .title{
+    font-size: 25px;
+    padding-left: 10px;
+}
+.Weekcard .tag{
+    font-size: 18px;
+    padding-left: 10px;
+    color: rgb(97, 96, 96);
+}
+.two-columns {
+    column-count: 2; /* 创建两列 */
+    column-gap: 20px; /* 设置列之间的间距 */
+}
+
+.Daycardtodo {
+    font-family: Arial, sans-serif;
+    font-size: 1.5em;
+    height: 800px;
+
+    /* 如果内容超出了这个高度，显示滚动条 */
+    overflow-y: auto;
+}
+
+.Daycardtodo .layout {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.Daycardtodo .content {
+    padding: 20px;
+}
+
+.Daycardtodo .title {
+    margin-bottom: 20px;
+}
+
+.Daycardtodo .todo-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+}
+
+.Daycardtodo .todo-item {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.Daycardtodo .task-box {
+    display: flex;
+    align-items: center;
+    border: 2px dashed #ffffff;
+    border-radius: 10px;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 7vh; /* 或者你想要容器的高度 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.Daycardtodo .check {
+    margin-right: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: #9395d3;
+}
+
+.Daycardtodo .check i {
+    cursor: pointer;
+
+}
+.Daycardtodo .check .text-success {
+    color: #ffb951;
+}
+.Daycardtodo .task:hover .check i {
+    color: #ffb951;
+}
+.Daycardtodo .new {
+    margin-right: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: #9395d3;
+}
+.Daycardtodo .edit{
+    margin-right: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #9395d3;
+    font-size: 1.5em;
+
+}
+.Daycardtodo .delete-btn {
+    background: none;
+    border: none;
+    color: #9395d3;
+    cursor: pointer;
+    margin-left: auto;
+    padding: 0;
+    font-size: 1.5em;
+}
+
+.Daycardtodo .delete-btn:focus {
+    outline: none;
+}
+
+.Daycardtodo .delete-btn i {
+    /*color: #96dbfa;*/
+}
+.Daycardtodo . fa-plus-circle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #9395d3;
+}
+.Daycardphoto {
+    font-family: 'Arial', sans-serif;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.Daycardphoto .container {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+}
+
+.Daycardphoto .divider {
+    width: 100%;
+    height: 1px;
+    margin: 20px 0;
+    background: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+.Daycardphoto h2 {
+    margin: 0;
+    color: #333;
+}
+
+.Daycardphoto .card {
+    flex: 1;
+    position: relative;
+    margin-bottom: 20px;
+    text-align: center;
+    display: inline-block;
+}
+
+.Daycardphoto .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.Daycardphoto .card  .text-overlay {
+    text-align: center;
+    color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.Daycardphoto textarea {
+    flex: 1;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    font-family: inherit;
+    color: #333;
+}
+
+
+.Daycardphoto textarea:hover,
+textarea:focus {
+    border-color: #888;
+    outline: none;
+    box-shadow: 0 0 0 2px #ccc;
+}
+.Modal .container {
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.Modal .form-container {
+    flex-grow: 1;
+    /*padding-right: 20px;*/
+}
+
+.Modal .notes-container {
+    width: 300px;
+}
+
+.Modal .label {
+    margin-bottom: 20px;
+}
+
+
+
+.Modal .column {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+.Modal .file-input {
+    margin-top: 10px; /* 为文件输入框添加顶部间距 */
+}
+.Modal .notes {
+    flex-grow: 1;
+
+}
+
+.Modal .file-upload {
+    margin-bottom: 20px;
+}
+
+.Modal .create-time {
+    font-style: italic;
+}
+.Modal .commit{
+    font-size:30px;
+    background-color: #007bff;
+}
+
+.Modal .save{
+    font-size:50px;
+    background-color: yellow;
+
+}
+.modal {
+
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+
+.modal-content {
+    background-color:white;
+    position: relative;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 50px!important;
+}
+
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 当模态框打开时 */
+.modal.show {
+    display: block;
+}
+.Modal-button {
+    font-size: 40px;
+}

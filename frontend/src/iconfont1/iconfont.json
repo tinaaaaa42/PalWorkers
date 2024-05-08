@@ -1,0 +1,65 @@
+{
+  "id": "4502791",
+  "name": "doplan1",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "680952",
+      "name": "个人",
+      "font_class": "geren",
+      "unicode": "e706",
+      "unicode_decimal": 59142
+    },
+    {
+      "icon_id": "2076271",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e892",
+      "unicode_decimal": 59538
+    },
+    {
+      "icon_id": "9344165",
+      "name": "研发项目节点审批流程",
+      "font_class": "yanfaxiangmujiedianshenpiliucheng",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "11372686",
+      "name": "日历",
+      "font_class": "rili",
+      "unicode": "e8b4",
+      "unicode_decimal": 59572
+    },
+    {
+      "icon_id": "14861991",
+      "name": "立方体 立体 多面体 方块",
+      "font_class": "lifangtilitiduomiantifangkuai",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "18455967",
+      "name": "计划",
+      "font_class": "jihua",
+      "unicode": "e722",
+      "unicode_decimal": 59170
+    },
+    {
+      "icon_id": "26316318",
+      "name": "四象限看板",
+      "font_class": "sixiangxiankanban",
+      "unicode": "e66d",
+      "unicode_decimal": 58989
+    },
+    {
+      "icon_id": "34243299",
+      "name": "柱状图",
+      "font_class": "zhuzhuangtu",
+      "unicode": "e73a",
+      "unicode_decimal": 59194
+    }
+  ]
+}

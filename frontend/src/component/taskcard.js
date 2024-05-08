@@ -2,7 +2,7 @@
 function Taskcard(props){
     const { title, tag, date } = props;
     return (<div className="Taskcard">
-        <a href=""><div class="card">
+        <div class="card">
             <div className="colorbar" style={{color:`blue`}}></div>
             <div>
                 <div className="title">
@@ -20,7 +20,7 @@ function Taskcard(props){
                     </div>
                 </div>
             </div>
-        </div></a>
+        </div>
     </div>);
 }
 export default Taskcard;

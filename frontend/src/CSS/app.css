@@ -71,9 +71,11 @@
 }
 .Header .logo{
     font-size: 25px;
+    cursor: pointer;
 }
 .Header .userlogo{
     padding-top: 12px;
+    cursor: pointer;
 }
 .Header .userlogo img{
     height: 50px;
@@ -87,10 +89,18 @@
     color: gray;
 }
 .Header .welcome{
-    margin-right: 12px;
+    margin-right: 420px;
+    width: 480px;
+    height: 80px;
+    box-sizing: border-box;
+    
 }
 .Header .jizhang{
-    margin-right: 580px;
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
+    padding-top: 15px;
+    cursor: pointer;
 }
 .Header .rili,.Header .search,.Header .tixing,.Header .time{
     margin-right:12px;
@@ -119,6 +129,7 @@
 .Seconddir .title{
     padding-left: 16px;
     margin-top: 20px;
+    cursor: pointer;
 }
 .Seconddir .title.active{
     color: rgb(178, 173, 173);
@@ -197,6 +208,7 @@
     display: flex;
     box-sizing: border-box;
     font-size: 20px;
+    cursor: pointer;
 }
 .Kanban .card.empty,.Projectdetail .card.empty{
     border: 1px dashed #60606076;
@@ -316,6 +328,7 @@
     border-radius: 5px;
     margin: 3px 0px 3px 0px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 .Weekcard .title{
     font-size: 25px;

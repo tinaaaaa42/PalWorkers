@@ -7,7 +7,7 @@ function Projectcard({ project }){
         navigate(`/project/${project.id}`);
     };
     return (<div className="Projectcard" onClick={handleClick}>
-        <a href=""><div class="card">
+        <div class="card">
             <div className="colorbar" style={{color:`blue`}}></div>
             <div>
                 <div className="title">
@@ -29,7 +29,7 @@ function Projectcard({ project }){
                     </div>
                 </div>
             </div>
-        </div></a>
+        </div>
     </div>);
 }
 export default Projectcard;

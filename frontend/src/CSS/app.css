@@ -48,7 +48,7 @@
 .Navleft .planlogo{
     margin-top: 18px;
 }
-.Navleft .month{ 
+.Navleft .month{
     margin-top: 17px;
 }
 .Navleft .week ,.Navleft .day ,.Navleft .zhongbao,.Navleft .profile,.Navleft .set{
@@ -93,7 +93,7 @@
     width: 480px;
     height: 80px;
     box-sizing: border-box;
-    
+
 }
 .Header .jizhang{
     margin-top: 5px;
@@ -114,8 +114,8 @@
 }
 .Seconddir .expandable-content {
     overflow: hidden;
-    max-height: 0; 
-    transition: max-height 0.8s ease; 
+    max-height: 0;
+    transition: max-height 0.8s ease;
 }
 .Seconddir .expanded{
     max-height: 200px;
@@ -123,7 +123,7 @@
 .Seconddir .collapsed{
     max-height: 0;
 }
-.Seconddir .kanban,.Seconddir .week,.Seconddir .day,.Seconddir .project{
+.Seconddir .kanban,.Seconddir .week,.Seconddir .project{
     padding-left: 16px;
 }
 .Seconddir .title{
@@ -190,10 +190,10 @@
     /* background-color: #f4f4f4;  */
     padding: 10px ;
     margin: 20px 10px 0;
-    border-radius: 8px; 
+    border-radius: 8px;
     min-height: 700px;
     text-align: center;
-    border: 1.8px dashed #0000002d; 
+    border: 1.8px dashed #0000002d;
 }
 .Kanban a,.Projectdetail a{
     text-decoration: none;
@@ -223,6 +223,13 @@
     display: flex;
     justify-content: space-between;
 }
+.Taskcard .cardcontent,.Projectcard .cardcontent{
+    width: 212px;
+}
+.Taskcard .card .delete,.Projectcard .card .delete{
+    font-size: 20px;
+    color: gray;
+}
 .Kanban .detail,.Projectdetail .detail{
     display: flex;
 }
@@ -248,7 +255,7 @@
     border-radius: 11px;
     background-color: rgb(250, 250, 206);
     padding: 2px 3px;
-    
+
 }
 .Kanban .comment,.Projectdetail .comment{
     display: flex;
@@ -267,16 +274,16 @@
 }
 .Progressbar {
     width: 200px;
-    height: 5px;  
-    border: 1px solid #0000002c; 
+    height: 5px;
+    border: 1px solid #0000002c;
     border-radius: 5px;
-    position: relative; 
+    position: relative;
     background-color: rgba(128, 128, 128, 0.167);
     margin-bottom: 10px;
 }
 .Progressbar div{
-    height: 100%; 
-    position: absolute;
+    height: 100%;
+    position: 'absolute';
     top: 0;
     left: 0;
 }
@@ -315,7 +322,7 @@
     height: 28px;
     width: 500px;
     border-radius: 8px;
-    
+
     font-size: 22px;
     text-align: center;
     color: white;
@@ -392,7 +399,7 @@
 }
 .Daycardtodo .image{
     display: flex;
-     margin-left: auto;
+    margin-left: auto;
     justify-content: space-between;
 }
 
@@ -403,7 +410,7 @@
     background: none;
     border: none;
     font-size: 1.5em;
-     color: #404040;
+    color: #404040;
 
 }
 .Daycardtodo .check .text-success {
@@ -619,11 +626,11 @@ textarea:focus {
 
 }
 .Modal .save:hover,
-  .Modal .save:focus{
-      color: green;
-      text-decoration: none;
-      cursor: pointer;
-  }
+.Modal .save:focus{
+    color: green;
+    text-decoration: none;
+    cursor: pointer;
+}
 .Modal .Compile-card{
     background-color: white; /* 背景颜色 */
     color: #333; /* 文字颜色 */

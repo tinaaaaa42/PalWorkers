@@ -99,9 +99,7 @@ const ModalComponent = () => {
   return (
 
     <div className="modal-container">
-      {isModalOpen && (
-
-          <div className="modal-content">
+            <div className="modal-content">
             <button className="close-button" onClick={closeModal}>X</button>
             {/* 表单内容 */}
             <div className="Modal">
@@ -247,7 +245,7 @@ const ModalComponent = () => {
             {/* ... 表单内容 */}
           </div>
 
-      )}
+
     </div>
   );
 };

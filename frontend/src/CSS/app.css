@@ -123,11 +123,9 @@
 .Seconddir .collapsed{
     max-height: 0;
 }
-<<<<<<< HEAD
+
 .Seconddir .kanban,.Seconddir .week,.Seconddir .day,.Seconddir .project{
-=======
-.Seconddir .kanban,.Seconddir .week,.Seconddir .project{
->>>>>>> 1813fc609af227b7b37ed41548dadee124846eb0
+
     padding-left: 16px;
 }
 .Seconddir .title{
@@ -280,7 +278,7 @@
 }
 .Progressbar div{
     height: 100%; 
-    position: 'absolute';
+    position: absolute;
     top: 0;
     left: 0;
 }
@@ -390,7 +388,7 @@
     border-radius: 10px;
     justify-content: center; /* 水平居中 */
     align-items: center; /* 垂直居中 */
-    height: 7vh; /* 或者你想要容器的高度 */
+    height:7vh; /* 或者你想要容器的高度 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -402,6 +400,11 @@
     font-size: 1.5em;
     color: #9395d3;
 }
+.Daycardtodo .check:hover{
+    olor: #ffb951;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 .Daycardtodo .check i {
     cursor: pointer;
@@ -410,9 +413,9 @@
 .Daycardtodo .check .text-success {
     color: #ffb951;
 }
-.Daycardtodo .task:hover .check i {
-    color: #ffb951;
-}
+/*.Daycardtodo .task:hover .check i {*/
+/*    color: #ffb951;*/
+/*}*/
 .Daycardtodo .new {
     margin-right: 10px;
     cursor: pointer;
@@ -529,6 +532,7 @@ textarea:focus {
 
     display: flex;
     justify-content: space-between;
+
 }
 
 .Modal .form-container {
@@ -596,18 +600,20 @@ textarea:focus {
     margin: 10% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 60%;
-    max-width: 800px;
+    width: 80%;
+    max-width: 1000px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 50px!important;
+
 }
 
 
 .close-button {
-    color: #aaa;
     float: right;
-    font-size: 28px;
-    font-weight: bold;
+    color: transparent;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 5em;
 }
 
 .close-button:hover,
@@ -620,9 +626,4 @@ textarea:focus {
 /* 当模态框打开时 */
 .modal.show {
     display: block;
-}
-.Modal-button {
-    font-size: 40px;
-=======
->>>>>>> 1813fc609af227b7b37ed41548dadee124846eb0
 }

@@ -3,7 +3,6 @@ import Header from "../component/header";
 import Control from "../component/control";
 import Daytodo from "../component/daytodocard";
 import Dayphoto from "../component/dayphotocard";
-import "../CSS/app.css"
 import Seconddir from "../component/seconddir";
 
 function App() {

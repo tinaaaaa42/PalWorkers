@@ -10,12 +10,13 @@ const DayTodoCard = () => {
     <div className="Daycardtodo">
       <div className="layout">
         <div className="content">
-          <h1 className="title">每日计划</h1>
+          <h1 className="title">Daily plan</h1>
           <ul className="todo-list">
             {data.map((item, index) => (
               <li key={index} className="todo-item">
                 <div className="task-box"  >
                   {item.title}
+                  <div className="image">
                   <button className="edit" onClick={()=>openModal(item.key,"day")} >
                   <i className="fa fa-pencil" ></i>
                   </button>
@@ -25,6 +26,7 @@ const DayTodoCard = () => {
                   <button className="check">
                      <i className={`fa fa-check-circle ${item.completed ? 'text-success' : ''}`}></i>
                   </button>
+                  </div>
                 </div>
               </li>
             ))}

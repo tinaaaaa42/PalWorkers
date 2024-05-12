@@ -13,10 +13,8 @@ function Navleft(){
                 return '1';
             case '/week':
                 return '3';
-
             case '/day':
                 return '2';
-
             default:
                 return '1'; // 默认激活第一个 id
         }
@@ -29,7 +27,6 @@ function Navleft(){
                         break;
             case '2':   navigate('/day');
                          break;
-
             case '3':   navigate('/week');
                         break;
         }

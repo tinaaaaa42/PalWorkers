@@ -23,28 +23,36 @@ const ModalComponent = () => {
       taskName: '',
       description: '',
       type:type,
-      isProject: false,
       time: new Date(),
-      label: 'task',
-      labelOptions: ['task', 'project', 'lab'],
+      tag:'',
       assignee: '',
       assigneeOptions: ['User1', 'User2', 'User3'],
       image: null,
       notes: '',
       files: [],
-      createTime: getCurrentDateTime()
+      note:[]
     });
 
-  const handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+     const handleEditClick = (event) => {
+        // 使用事件目标的 value 属性更新 taskName 状态
+        console.log("change")
+        const newTaskName =event.target.value
+        setState(prevState => ({
+                  ...prevState,
+                  taskName: event.target.value,
+                }));
 
-    setState({
-      ...state,
-      [name]: value
-    });
-  };
+      };
+       const handleInputChange = (event) => {
+          const target = event.target;
+          const value = target.type === 'checkbox' ? target.checked : target.value;
+          const name = target.name;
+
+          setState({
+            ...state,
+            [name]: value
+          });
+        };
 
   const handleDateChange = (date) => {
     setState({
@@ -95,29 +103,69 @@ const ModalComponent = () => {
 //  React.useEffect(() => {
 //      console.log(type);
 //    });
+React.useEffect(() => {
+    // 根据 keyToFind 的值初始化 taskName
+    if (type=== 'new') {
+      setState(prevState => ({
+        ...prevState,
+        taskName: '',
+      }));
+    } else {
+      const task = DayTasks.find(task => task.key === key);
+      if (task) {
+        setState(prevState => ({
+          ...prevState,
+          taskName: task.title,
+          tag:task.tag
+        }));
+        if(task.note!=null){
+        setState(prevState => ({
+              ...prevState,
+              note: task.note,
 
+           }));
+}
+      }
+    }
+  })
+ const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // 创建一个Object URL，用于在编辑器中引用文件
+      const fileUrl = URL.createObjectURL(file);
+
+      // 插入链接到编辑器
+      const quill = ReactQuill.getEditor();
+      if (quill) {
+        quill.focus();
+        quill.format('link', fileUrl); // 设置当前选中内容的链接格式
+        quill.insertText(`\n`); // 在链接后添加换行符，防止链接与其他文本合并
+      }
+    }
+  };
   return (
 
     <div className="modal-container">
-            <div className="modal-content">
-            <button className="close-button" onClick={closeModal}>X</button>
+      {isModalOpen && (
+
+          <div className="modal-content">
             {/* 表单内容 */}
             <div className="Modal">
               <div className="container">
                 <div className="form-container">
-                  <h1>Task Details</h1>
                   <div className="label">
-                    <label>
-                      Task Name:
-                      <input
+                    <input
                         type="text"
                         name="taskName"
                         value={state.taskName}
-                        onChange={handleInputChange} />
-                    </label>
+                        onChange={handleInputChange} className="title"/>
+                     <i className="fa fa-pencil"></i>
+
+
                   </div>
-                  <div className="label row">
+
                     <div className="column">
+                      Description:
                       <textarea
                         name="description"
                         value={state.description}
@@ -125,28 +173,32 @@ const ModalComponent = () => {
                         placeholder="Enter your description here..."
                         rows="4"
                         cols="50"
+                        className="modal-rounded-textarea"
                       />
                     </div>
 
-                    <div className="column">
-                      <label>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleImageChange}
-                          className="file-input"
-                        />
-                        {state.image && (
-                          <img src={state.image} alt="Description" style={{ maxWidth: '100%' }} />
-                        )}
-                      </label>
-                    </div>
+                   <div className="column">
+                      Add File:
+                      <input
+                        type="file"
+                        onChange={handleFileChange}
+                        multiple
+                      />
+                      <ul>
+                        {Array.from(state.files).map((file, index) => (
+                          <li key={index}>{file.name}</li>
+                        ))}
+                      </ul>
                   </div>
 
 
-                  <div>
-                  {key}</div>
-
+                    <div className="label">
+                    Tag:
+                    <input
+                        type="text"
+                         name="taskName"
+                           value={state.tag}/>
+                    </div>
 
                   <div className="label">
                     <label>
@@ -163,28 +215,6 @@ const ModalComponent = () => {
                     </label>
                   </div>
 
-                  <div className="label">
-                    <label>
-                      Is it a project?
-                      <input
-                        type="checkbox"
-                        name="isProject"
-                        checked={state.isProject}
-                        onChange={handleInputChange} />
-                    </label>
-                  </div>
-
-                  <div className="label">
-                    <label>
-                      Create Time:
-                      <input
-                        type="text"
-                        value={state.createTime}
-                        readOnly
-                        className="create-time"
-                      />
-                    </label>
-                  </div>
 
                     <div className="label">
                         <label>
@@ -193,59 +223,52 @@ const ModalComponent = () => {
                               selected={state.time}
                               onChange={handleDateChange}
                               dateFormat="yyyy-MM-dd"
+                              style={{
+                                  borderRadius: '10px'
+                                }}
                              />
                         </label>
                      </div>
 
-                 <div className="label">
-                          <label>
-                              Label:
-                              <select
-                                name="label"
-                                value={state.label}
-                                onChange={handleLabelChange}
-                              >
-                                {state.labelOptions.map((option) => (
-                                  <option key={option} value={option}>{option}</option>
-                                ))}
-                              </select>
-                            </label>
-                          </div>
+                     <div className="label">
+                        <button className="save">Save</button>
+                        <button className="cancle" onClick={closeModal}>Cancle</button>
+                     </div>
 
-                        </div>
+                   </div>
+
+
+
+
                 <div className="notes-container">
-                  <div className="label">
-                    <label>
-                      Notes:
-                      <ReactQuill
-                        value={state.notes}
-                        onChange={handleNotesChange}
-                        placeholder="Enter your notes here..."
-                      />
-                    </label>
-                  </div>
-                  <div className="label">
-                    <label>
-                      Add File:
-                      <input
-                        type="file"
-                        onChange={handleFileChange}
-                        multiple
-                      />
-                      <ul>
-                        {Array.from(state.files).map((file, index) => (
-                          <li key={index}>{file.name}</li>
-                        ))}
-                      </ul>
-                    </label>
-                  </div>
+
+                {key!=0&&(
+                    <div className="Compile-card">
+                       <div className="compile-title"> Compile</div>
+                       <div >{state.note}</div>
+                       <div className="compile-time"> 5.1</div>
+                        </div>
+                       ) }
+
+                 <div className="label">
+                       <label>
+                         Notes:
+                         <ReactQuill
+                           value={state.notes}
+                           onChange={handleNotesChange}
+
+                           placeholder="Enter your notes here..."
+                         />
+                       </label>
+                     </div>
+
                 </div>
               </div>
             </div>
             {/* ... 表单内容 */}
           </div>
 
-
+      )}
     </div>
   );
 };

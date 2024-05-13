@@ -1,8 +1,10 @@
-
+import ModalContext from '../context/ModalContext';
+import React, { useState,useContext } from 'react';
 function Taskcard(props){
-    const { title, tag, date } = props;
-    return (<div className="Taskcard">
-        <div class="card">
+    const { key,title, tag, date } = props;
+    const { openModal ,isModalOpen} = useContext(ModalContext);
+    return (<div className="Taskcard" onClick={()=>openModal(key,"day","detail")}>
+        <div class="card" >
             <div className="colorbar" style={{color:`blue`}}></div>
             <div>
                 <div className="title">

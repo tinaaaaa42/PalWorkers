@@ -304,6 +304,7 @@
 }
 .firstline{
     padding-top: 20px;
+    /* margin-bottom: 10px; */
 }
 .firstline,.secondline {
     padding-left: 50px;
@@ -316,7 +317,8 @@
     border: 1px solid #0000002d;
     border-radius: 8px;
     box-sizing: border-box;
-    background-color: rgba(163, 164, 161, 0.123);
+    background-color: rgba(245, 249, 245, 0.139);
+    /* margin: 0 10px 10px 0; */
 }
 .Quadrant .colorbar{
     height: 28px;
@@ -336,6 +338,33 @@
     margin: 3px 0px 3px 0px;
     box-sizing: border-box;
     cursor: pointer;
+    background-color: rgba(251, 241, 223, 0.084);
+    
+    
+}
+.Weekcard .colorandcontent{
+    display: flex;
+}
+.Weekcard .colorbar{
+    width: 10px;
+    height: 70px;
+    background-color: rgba(0, 110, 255, 0.642);
+}
+.Weekcard .detail{
+    width: 170px;
+    height: 70px;
+}
+.Weekcard .line{
+    display: flex;
+    box-sizing: border-box;
+    position: relative;
+}
+.Weekcard .icon-lajixiang{
+    padding-top: 5px;
+    font-size: 20px;
+    color: gray;
+    position: absolute;
+    right: 4px;
 }
 .Weekcard .title{
     font-size: 25px;
@@ -345,6 +374,10 @@
     font-size: 18px;
     padding-left: 10px;
     color: rgb(97, 96, 96);
+}
+.Weekcard .Isdelete{
+    text-decoration: line-through;
+    color: rgba(128, 128, 128, 0.715);
 }
 .two-columns {
     column-count: 2; /* 创建两列 */
@@ -454,9 +487,9 @@
     outline: none;
 }
 
-.Daycardtodo  .delete-btn i {
-    /*color: #96dbfa;*/
-}
+/* .Daycardtodo  .delete-btn i {
+    /*color: #96dbfa;} */
+    
 .Daycardtodo  .fa-plus-circle{
 
     display: flex;

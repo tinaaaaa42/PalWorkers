@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { DayTasks} from "../Data/data";
+import { DayTasks,Tasks} from "../Data/data";
 const ModalComponent = () => {
   const { isModalOpen, closeModal ,type,key} = useContext(ModalContext);
 
@@ -111,7 +111,9 @@ React.useEffect(() => {
         taskName: '',
       }));
     } else {
-      const task = DayTasks.find(task => task.key === key);
+      
+      let task = DayTasks.find(task => task.key === key);
+      
       if (task) {
         setState(prevState => ({
           ...prevState,

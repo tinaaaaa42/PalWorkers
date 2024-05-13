@@ -5,17 +5,20 @@ export const ModalContext = createContext({
   openModal: () => {},
   closeModal: () => {},
   type: "day",
-  key: 0
+  key: 0,
+  message: "new"
 });
 
 export const ModalProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [type,setType]=useState("day");
+  const [message,setMessage]=useState("new");
   const [key,setKey]=useState(0);
-  const openModal = (theKey,theType) => {
+  const openModal = (theKey,theType,theMessage) => {
     setIsModalOpen(true);
     setKey(theKey);
     setType(theType);
+    setMessage(theMessage)
 
   };
 
@@ -37,7 +40,7 @@ export const ModalProvider = ({ children }) => {
       {children}
       {isModalOpen && (
       <div className="modal">
-
+          console.log(theKey)
             <ModalComponent>
             </ModalComponent>
 

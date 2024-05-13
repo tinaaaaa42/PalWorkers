@@ -4,9 +4,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { DayTasks,Tasks} from "../Data/data";
+import { DayTasks,Tasks,WeekTasks} from "../Data/data";
 const ModalComponent = () => {
-  const { isModalOpen, closeModal ,type,key} = useContext(ModalContext);
+  const { isModalOpen, closeModal ,type,key,message} = useContext(ModalContext);
 
 
 
@@ -104,30 +104,85 @@ const ModalComponent = () => {
 //      console.log(type);
 //    });
 React.useEffect(() => {
-    // 根据 keyToFind 的值初始化 taskName
-    if (type=== 'new') {
-      setState(prevState => ({
-        ...prevState,
-        taskName: '',
-      }));
-    } else {
-      
-      let task = DayTasks.find(task => task.key === key);
-      
+    // 根据 keyToFind 的值初始化 taskNam
+    switch(type){
+
+      case "day":{
+
+      if(message=== 'new') {
+             setState(prevState => ({
+               ...prevState,
+               taskName: '',
+             }));
+             break;
+             }
+
+      const task = DayTasks.find(task => task.key === key);
       if (task) {
         setState(prevState => ({
           ...prevState,
           taskName: task.title,
-          tag:task.tag
+          tag:task.tag,
+          time:task.date
         }));
         if(task.note!=null){
         setState(prevState => ({
               ...prevState,
               note: task.note,
 
-           }));
-}
+           }));}
+      }break;
       }
+      case "week":{
+       if(type=== 'new') {
+                   setState(prevState => ({
+                     ...prevState,
+                     taskName: '',
+                   }));
+                   break;
+                   }
+       const task = WeekTasks.find(task => task.id === key);
+            if (task) {
+              setState(prevState => ({
+                ...prevState,
+                taskName: task.title,
+                tag:task.tag,
+                time:task.date
+              }));
+              if(task.note!=null){
+              setState(prevState => ({
+                    ...prevState,
+                    note: task.note,
+
+                 }));}
+            }break;
+            }
+      case "kanban":{
+      console.log(key)
+       if(message=== 'new') {
+                   setState(prevState => ({
+                     ...prevState,
+                     taskName: '',
+                   }));
+                   break;
+                   }
+       const task = Tasks.find(task => task.id === key);
+            if (task) {
+             console.log("task")
+              setState(prevState => ({
+                ...prevState,
+                taskName: task.title,
+                tag:task.tag,
+                 time:task.date
+              }));
+              if(task.note!=null){
+              setState(prevState => ({
+                    ...prevState,
+                    note: task.note,
+
+                 }));}
+            }break;
+            }
     }
   })
  const handleFileUpload = (event) => {
@@ -242,21 +297,22 @@ React.useEffect(() => {
 
 
 
-                <div className="notes-container">
-
-                {key!=0&&(
-                    <div className="Compile-card">
+                <div className="notes-container" style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ flex: '0.8' }}>
+                {(type!=="new"&&state.note!=='')&&(
+                    <div className="Compile-card" >
                        <div className="compile-title"> Compile</div>
                        <div >{state.note}</div>
                        <div className="compile-time"> 5.1</div>
                         </div>
                        ) }
+                       </div>
 
-                 <div className="label">
+                 <div className="label" style={{ flex: '1', marginTop: '10px' }}>
                        <label>
                          Notes:
                          <ReactQuill
-                           value={state.notes}
+                           value={state.notes}//yhis
                            onChange={handleNotesChange}
 
                            placeholder="Enter your notes here..."

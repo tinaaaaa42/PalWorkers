@@ -570,7 +570,7 @@ textarea:focus {
     box-shadow: 0 0 0 2px #ccc;
 }
 .Modal .container {
-
+    position: relative;
     display: flex;
     justify-content: space-between;
 }
@@ -583,6 +583,9 @@ textarea:focus {
 
 .Modal .notes-container {
     width: 50%;
+
+    right: 0;
+   bottom: 10px;
 }
 
 .Modal .label {
@@ -709,7 +712,7 @@ textarea:focus {
     max-width: 1200px;
     height: 80%;
     min-height: 500px;
-    max-width: 1200px;
+    max-width: 800px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 50px!important;
 }

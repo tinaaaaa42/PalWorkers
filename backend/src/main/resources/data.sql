@@ -1,3 +1,5 @@
+use palworkers;
+
 INSERT INTO tasks (task_id, title, description, create_date, due_date) VALUES
    (1, '发布新产品', '发布我们的新产品。', '2023-04-01', '2023-04-15'),
    (2, '市场调研', '进行市场调研以了解客户需求。', '2023-04-02', NULL),

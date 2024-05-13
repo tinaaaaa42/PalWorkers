@@ -1,3 +1,7 @@
+# may be needed
+# create database palworkers
+use palworkers;
+
 DROP TABLE IF EXISTS tasks;
 DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS task_tags;
@@ -9,13 +13,13 @@ CREATE TABLE tasks (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     create_date DATE NOT NULL,
-    due_date DATE,
-)
+    due_date DATE
+);
 
 CREATE TABLE tags (
     tag_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
-)
+);
 
 CREATE TABLE task_tags (
     task_id BIGINT NOT NULL,
@@ -23,13 +27,13 @@ CREATE TABLE task_tags (
     PRIMARY KEY (task_id, tag_id),
     FOREIGN KEY (task_id) REFERENCES tasks(task_id),
     FOREIGN KEY (tag_id) REFERENCES tags(tag_id)
-)
+);
 
 CREATE TABLE kanban_tasks (
     task_id BIGINT PRIMARY KEY,
     state VARCHAR(255) NOT NULL,
     FOREIGN KEY (task_id) REFERENCES tasks(task_id)
-)
+);
 
 CREATE TABLE weekly_tasks (
     task_id BIGINT PRIMARY KEY,

@@ -34,7 +34,7 @@ const DayPhotoCard = () => {
                       <h2>Daily reflection</h2>
                     </div>
       <div className="divider" />
-      <textarea
+      <textarea className='note'
         style={{ minHeight: '100px', resize: 'vertical' }}
       />
     </div>

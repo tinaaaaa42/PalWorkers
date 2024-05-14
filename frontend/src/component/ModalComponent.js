@@ -26,14 +26,15 @@ const ModalComponent = () => {
       time: new Date(),
       tag:'',
       assignee: '',
-      assigneeOptions: ['User1', 'User2', 'User3'],
+      assigneeOptions: 'User1',
       image: null,
       notes: '',
       files: [],
       note:[],
       choosepro:['todo','inprogress','review','done'],
       chooseimpo:'',
-      chooseurg:''
+      chooseurg:'',
+
     });
 
      const handleEditClick = (event) => {
@@ -56,6 +57,16 @@ const ModalComponent = () => {
             [name]: value
           });
         };
+        const handleInputtagChange = (event) => {
+                  const target = event.target;
+                  const value = target.type === 'checkbox' ? target.checked : target.value;
+
+
+                  setState({
+                    ...state,
+                    tag: value
+                  });
+                };
 
   const handleDateChange = (date) => {
     setState({
@@ -261,24 +272,15 @@ React.useEffect(() => {
                         type="text"
                          name="taskName"
                            value={state.tag}
-                           onChange={handleInputChange}
+                           onChange={handleInputtagChange}
 
                            />
                     </div>
 
                   <div className="label">
                     <label>
-                      Assignee:
-                      <select
-                        name="assignee"
-                        value={state.assignee}
-                        onChange={handleAssigneeChange}
-                      >
-                        {state.assigneeOptions.map((option) => (
-                          <option key={option} value={option}>{option}</option>
-                        ))}
-                      </select>
-                    </label>
+                      Assignee:user1
+                       </label>
                   </div>
 
                   <div className="label">

@@ -102,6 +102,9 @@
     padding-top: 15px;
     cursor: pointer;
 }
+.Header .jizhang:hover{
+    transform: translateX(2px);
+}
 .Header .rili,.Header .search,.Header .tixing,.Header .time{
     margin-right:12px;
 }
@@ -234,6 +237,10 @@
     box-sizing: border-box;
     font-size: 20px;
     cursor: pointer;
+}
+.Kanban .card:hover,.Projectdetail .card:hover{
+    transform: translateY(2px);
+    transform: translateX(2px);
 }
 .Kanban .card.empty,.Projectdetail .card.empty{
     border: 1px dashed #60606076;
@@ -377,6 +384,10 @@
     background-color: rgba(251, 241, 223, 0.084);
     
 }
+.Weekcard.card:hover{
+    transform: translateY(2px);
+    transform: translateX(2px);
+}
 .Weekcard .colorandcontent{
     display: flex;
 }
@@ -455,6 +466,11 @@
     margin-bottom: 15px;
 }
 
+.Daycardtodo .todo-item:hover{
+    transform: translateX(2px);
+    cursor: pointer;
+}
+
 .Daycardtodo .task-box {
     display: flex;
     align-items: center;
@@ -463,7 +479,7 @@
     justify-content: center;
     align-items: center; /* 垂直居中 */
     height: 7vh; /* 或者你想要容器的高度 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.311);
 }
 .Daycardtodo .image{
     display: flex;

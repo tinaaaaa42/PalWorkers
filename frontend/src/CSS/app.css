@@ -452,6 +452,7 @@
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
+    font-size: 30px;
 }
 
 .Daycardtodo .todo-list {
@@ -480,6 +481,7 @@
     align-items: center; /* 垂直居中 */
     height: 7vh; /* 或者你想要容器的高度 */
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.311);
+    padding-left: 6px;
 }
 .Daycardtodo .image{
     display: flex;
@@ -494,16 +496,16 @@
     background: none;
     border: none;
     font-size: 1.5em;
-    color: #404040;
+    color: #b9b6b6;
 
 }
 .Daycardtodo .check .text-success {
-    color: #ffb951;
+    color: #ffb951d0;
 }
 .Daycardtodo .task:hover,
 .Daycardtodo .task:focus
 {
-    color: #ffb951;
+    color: #ffb951d0;
     text-decoration: none;
     cursor: pointer;
 }
@@ -512,6 +514,8 @@
     background: none;
     border: none;
     font-size: 1.5em;
+    width: 50px;
+    height: 50px;
 
 }
 
@@ -540,13 +544,16 @@
 
 /* .Daycardtodo  .delete-btn i {
     /*color: #96dbfa;} */
-    
-.Daycardtodo  .fa-plus-circle{
 
+.Daycardtodo .fa-trash-o,.Daycardtodo .fa-pencil{
+    color: #ccc;
+}   
+.Daycardtodo  .fa-plus-circle{
+    font-size: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #404040;
+    color: #d9d9d9;
 }
 .Daycardphoto {
     font-family: 'Arial', sans-serif;
@@ -573,8 +580,11 @@
 }
 
 .Daycardphoto h2 {
-    margin: 0;
-    color: #333;
+    margin-top: 5px;
+    color: #524f4f;
+}
+.Daycardphoto .note{
+    font-size: 20px;
 }
 
 .Daycardphoto .card {
@@ -590,16 +600,17 @@
     height: 400px;
     border-radius: 4px;
     margin-bottom: 10px;
+    filter: blur(3px);
 }
 .Daycardphoto .card  .text-overlay {
     text-align: center;
-    color: black;
+    color: white;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 24px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 26px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.352);
 }
 
 .Daycardphoto textarea {
@@ -687,34 +698,92 @@ textarea:focus {
 }
 .Modal .cancle{
     font-size:1.5em;
-    background-color: indianred;
+    background-color: rgba(32, 157, 229, 0.68);
     padding: 10px 20px;
     margin-top: 50px;
     margin-left:80px ;
-    border-radius: 8px;
+    border-radius: 10px;
+    border: none;
+    color:white;
 }
 .Modal .cancle:hover,
 .Modal .cancle:focus{
-    color: red;
     text-decoration: none;
+    cursor: pointer;
+    transform: translateX(2px);
+}
+.Modal .label{
+    position: relative;
+}
+.Modal .label .fa{
+    font-size: 25px;
+    color: #b9b6b6;
+    position: absolute;
+    right: 5px;
+}
+.Modal .column .description{
+    margin-top: 4px;
+    font-size: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.418);
+    padding-top: 5px;
+    text-indent: 10px;
+    box-sizing: border-box;
+}
+.Modal .logfile{
+    padding-left: 10px;
+}
+.Modal .taginfo{
+    position: absolute;
+    right: 5px;
+    padding-left: 5px;
+    height: 24px;
+    font-size: 20px;
+    width: 160px;
+    border: none;
+    border-radius: 5px;
+    background-color:#8888881a ;
+    text-align: center;
+    box-sizing: border-box;
+}
+.Modal .Userlabel{
+    display: flex;
+    justify-content: space-between;
+    width: 366px;
+}
+.Modal .Userlabel .asstitle{
+    width: 100px;
+}
+.Modal .Userlabel .User{
+    width: 160px;
+    background-color: #8888881a ;
+    text-align: center;
+    border-radius: 5px;
+    height: 28px;
+}
+
+.Modal .logfile::file-selector-button{
+    color: white;
+    background-color: rgba(0, 115, 255, 0.603);
+    border-radius: 7px;
+    border: 1px solid rgb(223, 218, 218);
+    height: 28px;
+    font-size: 16px;
     cursor: pointer;
 }
 
-
-
-
 .Modal .save{
     font-size: 1.5em;
-    background-color: lawngreen;
+    background-color: rgba(121, 218, 25, 0.689);
     padding: 10px 20px;
     margin-left:80px ;
     margin-top: 50px;
-    border-radius: 8px;
-
+    border-radius: 10px;
+    border: none;
+    color:white;
 }
 .Modal .save:hover,
 .Modal .save:focus{
-    color: green;
+    transform: translateX(2px);
     text-decoration: none;
     cursor: pointer;
 }
@@ -740,7 +809,6 @@ textarea:focus {
     border-radius: 8px; /* 添加圆角，半径为8像素 */
 }
 .modal {
-
     position: fixed;
     z-index: 1;
     left: 0;
@@ -750,6 +818,44 @@ textarea:focus {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
 
+}
+.Modal .datalabel{
+    position: relative;
+}
+.Modal .datelabel{
+    display: flex;
+}
+.Modal .Date{
+    position: absolute;
+    right: -324px;
+    width: 160px;
+    border: none;
+    text-align: center;
+    font-size: 20px;
+    background-color: #8888881a;
+    height: 28px;
+    border-radius: 5px;
+}
+.Modal .Destitle{
+    font-size: 20px;
+}
+.Modal .pic{
+    width: 24px;
+    height: 24px;
+    margin-left: 2px;
+}
+.Modal .Progressselect{
+    height: 27px;
+    border-radius: 5px;
+    background-color: #8888881a;
+    width: 160px;
+    font-size: 20px;
+    margin-left: 15px;
+    position: absolute;
+    right: 5px;
+    border: none;
+    text-align: center;
+    height: 30px;
 }
 
 .modal-content {

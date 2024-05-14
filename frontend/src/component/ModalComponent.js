@@ -241,26 +241,22 @@ React.useEffect(() => {
                         value={state.taskName}
                         onChange={handleInputChange} className="title"/>
                      <i className="fa fa-pencil"></i>
-
-
                   </div>
-
-                    <div className="column">
-                      Description:
-                      <textarea
-                        name="description"
-                        value={state.description}
-                        onChange={handleInputChange}
-                        placeholder="Enter your description here..."
-                        rows="4"
-                        cols="50"
-                        className="modal-rounded-textarea"
-                      />
-                    </div>
-
-                   <div className="column">
+                  <div className="column Destitle">
+                    Description:
+                    <textarea 
+                      name="description"
+                      value={state.description}
+                      onChange={handleInputChange}
+                      placeholder="description..."
+                      rows="4"
+                      cols="50"
+                      className="modal-rounded-textarea description"
+                    />
+                  </div>
+                  <div className="column">
                       Add File:
-                      <input
+                      <input className='logfile'
                         type="file"
                         onChange={handleFileChange}
                         multiple
@@ -271,61 +267,52 @@ React.useEffect(() => {
                         ))}
                       </ul>
                   </div>
-
-
-                    <div className="label">
-                    Tag:
-                    <input
-                        type="text"
-                         name="taskName"
-                           value={state.tag}
-                           onChange={handleInputtagChange}
-
-                           />
-                    </div>
-
                   <div className="label">
-                    <label>
-                      Assignee:user1
-                       </label>
+                  <img className='pic' src={process.env.PUBLIC_URL + "/标签.png"}  alt="" ></img>
+                    Tag:
+                    <input className='taginfo'
+                        type="text"
+                        name="taskName"
+                        value={state.tag}
+                        onChange={handleInputtagChange}/>
+                  </div>
+                  <div className="label">
+                  <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>
+                    <label className='Userlabel'>
+                      <div className='asstitle'>Assignee:</div><div className='User'>user1</div>
+                    </label>
                   </div>
 
                   <div className="label">
-                                      <label>
-                                        progress:
-                                        <select
-                                          name="assignee"
-                                          value={state.assignee}
-                                          onChange={handleAssigneeChange}
-                                        >
-                                          {state.choosepro.map((option) => (
-                                            <option key={option} value={option}>{option}</option>
-                                          ))}
-                                        </select>
-                                      </label>
-                                    </div>
-
-
-                    <div className="label">
-                        <label>
-                           Due:
-                             <DatePicker
-                              selected={state.time}
-                              onChange={handleDateChange}
-                              dateFormat="yyyy-MM-dd"
-                              style={{
-                                  borderRadius: '10px'
-                                }}
-                             />
-                        </label>
-                     </div>
-
-                     <div className="label">
-                        <button className="save">Save</button>
-                        <button className="cancle" onClick={closeModal}>Cancle</button>
-                     </div>
-
-                   </div>
+                    <label>
+                    <img className='pic' src={process.env.PUBLIC_URL + "/进度.png"}  alt="" ></img>
+                      progress:
+                      <select name="assignee" className='Progressselect'  value={state.assignee} onChange={handleAssigneeChange}>
+                        {state.choosepro.map((option) => (
+                          <option key={option} value={option}>{option}</option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
+                  <div className="label datelabel">
+                  <img className='pic' src={process.env.PUBLIC_URL + "/日历-内容页.png"}  alt="" ></img>
+                      <div className='Due'>Due:</div>
+                      <div>
+                      <DatePicker className='Date'
+                        selected={state.time}
+                        onChange={handleDateChange}
+                        dateFormat="yyyy-MM-dd"
+                        style={{
+                            borderRadius: '10px'
+                          }}
+                      />
+                      </div>
+                  </div>
+                  <div className="label">
+                    <button className="detail save">Save</button>
+                    <button className="detail cancle" onClick={closeModal}>Cancle</button>
+                  </div>
+                  </div>
 
 
 

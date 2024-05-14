@@ -123,7 +123,8 @@ React.useEffect(() => {
           ...prevState,
           taskName: task.title,
           tag:task.tag,
-          time:task.date
+          time:task.date,
+          description:task.description
         }));
         if(task.note!=null){
         setState(prevState => ({
@@ -184,7 +185,7 @@ React.useEffect(() => {
             }break;
             }
     }
-  })
+  },[])
  const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {

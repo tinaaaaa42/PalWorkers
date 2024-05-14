@@ -15,25 +15,25 @@ function Projtectdetail(props){
         <div class="column">
             <h2>To Do</h2>
             {TodoTasks.map((task) => (
-                <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id} />
+                <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id} projectid={projectid}/>
             ))}
         </div>
         <div class="column">
             <h2>In Progress</h2>
             {InprogressTasks.map((task) => (
-                <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id}/>
+                <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id} projectid={projectid}/>
             ))}
         </div>
             <div class="column">
             <h2>Review</h2>
             {ReviewTasks.map((task) => (
-                <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id}/>
+                <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id} projectid={projectid}/>
             ))}
         </div>
         <div class="column">
             <h2>Done</h2>
             {DownTasks.map((task) => (
-                <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} />
+                <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} projectid={projectid}/>
             ))}
             <a href=""><div class="card empty"><div className="add iconfont icon-jiahao"></div></div></a>
         </div>

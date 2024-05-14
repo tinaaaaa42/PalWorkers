@@ -10,7 +10,7 @@ export const ModalContext = createContext({
   importance:0,
   urgency:0,
   progress:"todo",
-  projectid:0
+  projectid:null
 });
 
 export const ModalProvider = ({ children }) => {
@@ -20,9 +20,9 @@ export const ModalProvider = ({ children }) => {
   const [key,setKey]=useState(0);
   const [importance,setImportance]=useState(0);
   const [urgency,setUrgency]=useState(0);
-  const [projectid,setProjectid]=useState(0);
+  const [projectid,setProjectid]=useState(null);
   const [progress,setProgress]=useState("todo");
-  const openModal = (theKey,theType,theMessage,theImportance,theUrgency,theProgress,theProjectid) => {
+  const openModal = (theKey,theType,theMessage,theProjectid,theImportance,theUrgency,theProgress) => {
     setIsModalOpen(true);
     setKey(theKey);
     setType(theType);

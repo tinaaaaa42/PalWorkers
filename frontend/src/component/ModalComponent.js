@@ -4,9 +4,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { DayTasks,Tasks,WeekTasks} from "../Data/data";
+import { DayTasks,Tasks,WeekTasks,Projects} from "../Data/data";
 const ModalComponent = () => {
-  const { isModalOpen, closeModal ,type,key,message,importance,urgency,progress} = useContext(ModalContext);
+  const { isModalOpen, closeModal ,type,key,message,importance,urgency,progress,projectid} = useContext(ModalContext);
 
 
 
@@ -88,7 +88,6 @@ const ModalComponent = () => {
       assignee: event.target.value
     });
   };
-
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -173,7 +172,7 @@ React.useEffect(() => {
             }break;
             }
       case "kanban":{
-      //console.log(key)
+
        if(message=== 'new') {
                    setState(prevState => ({
                      ...prevState,
@@ -182,7 +181,15 @@ React.useEffect(() => {
                    }));
                    break;
                    }
-       const task = Tasks.find(task => task.id === key);
+//         if(isproject){
+//
+//         }
+           let task;
+          if(projectid){
+          const project=Projects.find(project=>project.id==projectid)
+           task=project?.Tasks.find(task=>task.id===key)||null
+          }
+         else {task = Tasks.find(task => task.id === key)||null;}
             if (task) {
              console.log("task")
               setState(prevState => ({

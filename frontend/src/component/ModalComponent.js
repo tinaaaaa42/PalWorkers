@@ -6,7 +6,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { DayTasks,Tasks,WeekTasks} from "../Data/data";
 const ModalComponent = () => {
-  const { isModalOpen, closeModal ,type,key,message} = useContext(ModalContext);
+  const { isModalOpen, closeModal ,type,key,message,importance,urgency,progress} = useContext(ModalContext);
 
 
 
@@ -30,7 +30,10 @@ const ModalComponent = () => {
       image: null,
       notes: '',
       files: [],
-      note:[]
+      note:[],
+      choosepro:['todo','inprogress','review','done'],
+      chooseimpo:'',
+      chooseurg:''
     });
 
      const handleEditClick = (event) => {
@@ -164,6 +167,7 @@ React.useEffect(() => {
                    setState(prevState => ({
                      ...prevState,
                      taskName: '',
+                     progress:''
                    }));
                    break;
                    }
@@ -175,6 +179,7 @@ React.useEffect(() => {
                 taskName: task.title,
                 tag:task.tag,
                  time:task.date
+
               }));
               if(task.note!=null){
               setState(prevState => ({
@@ -255,7 +260,10 @@ React.useEffect(() => {
                     <input
                         type="text"
                          name="taskName"
-                           value={state.tag}/>
+                           value={state.tag}
+                           onChange={handleInputChange}
+
+                           />
                     </div>
 
                   <div className="label">
@@ -272,6 +280,21 @@ React.useEffect(() => {
                       </select>
                     </label>
                   </div>
+
+                  <div className="label">
+                                      <label>
+                                        progress:
+                                        <select
+                                          name="assignee"
+                                          value={state.assignee}
+                                          onChange={handleAssigneeChange}
+                                        >
+                                          {state.choosepro.map((option) => (
+                                            <option key={option} value={option}>{option}</option>
+                                          ))}
+                                        </select>
+                                      </label>
+                                    </div>
 
 
                     <div className="label">

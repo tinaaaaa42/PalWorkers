@@ -2,18 +2,24 @@
 # create database palworkers
 use palworkers;
 
-DROP TABLE IF EXISTS tasks;
-DROP TABLE IF EXISTS tags;
-DROP TABLE IF EXISTS task_tags;
-DROP TABLE IF EXISTS kanban_tasks;
+# create  type_enum AS ENUM("kanban","weekly","daily");
 DROP TABLE IF EXISTS weekly_tasks;
+DROP TABLE IF EXISTS kanban_tasks;
+DROP TABLE IF EXISTS task_tags;
+DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS tasks;
+
+
+
+
 
 CREATE TABLE tasks (
     task_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description TEXT,
     create_date DATE NOT NULL,
-    due_date DATE
+    due_date DATE,
+    type ENUM('kanban','weekly','daily') NOT NULL
 );
 
 CREATE TABLE tags (

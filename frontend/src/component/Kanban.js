@@ -11,7 +11,7 @@ function Kanban(){
     const InprogressProjects = Projects.filter((project) => project.state === "inprogress");
     return (
     <div className="Kanban">
-        <div class="column">
+        <div className="column">
             <h2>To Do</h2>
             {TodoTasks.map((task) => (
                 <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id}/>
@@ -20,7 +20,7 @@ function Kanban(){
                 <Projectcard key={project.id} project={project} />
             ))}
         </div>
-        <div class="column">
+        <div className="column">
             <h2>In Progress</h2>
             {InprogressTasks.map((task) => (
                 <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id}/>
@@ -29,18 +29,18 @@ function Kanban(){
                 <Projectcard key={project.id} project={project} />
             ))}
         </div>
-            <div class="column">
+            <div className="column">
             <h2>Review</h2>
             {ReviewTasks.map((task) => (
                 <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id}/>
             ))}
         </div>
-        <div class="column">
+        <div className="column">
             <h2>Done</h2>
             {DownTasks.map((task) => (
                 <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id}/>
             ))}
-            <a href=""><div class="card empty"><div className="add iconfont icon-jiahao"></div></div></a>
+            <a href=""><div className="card empty"><div className="add iconfont icon-jiahao"></div></div></a>
         </div>
     </div>);
 }

@@ -16,9 +16,9 @@ const router=createBrowserRouter([
         path:'/week',
         element:<Weekpage></Weekpage>
     },
-         {
-             path:'/day',
-             element:<Daypage></Daypage>
-         }
+    {
+        path:'/day',
+        element:<Daypage></Daypage>
+    }
 ])
 export default router;

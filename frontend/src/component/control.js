@@ -13,8 +13,8 @@ function Control({taskhandler}){
                 {Tag.map(tag=>(<option value={`${tag.name}`} key={tag.name}>{tag.name}</option>))}
             </select>
             <div className="placeholder"></div>
-            <button class="rounded-button taskbutton" onClick={taskhandler}>New Task</button>
-            <button class="rounded-button projectbutton">New Project</button>
+            <button className="rounded-button taskbutton" onClick={taskhandler}>New Task</button>
+            <button className="rounded-button projectbutton">New Project</button>
         </div>
     );
 }

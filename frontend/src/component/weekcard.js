@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import ModalContext from '../context/ModalContext';
+import {useContext } from 'react';
 function Weekcard(props){
-    const {title,tag}=props;
+    const {id,title,tag}=props;
     const [isDel, setIsDel] = useState(false);
-    const handleClick = () => {
+    const { openModal ,isModalOpen} = useContext(ModalContext);
+    const handleClick = (event) => {
+        event.stopPropagation(); 
         let myseitch=1-isDel;
         setIsDel(myseitch);
       };
-    return (<div className="Weekcard">
+    return (<div className="Weekcard" onClick={()=>openModal(id,"week","detail")}>
         <div className="colorandcontent">
             <div className="colorbar" style={{color:`blue`}}></div>
             <div className={`detail ${isDel ? 'Isdelete' : ''}`}>

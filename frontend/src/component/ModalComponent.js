@@ -158,7 +158,7 @@ React.useEffect(() => {
             }break;
             }
       case "kanban":{
-      console.log(key)
+      //console.log(key)
        if(message=== 'new') {
                    setState(prevState => ({
                      ...prevState,

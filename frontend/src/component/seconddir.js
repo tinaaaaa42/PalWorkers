@@ -36,8 +36,10 @@ function Seconddir(){
     const renderTitle = () => {
         if(location.pathname.startsWith('/project')){
             return <>
-            <div className='Projecttitle'><h1 className='project'>Project</h1>
-            <button onClick={() => navigate('/')}>back</button></div>
+            <div className='Projecttitle'>
+                <h1 className='project'>Project</h1>
+                <div className='back' onClick={() => navigate('/')}><img src={process.env.PUBLIC_URL + "/back.png"}  alt="" ></img></div>
+            </div>
             </>;
         }
         switch (location.pathname) {

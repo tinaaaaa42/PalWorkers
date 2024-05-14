@@ -1,9 +1,12 @@
 import Weekcard from "./weekcard";
 import { WeekTasks } from "../Data/data";
+import ModalContext from '../context/ModalContext';
+import {useContext } from 'react';
+import "../iconfont3/iconfont.css"
 function Quadrant({ quadrant }){
     let color = '';
     let content = '';
-
+    const { openModal ,isModalOpen} = useContext(ModalContext);
     if (quadrant === 1) {
         color = 'rgba(255, 0, 0, 0.416)';
         content = '重要且紧急';
@@ -32,12 +35,12 @@ function Quadrant({ quadrant }){
     
     const colorStyle = {
         backgroundColor: color,
-      };
+    };
     return (<div className="Quadrant">
         <div className="quadrantcard">
-            <div className="colorbar" style={colorStyle}>{content}</div>
+            <div className="colorbar" style={colorStyle}><div>{content}</div><div className="iconfont icon-jiahao" onClick={()=>openModal(0,"week","new")}></div></div>
             {tasks.map(task => (
-            <Weekcard key={task.id} title={task.title} tag={task.tag} />
+            <Weekcard key={task.id} title={task.title} tag={task.tag} id={task.id}/>
             ))}
         </div>
     </div>);

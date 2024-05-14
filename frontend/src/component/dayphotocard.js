@@ -28,7 +28,7 @@ const DayPhotoCard = () => {
           style={{ maxWidth: '100%', display: 'block', margin: '0 auto' }}
           onClick={switchImage}
         />
-         <div class="text-overlay">{currentju}</div>
+         <div className="text-overlay">{currentju}</div>
         </div>
       <div className="divider">
                       <h2>Daily reflection</h2>

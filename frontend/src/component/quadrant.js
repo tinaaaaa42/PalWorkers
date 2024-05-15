@@ -1,8 +1,9 @@
 import Weekcard from "./weekcard";
 import { WeekTasks } from "../Data/data";
 import ModalContext from '../context/ModalContext';
-import {useContext } from 'react';
+import {useContext, useEffect, useState} from 'react';
 import "../iconfont3/iconfont.css"
+import {get_weekly_task} from "../service/weekly_task";
 function Quadrant({ quadrant }){
     let color = '';
     let content = '';
@@ -20,18 +21,31 @@ function Quadrant({ quadrant }){
         color = 'rgba(255, 166, 0, 0.614)';
         content = '不重要且不紧急';
     }
-    const tasks = WeekTasks.filter(task => {
+    const [test_tasks, setTest_tasks] = useState([])
+
+    const init_tasks = async () => {
+        let weekly_tasks = await get_weekly_task();
+        setTest_tasks(weekly_tasks)
+    }
+
+    useEffect( () => {
+        init_tasks();
+    }, []);
+
+    const tasks = test_tasks.filter(task => {
     if (quadrant === 1) {
-        return task.urgent === 1 && task.important === 1;
+        return task.urgent === true && task.important === true;
     } else if (quadrant === 2) {
-        return task.urgent === 0 && task.important === 1;
+        return task.urgent === false && task.important === true;
     } else if (quadrant === 3) {
-        return task.urgent === 1 && task.important === 0;
+        return task.urgent === true && task.important === false;
     } else if (quadrant === 4) {
-        return task.urgent === 0 && task.important === 0;
+        return task.urgent === false && task.important === false;
     }
     return false;
     });
+
+    console.log(tasks)
     
     const colorStyle = {
         backgroundColor: color,

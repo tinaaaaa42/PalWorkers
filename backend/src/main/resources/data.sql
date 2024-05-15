@@ -24,7 +24,7 @@ INSERT INTO tags (tag_id, name) VALUES
     (8, '旅行'),
     (9, '购物'),
     (10, '健康'),
-    (11, '饮食')
+    (11, '饮食');
 INSERT INTO task_tags (task_id, tag_id) VALUES
     (1, 1),
     (1, 3),
@@ -53,10 +53,10 @@ INSERT INTO weekly_tasks (task_id, urgent, important) VALUES
 SET @kanban_task_id = 6;
 
 INSERT INTO kanban_tasks (task_id, state) VALUES
-  (@kanban_task_id + 0, '待办'),
-  (@kanban_task_id + 1, '进行中'),
-  (@kanban_task_id + 2, '已完成'),
-  (@kanban_task_id + 3, '待办'),
-  (@kanban_task_id + 4, '进行中');
+  (@kanban_task_id + 0, 'todo'),
+  (@kanban_task_id + 1, 'inprogress'),
+  (@kanban_task_id + 2, 'review'),
+  (@kanban_task_id + 3, 'todo'),
+  (@kanban_task_id + 4, 'down');
 
 

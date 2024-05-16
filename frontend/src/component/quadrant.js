@@ -4,7 +4,7 @@ import ModalContext from '../context/ModalContext';
 import {useContext, useEffect, useState} from 'react';
 import "../iconfont3/iconfont.css"
 import {get_weekly_task} from "../service/weekly_task";
-function Quadrant({ quadrant }){
+function Quadrant({ quadrant ,Week_tasks}){
     let color = '';
     let content = '';
     const { openModal ,isModalOpen} = useContext(ModalContext);
@@ -21,18 +21,18 @@ function Quadrant({ quadrant }){
         color = 'rgba(255, 166, 0, 0.614)';
         content = '不重要且不紧急';
     }
-    const [test_tasks, setTest_tasks] = useState([])
+    // const [test_tasks, setTest_tasks] = useState([])
 
-    const init_tasks = async () => {
-        let weekly_tasks = await get_weekly_task();
-        setTest_tasks(weekly_tasks)
-    }
+    // const init_tasks = async () => {
+    //     let weekly_tasks = await get_weekly_task();
+    //     setTest_tasks(weekly_tasks)
+    // }
 
-    useEffect( () => {
-        init_tasks();
-    }, []);
+    // useEffect( () => {
+    //     init_tasks();
+    // }, []);
 
-    const tasks = test_tasks.filter(task => {
+    const tasks = Week_tasks.filter(task => {
     if (quadrant === 1) {
         return task.urgent === true && task.important === true;
     } else if (quadrant === 2) {
@@ -54,7 +54,7 @@ function Quadrant({ quadrant }){
         <div className="quadrantcard">
             <div className="colorbar" style={colorStyle}><div>{content}</div><div className="iconfont icon-jiahao" onClick={()=>openModal(0,"week","new")}></div></div>
             {tasks.map(task => (
-            <Weekcard key={task.id} title={task.title} tag={task.tag} id={task.id}/>
+            <Weekcard key={task.id} title={task.title} tags={task.tags} id={task.id}/>
             ))}
         </div>
     </div>);

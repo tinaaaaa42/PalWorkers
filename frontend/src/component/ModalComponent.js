@@ -310,7 +310,7 @@ React.useEffect(() => {
                   </div>
                   <div className="label">
                     <button className="detail save">Save</button>
-                    <button className="detail cancle" onClick={closeModal}>Cancle</button>
+                    <button className="detail cancle" onClick={closeModal}>Cancel</button>
                   </div>
                   </div>
 

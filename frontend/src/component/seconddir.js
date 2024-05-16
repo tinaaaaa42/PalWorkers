@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Projects ,Tasks,Tag,WeekTasks,DayTasks} from '../Data/data';
 import { useLocation, useNavigate } from 'react-router-dom';
-function Seconddir(){
+function Seconddir({tags,taskstitle}){
     const [expanded, setExpanded] = useState(false);
     const [expanded2, setExpanded2] = useState(false);
     const [expanded3, setExpanded3] = useState(false);
@@ -73,11 +73,11 @@ function Seconddir(){
                 return (<>
                 <div className={`title ${active3 ? '':'active'}`} onClick={(e)=>toggleExpanded(e,"3")}>Tasks</div>
                 <div className={`expandable-content  projectlist  ${expanded3 ? 'expanded' : 'collapsed'}`}>
-                    {WeekTasks.map(tasks=>(<div className={`content`} key={tasks.title}>{tasks.title}</div>))}
+                    {taskstitle.map(title=>(<div className={`content`} key={title}>{title}</div>))}
                 </div>
                 <div className={`title ${active4 ? '':'active'}`} onClick={(e)=>toggleExpanded(e,"4")}>Tag</div>
                 <div className={`expandable-content  taglist  ${expanded4 ? 'expanded' : 'collapsed'}`}>
-                    {WeekTasks.map(tasks=>(<div className={`content`} key={tasks.title}>{tasks.tag}</div>))}
+                    {Array.from(tags).map(tag=>(<div className={`content`} key={tag}>{tag}</div>))}
                 </div>
                 </>);
             case '/':
@@ -96,11 +96,12 @@ function Seconddir(){
                     </div>
                     <div className={`title ${active3 ? '':'active'}`} onClick={(e)=>toggleExpanded(e,"3")}>Tasks</div>
                     <div className={`expandable-content  projectlist  ${expanded3 ? 'expanded' : 'collapsed'}`}>
-                        {Tasks.map(tasks=>(<div className={`content`} key={tasks.title}>{tasks.title}</div>))}
+                        {/* {Tasks.map(tasks=>(<div className={`content`} key={tasks.title}>{tasks.title}</div>))} */}
+                        {taskstitle.map(title=>(<div className={`content`} key={title}>{title}</div>))}
                     </div>
                     <div className={`title ${active4 ? '':'active'}`} onClick={(e)=>toggleExpanded(e,"4")}>Tag</div>
                     <div className={`expandable-content  taglist  ${expanded4 ? 'expanded' : 'collapsed'}`}>
-                        {Tag.map(tag=>(<div className={`content`} key={tag.name}>{tag.name}</div>))}
+                        {Array.from(tags).map(tag=>(<div className={`content`} key={tag}>{tag}</div>))}
                     </div>
                     </>);
               case '/day':

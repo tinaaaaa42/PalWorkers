@@ -265,17 +265,18 @@
 .Kanban .detail,.Projectdetail .detail{
     display: flex;
 }
-.Kanban .tag,.Projectdetail .tag{
+.Kanban .tags,.Projectdetail .tag{
     margin-top: 8px;
     margin-bottom: 30px;
     display: flex;
 
 }
-.Kanban .tag div,.Projectdetail .tag div{
-    width: 35px;
-    /* border: #1b1d22 solid 1px; */
+.Kanban .tags div,.Projectdetail .tag div{
+    width: 50px;
+    height: 27px;
     border-radius: 11px;
     background-color: rgba(255, 192, 203, 0.427);
+    margin-left: 2px;
 }
 .Kanban .title .delete,.Projectdetail .title .delete{
     width: 40px;
@@ -287,6 +288,7 @@
     border-radius: 11px;
     background-color: rgb(250, 250, 206);
     padding: 2px 3px;
+    width: 118px;
 
 }
 .Kanban .comment,.Projectdetail .comment{
@@ -415,6 +417,9 @@
 .Weekcard .title{
     font-size: 25px;
     padding-left: 10px;
+}
+.Weekcard .tags{
+    display: flex;
 }
 .Weekcard .tag{
     font-size: 18px;

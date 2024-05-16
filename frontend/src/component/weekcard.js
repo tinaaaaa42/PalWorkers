@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ModalContext from '../context/ModalContext';
 import {useContext } from 'react';
 function Weekcard(props){
-    const {id,title,tag}=props;
+    const {id,title,tags}=props;
     const [isDel, setIsDel] = useState(false);
     const { openModal ,isModalOpen} = useContext(ModalContext);
     const handleClick = (event) => {
@@ -18,7 +18,8 @@ function Weekcard(props){
                     <div className="title">{title}</div>
                     <div className="delete iconfont icon-lajixiang" onClick={handleClick}></div>
                 </div>
-                <div className="tag">{tag}</div>
+                {/* <div className="tag">{}</div> */}
+                <div className='tags'>{tags.map(tag => (<div className="tag">{tag}</div>))}</div>
             </div>
         </div>
         

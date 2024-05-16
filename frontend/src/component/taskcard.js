@@ -2,7 +2,7 @@ import ModalContext from '../context/ModalContext';
 import React, { useState,useContext } from 'react';
 import { Projects} from "../Data/data";
 function Taskcard(props){
-    const { id,title, tag, date ,projectid=null} = props;
+    const { id,title, tags, date ,projectid=null} = props;
     const { openModal ,isModalOpen} = useContext(ModalContext);
     return (
     <div className="Taskcard" onClick={()=>openModal(id,"kanban","detail",projectid)}>
@@ -13,10 +13,11 @@ function Taskcard(props){
                     <div>{title}</div>
                     <a href=""><div className="delete iconfont icon-lajixiang"></div></a>
                 </div>
-                <div className="tag"><div>{tag}</div></div>
+                <div className="tags">{tags.length === 0 ? (<div></div>) : (tags.map(tag => (<div key={tag}>{tag}</div>)))}</div>
+                {/* <div className="tags">{tags.length === 0 ? (<i style={{height:'27px'}}></i>) : (tags.map(tag => (<div key={tag}>{tag}</div>)))}</div> */}
                 <div className="detail">
                     <div className="Date">
-                        {date}
+                        {date===null?<></>:date}
                     </div>
                     <div className="comment">
                         <div className="iconfont icon-pinglun"></div>

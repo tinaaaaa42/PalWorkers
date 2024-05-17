@@ -1,45 +1,60 @@
-import {CurUser} from "../Data/data.js"
-import "../iconfont2/iconfont.css"
 import React, { useState } from "react";
-function Header(){
-    const today = new Date();
-    
-    // 获取年、月、日
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1; // 注意月份是从 0 开始计数的，所以要加 1
-    const day = today.getDate();
+import { Modal, Calendar } from 'antd';
+import { CurUser } from "../Data/data.js";
+import "../iconfont2/iconfont.css";
 
-    // 将日期格式化为字符串
+function Header() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
     const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+    
     const [quote, setQuote] = useState("");
     const [welcomeMessage, setWelcomeMessage] = useState(`Welcome back, ${CurUser.username}`);
+    const [isCalendarVisible, setIsCalendarVisible] = useState(false);  // 控制日历弹窗的状态
 
     const handleQuoteChange = () => {
         const quotes = [
             "All we have is now.",
             "Go big or go home.",
             "Live and learn.",
-            "Conguer from within." ,
+            "Conquer from within.",
             "The best is yet to come."
         ];
         const randomIndex = Math.floor(Math.random() * quotes.length);
         setQuote(quotes[randomIndex]);
     };
 
-    const handleWelcomeMessageChange = () => {
-        handleQuoteChange();
+    const toggleCalendar = () => {
+        setIsCalendarVisible(!isCalendarVisible);  // 切换日历的显示状态
     };
+
     return (
         <div className="Header">
-            <div className="welcome" >{quote ? quote : welcomeMessage}
-            <img className="jizhang" onClick={handleQuoteChange} src={process.env.PUBLIC_URL + "/击掌.png"}></img>
+            <div className="welcome">
+                {quote ? quote : welcomeMessage}
+                <img className="jizhang" onClick={handleQuoteChange} src={process.env.PUBLIC_URL + "/击掌.png"} alt=""></img>
             </div>
             <div className="search logo iconfont icon-sousuo"></div>
             <div className="tixing logo iconfont icon-xiaoxitixing-youtixing1"></div>
-            <div className="rili logo iconfont icon-rili"></div>
+            <div className="rili logo iconfont icon-rili" onClick={toggleCalendar}></div>
             <div className="time">{formattedDate}</div>
-            <div className="userlogo"><img src={process.env.PUBLIC_URL + '/'+CurUser.profilelogo}  alt="" ></img></div>
+            <div className="userlogo">
+                <img src={process.env.PUBLIC_URL + '/' + CurUser.profilelogo} alt=""></img>
+            </div>
+
+            <Modal
+                title="选择日期"
+                visible={isCalendarVisible}
+                onCancel={toggleCalendar}
+                onOk={toggleCalendar}
+                footer={null}
+            >
+                <Calendar fullscreen={false} />
+            </Modal>
         </div>
     );
 }
+
 export default Header;

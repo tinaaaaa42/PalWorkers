@@ -3,6 +3,7 @@ import Kanbanpage from './Page/Kanbanpage';
 import Projectpage from './Page/Projectpage';
 import Weekpage from './Page/Weekpage';
 import Daypage from './Page/Daypage';
+import Profilepage from './Page/Profilepage';
 const router=createBrowserRouter([
     {
         path:'/',
@@ -19,6 +20,9 @@ const router=createBrowserRouter([
     {
         path:'/day',
         element:<Daypage></Daypage>
+    },{
+        path:'/profile',
+        element:<Profilepage></Profilepage>
     }
 ])
 export default router;

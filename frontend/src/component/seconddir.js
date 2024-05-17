@@ -49,6 +49,8 @@ function Seconddir({tags,taskstitle}){
             return <h1 className='day'>Day</h1>;
         case '/':
             return <h1 className='kanban'>Kanban</h1>;
+        case '/profile':
+            return <h1 className='profile'>Profile</h1>    
         default:
             return <h1>Page Not Found</h1>;
         }
@@ -104,7 +106,7 @@ function Seconddir({tags,taskstitle}){
                         {Array.from(tags).map(tag=>(<div className={`content`} key={tag}>{tag}</div>))}
                     </div>
                     </>);
-              case '/day':
+            case '/day':
                   return (<>
                     <div className={`title ${active3 ? '':'active'}`} onClick={(e)=>toggleExpanded(e,"3")}>Tasks</div>
                    <div className={`expandable-content  projectlist  ${expanded3 ? 'expanded' : 'collapsed'}`}>
@@ -115,6 +117,8 @@ function Seconddir({tags,taskstitle}){
                                     {DayTasks.map(tasks=>(<div className={`content`} key={tasks.title}>{tasks.tag}</div>))}
                           </div>
                             </>);
+            case '/profile':
+                return(<></>);    
             default:
                 return <h1>Page Not Found</h1>;
             }

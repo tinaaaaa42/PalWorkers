@@ -126,7 +126,7 @@
 .Seconddir .collapsed{
     max-height: 0;
 }
-.Seconddir .kanban,.Seconddir .week,.Seconddir .project,.Seconddir .day{
+.Seconddir .kanban,.Seconddir .week,.Seconddir .project,.Seconddir .day,.Seconddir .profile{
     padding-left: 16px;
 }
 .Seconddir .title{

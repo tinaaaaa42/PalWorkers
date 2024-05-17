@@ -265,13 +265,13 @@
 .Kanban .detail,.Projectdetail .detail{
     display: flex;
 }
-.Kanban .tags,.Projectdetail .tag{
+.Kanban .tags,.Projectdetail .tags{
     margin-top: 8px;
     margin-bottom: 30px;
     display: flex;
 
 }
-.Kanban .tags div,.Projectdetail .tag div{
+.Kanban .tags div,.Projectdetail .tags div{
     width: 50px;
     height: 27px;
     border-radius: 11px;

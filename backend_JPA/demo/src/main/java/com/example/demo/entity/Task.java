@@ -54,4 +54,7 @@ public class Task {
     @OneToMany(mappedBy = "task",cascade = CascadeType.ALL , orphanRemoval = true)
     private Set<WeeklyTask> weeklyTasks = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "task",cascade = CascadeType.ALL , orphanRemoval = true)
+    private Set<DailyTask> dailyTasks = new LinkedHashSet<>();
+
 }

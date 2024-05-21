@@ -39,15 +39,22 @@ INSERT INTO task_tags (task_id, tag_id) VALUES
                                             (6, 10),
                                             (6, 1);
 
+
+-- 生成每日任务的task_id
+SET @daily_task_id = 1;
+
+INSERT INTO daily_tasks (task_id) VALUES
+                                                          (@daily_task_id + 0),
+                                                          (@daily_task_id + 1);
+
+
 -- 生成每周任务的task_id
-SET @weekly_task_id = 1;
+SET @weekly_task_id = 3;
 
 INSERT INTO weekly_tasks (task_id, urgent, important) VALUES
                                                           (@weekly_task_id + 0, 1, 1),
                                                           (@weekly_task_id + 1, 0, 1),
-                                                          (@weekly_task_id + 2, 1, 0),
-                                                          (@weekly_task_id + 3, 0, 0),
-                                                          (@weekly_task_id + 4, 1, 1);
+                                                          (@weekly_task_id + 2, 1, 0);
 
 -- 生成看板任务的task_id
 SET @kanban_task_id = 6;

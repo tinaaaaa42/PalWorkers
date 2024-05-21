@@ -49,4 +49,10 @@ CREATE TABLE weekly_tasks (
                               urgent BOOLEAN NOT NULL,
                               important BOOLEAN NOT NULL,
                               FOREIGN KEY (task_id) REFERENCES tasks(task_id)
+);
+
+CREATE TABLE daily_tasks (
+                              daily_id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                              task_id BIGINT,
+                              FOREIGN KEY (task_id) REFERENCES tasks(task_id)
 )

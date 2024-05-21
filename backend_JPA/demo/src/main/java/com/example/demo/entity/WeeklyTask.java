@@ -22,6 +22,7 @@ public class WeeklyTask {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")
+    @JsonIgnoreProperties("weeklyTasks")
     private Task task;
 
     @Column(name = "urgent", nullable = false)

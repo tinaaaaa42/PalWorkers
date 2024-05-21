@@ -3,12 +3,12 @@ import React, { useState,useContext } from 'react';
 import { Projects} from "../Data/data";
 import { useLocation, useNavigate } from 'react-router-dom';
 function Taskcard(props){
-    const { id,title, tags, tag,date ,projectid=null} = props;
+    const { id,title, tags, tag,date ,projectid=null,task} = props;
     const { openModal ,isModalOpen} = useContext(ModalContext);
     const location = useLocation();
     if(location.pathname.startsWith('/project')){
         return (
-            <div className="Taskcard" onClick={()=>openModal(id,"kanban","detail",projectid)}>
+            <div className="Taskcard" onClick={()=>openModal()}>
                 <div class="card" >
                     <div className="colorbar" style={{color:`blue`}}></div>
                     <div>
@@ -36,14 +36,14 @@ function Taskcard(props){
             <div className="colorbar" style={{color:`blue`}}></div>
             <div>
                 <div className="title">
-                    <div>{title}</div>
+                    <div>{task.title}</div>
                     <a href=""><div className="delete iconfont icon-lajixiang"></div></a>
                 </div>
-                <div className="tags">{tags.length === 0 ? (<div></div>) : (tags.map(tag => (<div key={tag}>{tag}</div>)))}</div>
+                {/* <div className="tags">{task.taskTags.length === 0 ? (<div></div>) : (task.taskTags.map(tag => (<div key={tag}>{tag}</div>)))}</div> */}
                 {/* <div className="tags">{tags.length === 0 ? (<i style={{height:'27px'}}></i>) : (tags.map(tag => (<div key={tag}>{tag}</div>)))}</div> */}
                 <div className="detail">
                     <div className="Date">
-                        {date===null?<></>:date}
+                        {task.date===null?<></>:task.date}
                     </div>
                     <div className="comment">
                         <div className="iconfont icon-pinglun"></div>

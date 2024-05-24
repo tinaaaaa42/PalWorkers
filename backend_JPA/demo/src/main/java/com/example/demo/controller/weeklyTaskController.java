@@ -3,8 +3,10 @@ package com.example.demo.controller;
 
 import com.example.demo.DTO.KanbanTaskDto;
 import com.example.demo.DTO.WeeklyTaskDto;
+import com.example.demo.entity.User;
 import com.example.demo.entity.WeeklyTask;
 import com.example.demo.service.weeklyTaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,13 +19,23 @@ public class weeklyTaskController {
     private weeklyTaskService weeklyService;
 
     @GetMapping(value = "api/tasks/weekly")
-    public List<WeeklyTask> getAllWeeklyTask() {
-        return weeklyService.findAll();
+    public List<WeeklyTask> getAllWeeklyTask(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return weeklyService.findAll(userId);
     }
 
     @PostMapping(value = "/api/tasks/weekly")
-    public WeeklyTask addWeeklyTask(@RequestBody WeeklyTaskDto weeklyTaskDto) {
-        return weeklyService.addWeeklyTask(weeklyTaskDto);
+    public WeeklyTask addWeeklyTask(@RequestBody WeeklyTaskDto weeklyTaskDto, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return weeklyService.addWeeklyTask(weeklyTaskDto, user);
     }
 
 }

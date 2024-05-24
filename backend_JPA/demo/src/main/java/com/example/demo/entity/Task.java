@@ -20,6 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "tasks")
 public class Task {
     @Id
@@ -44,17 +45,22 @@ public class Task {
     @Column(name = "type", nullable = false)
     private String type;
 
-    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY, cascade = CascadeType.ALL , orphanRemoval = true)
-    private Set<KanbanTask> kanbanTasks = new LinkedHashSet<>();
+//    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY, cascade = CascadeType.ALL , orphanRemoval = true)
+//    private Set<KanbanTask> kanbanTasks = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "task")
     @JsonIgnoreProperties("task")
     private Set<TaskTag> taskTags = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "task",cascade = CascadeType.ALL , orphanRemoval = true)
-    private Set<WeeklyTask> weeklyTasks = new LinkedHashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private User user;
 
-    @OneToMany(mappedBy = "task",cascade = CascadeType.ALL , orphanRemoval = true)
-    private Set<DailyTask> dailyTasks = new LinkedHashSet<>();
+//    @OneToMany(mappedBy = "task",cascade = CascadeType.ALL , orphanRemoval = true)
+//    private Set<WeeklyTask> weeklyTasks = new LinkedHashSet<>();
+
+//    @OneToMany(mappedBy = "task",cascade = CascadeType.ALL , orphanRemoval = true)
+//    private Set<DailyTask> dailyTasks = new LinkedHashSet<>();
 
 }

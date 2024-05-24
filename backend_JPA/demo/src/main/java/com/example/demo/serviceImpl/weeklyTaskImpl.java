@@ -1,10 +1,7 @@
 package com.example.demo.serviceImpl;
 
 import com.example.demo.DTO.WeeklyTaskDto;
-import com.example.demo.entity.Tag;
-import com.example.demo.entity.Task;
-import com.example.demo.entity.TaskTag;
-import com.example.demo.entity.WeeklyTask;
+import com.example.demo.entity.*;
 import com.example.demo.repository.TagRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.TaskTagRepository;
@@ -28,34 +25,30 @@ public class weeklyTaskImpl implements weeklyTaskService {
     private WeeklyTaskRepository weeklyTaskRepository;
 
     @Autowired
-    private TaskRepository taskRepository;
-
-    @Autowired
     private TagRepository tagRepository;
+
     @Autowired
     private TaskTagRepository taskTagRepository;
 
-    public List<WeeklyTask> findAll() {
-        return weeklyTaskRepository.findAll();
+    public List<WeeklyTask> findAll(long userId) {
+        return weeklyTaskRepository.findAllByUserId(userId);
     }
 
-    public WeeklyTask addWeeklyTask(WeeklyTaskDto weeklyTaskDto) {
+    public WeeklyTask addWeeklyTask(WeeklyTaskDto weeklyTaskDto, User user) {
+        System.out.println(weeklyTaskDto);
         WeeklyTask weeklyTask = new WeeklyTask();
         weeklyTask.setImportant(weeklyTaskDto.getImportant());
         weeklyTask.setUrgent(weeklyTaskDto.getUrgent());
+        weeklyTask.setUser(user);
 
         // Assuming TaskDto contains the necessary information for a Task entity
-        Task task = new Task();
-        task.setDescription(weeklyTaskDto.getTask().getDescription());
-        task.setCreateDate(LocalDate.parse(weeklyTaskDto.getTask().getCreateDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        task.setDueDate(LocalDate.parse(weeklyTaskDto.getTask().getDueDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        task.setTitle(weeklyTaskDto.getTask().getTitle());
-        task.setType(weeklyTaskDto.getTask().getType());
+        weeklyTask.setDescription(weeklyTaskDto.getTask().getDescription());
+        weeklyTask.setCreateDate(LocalDate.parse(weeklyTaskDto.getTask().getCreateDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        weeklyTask.setDueDate(LocalDate.parse(weeklyTaskDto.getTask().getDueDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        weeklyTask.setTitle(weeklyTaskDto.getTask().getTitle());
+        weeklyTask.setType(weeklyTaskDto.getTask().getType());
 
-
-        // Save the task
-        taskRepository.save(task);
-
+        weeklyTaskRepository.save(weeklyTask);
         List<String> tags = weeklyTaskDto.getTask().getTags();
         Set<TaskTag> taskTags = new HashSet<>();
         for (int i = 0; i < tags.size(); i++) {
@@ -67,17 +60,13 @@ public class weeklyTaskImpl implements weeklyTaskService {
                 tagRepository.save(tag);
             }
             TaskTag taskTag = new TaskTag();
-            taskTag.setTask(task);
+            taskTag.setTask(weeklyTask);
             taskTag.setTag(tag);
             taskTagRepository.save(taskTag);
             taskTags.add(taskTag);
         }
-        task.setTaskTags(taskTags);
+        weeklyTask.setTaskTags(taskTags);
 
-        // Associate the task with the weeklyTask
-        weeklyTask.setTask(task);
-
-        // Save the weeklyTask
         return weeklyTaskRepository.save(weeklyTask);
     }
 }

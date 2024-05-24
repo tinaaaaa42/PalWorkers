@@ -15,16 +15,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Table(name = "kanban_tasks")
-public class KanbanTask {
+public class KanbanTask extends Task{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "kanban_id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "task_id", nullable = false)
-    @JsonIgnoreProperties("kanbanTasks")
-    private Task task;
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "task_id", nullable = false)
+//    @JsonIgnoreProperties("kanbanTasks")
+//    private Task task;
 
     @Column(name = "state", nullable = false)
     private String state;

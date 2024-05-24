@@ -14,16 +14,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Table(name = "weekly_tasks")
-public class WeeklyTask {
+public class WeeklyTask extends Task{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "weekly_id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "task_id")
-    @JsonIgnoreProperties("weeklyTasks")
-    private Task task;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "task_id")
+//    @JsonIgnoreProperties("weeklyTasks")
+//    private Task task;
 
     @Column(name = "urgent", nullable = false)
     private Boolean urgent = false;

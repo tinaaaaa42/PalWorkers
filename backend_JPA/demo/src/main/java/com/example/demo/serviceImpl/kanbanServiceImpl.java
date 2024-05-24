@@ -28,9 +28,6 @@ public class kanbanServiceImpl implements kanbanTaskService {
     private KanbanTaskRepository kanbanTaskRepository;
 
     @Autowired
-    private TaskRepository taskRepository;
-
-    @Autowired
     private TagRepository tagRepository;
 
     @Autowired
@@ -40,21 +37,19 @@ public class kanbanServiceImpl implements kanbanTaskService {
         return kanbanTaskRepository.findAll();
     }
 
-    public void addKanbanTask(KanbanTaskDto kanbanTaskDto) {
+    public KanbanTask addKanbanTask(KanbanTaskDto kanbanTaskDto) {
         KanbanTask kanbanTask = new KanbanTask();
         kanbanTask.setState(kanbanTaskDto.getState());
 
         // 创建 Task 实例，但不一定需要立即保存
-        Task task = new Task();
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        task.setDescription(kanbanTaskDto.getTask().getDescription());
-        task.setCreateDate(LocalDate.parse(kanbanTaskDto.getTask().getCreateDate(), formatter)); // 这里解析 create_date
-        task.setDueDate(LocalDate.parse(kanbanTaskDto.getTask().getDueDate(),formatter));
-        task.setTitle(kanbanTaskDto.getTask().getTitle());
-        task.setType(kanbanTaskDto.getTask().getType());
+        kanbanTask.setDescription(kanbanTaskDto.getTask().getDescription());
+        kanbanTask.setCreateDate(LocalDate.parse(kanbanTaskDto.getTask().getCreateDate(), formatter)); // 这里解析 create_date
+        kanbanTask.setDueDate(LocalDate.parse(kanbanTaskDto.getTask().getDueDate(),formatter));
+        kanbanTask.setTitle(kanbanTaskDto.getTask().getTitle());
+        kanbanTask.setType(kanbanTaskDto.getTask().getType());
 
-        taskRepository.save(task);
+        kanbanTaskRepository.save(kanbanTask);
 
         List<String> tags = kanbanTaskDto.getTask().getTags();
         Set<TaskTag> taskTags = new HashSet<>();
@@ -67,16 +62,14 @@ public class kanbanServiceImpl implements kanbanTaskService {
                 tagRepository.save(tag);
             }
             TaskTag taskTag = new TaskTag();
-            taskTag.setTask(task);
+            taskTag.setTask(kanbanTask);
             taskTag.setTag(tag);
             taskTagRepository.save(taskTag);
             taskTags.add(taskTag);
         }
-        task.setTaskTags(taskTags);
+        kanbanTask.setTaskTags(taskTags);
 
-        taskRepository.save(task);
-        kanbanTask.setTask(task);
-        kanbanTaskRepository.save(kanbanTask);
+        return kanbanTaskRepository.save(kanbanTask);
     }
 
 }

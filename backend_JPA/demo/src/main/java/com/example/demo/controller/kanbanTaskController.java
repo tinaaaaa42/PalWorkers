@@ -24,8 +24,8 @@ public class kanbanTaskController {
     }
 
     @PostMapping(value = "/api/tasks/kanban")
-    public void addKanbanTask(@RequestBody KanbanTaskDto kanbanTaskDto) {
-        kanbantaskService.addKanbanTask(kanbanTaskDto);
+    public KanbanTask addKanbanTask(@RequestBody KanbanTaskDto kanbanTaskDto) {
+        return kanbantaskService.addKanbanTask(kanbanTaskDto);
     }
 
 

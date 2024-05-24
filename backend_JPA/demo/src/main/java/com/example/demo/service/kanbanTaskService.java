@@ -9,5 +9,5 @@ import java.util.List;
 public interface kanbanTaskService {
     List<KanbanTask> findAll();
 
-    void addKanbanTask(KanbanTaskDto kanbanTaskDto);
+    KanbanTask addKanbanTask(KanbanTaskDto kanbanTaskDto);
 }

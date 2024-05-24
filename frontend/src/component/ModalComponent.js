@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { DayTasks,Tasks,WeekTasks,Projects} from "../Data/data";
+import {createTask} from "../service/write"
 const ModalComponent = () => {
   const { isModalOpen, closeModal ,type,key,message,importance,urgency,progress,projectid} = useContext(ModalContext);
 
@@ -25,28 +26,29 @@ const ModalComponent = () => {
       type:type,
       time: new Date(),
       tag:'',
-      assignee: '',
-      assigneeOptions: 'User1',
+      assigneeOptions:['User1','User2'],
       image: null,
       notes: '',
       files: [],
       note:[],
       choosepro:['todo','inprogress','review','done'],
-      chooseimpo:'',
-      chooseurg:'',
+      chooseimpo:['important','unimportant'],
+      chooseurg:['urgent','not urgent'],
 
     });
+      const handleSave = async (e) => {
+          e.preventDefault();
+          try {
+            const response = await createTask(state);
+            console.log('任务创建成功:', response);
 
-     const handleEditClick = (event) => {
-        // 使用事件目标的 value 属性更新 taskName 状态
-        console.log("change")
-        const newTaskName =event.target.value
-        setState(prevState => ({
-                  ...prevState,
-                  taskName: event.target.value,
-                }));
+          } catch (error) {
+            console.error('创建任务失败:', error);
+          }
+               closeModal();
+        };
 
-      };
+
        const handleInputChange = (event) => {
           const target = event.target;
           const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -279,7 +281,12 @@ React.useEffect(() => {
                   <div className="label">
                   <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>
                     <label className='Userlabel'>
-                      <div className='asstitle'>Assignee:</div><div className='User'>user1</div>
+                      <div className='asstitle'>Assignee: </div>
+                      <select name=" assigneeOptions" className='Progressselect'  value={state.assignee} onChange={handleAssigneeChange}>
+                          {state.assigneeOptions.map((option) => (
+                             <option key={option} value={option}>{option}</option>
+                            ))}
+                      </select>
                     </label>
                   </div>
 
@@ -309,7 +316,7 @@ React.useEffect(() => {
                       </div>
                   </div>
                   <div className="label">
-                    <button className="detail save">Save</button>
+                    <button className="detail save" onClick={handleSave}>Save</button>
                     <button className="detail cancle" onClick={closeModal}>Cancel</button>
                   </div>
                   </div>

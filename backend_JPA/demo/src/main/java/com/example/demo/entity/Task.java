@@ -9,8 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -67,5 +69,12 @@ public class Task {
 
     @OneToMany(mappedBy = "task")
     private Set<TeamTasksLeader> teamTasksLeaders = new LinkedHashSet<>();
+
+    @ColumnDefault("0")
+    @Column(name = "expired", nullable = false)
+    private Boolean expired;
+
+    @Column(name = "due_time")
+    private LocalTime dueTime;
 
 }

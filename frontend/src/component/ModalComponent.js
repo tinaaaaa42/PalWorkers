@@ -8,12 +8,7 @@ import { DayTasks,Tasks,WeekTasks,Projects} from "../Data/data";
 import {createTask} from "../service/write"
 const ModalComponent = () => {
   const { isModalOpen, closeModal ,type,message,task} = useContext(ModalContext);
-const messageToStatusMap = {
-  1: { important: 'true', urgent: 'true' },
-  2: { important: 'false', urgent: 'true' },
-  3: { important: 'true', urgent: 'false' },
-  4: { important: 'false', urgent: 'false' }
-};
+
 
 
   const getCurrentDateTime = () => {
@@ -26,7 +21,7 @@ const messageToStatusMap = {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
   const [state, setState] = React.useState({
-      tsakName: '',
+      taskName: '',
       description: '',
       type:type,
       startTime: new Date(),
@@ -40,26 +35,33 @@ const messageToStatusMap = {
       team:'',
       teamTasksAnticipaters:[],
       teamTasksLeaders:[],
-
+      important:true,
+      urgent:false
     });
-    const { important, urgent } = messageToStatusMap[state.message] || { important: 'false', urgent: 'false' };
+//传回日期格式
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+        }
 
         const convertStateToBackendFormat = () => {
             // 构造新的 JSON 对象
             const backendData = {
               task: {
+              id:task.id||null,
                 title: state.taskName,
                 description: state.description,
-                createDate: state.startTime,
-                dueDate: state.dueTime,
+                createDate: formatDate(state.startTime),
+                dueDate: formatDate(state.dueTime),
                 type: state.type,
-                tags: state.tag,
-                expired: false
+                tags: [],
               },
-              important: important,
-              urgent: urgent
+              important: "true",
+              urgent: "true"
             };
-
+            console.log(backendData)
             return backendData;
           };
 
@@ -67,7 +69,7 @@ const messageToStatusMap = {
                  const dataToSend = convertStateToBackendFormat();
                     e.preventDefault();
                     try {
-                      const response = await createTask(state);
+                      const response = await createTask(dataToSend);
                       console.log('任务创建成功:', response);
 
                     } catch (error) {
@@ -161,6 +163,7 @@ React.useEffect(() => {
       if(!task) {
              setState(prevState => ({
                ...prevState,
+               type:"daily",
                taskName: '',
              }));
              break;
@@ -174,7 +177,8 @@ React.useEffect(() => {
           tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
           startTime:task.createDate||'',
           dueTime: task.dueDate || '',
-          description:task.description
+          description:task.description,
+          type:"daily"
         }));
         if(task.team!=null){
         setState(prevState => ({
@@ -192,6 +196,7 @@ React.useEffect(() => {
                    setState(prevState => ({
                      ...prevState,
                      taskName: '',
+                     type:"weekly"
 
 
                    }));
@@ -201,6 +206,7 @@ React.useEffect(() => {
 
               setState(prevState => ({
                 ...prevState,
+                type:"weekly",
                 choosepro:task.state,
                 taskName: task.title||'',
                 tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',

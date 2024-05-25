@@ -10,6 +10,7 @@ import java.util.List;
  */
 @Value
 public class TaskDto implements Serializable {
+    int task_id;
     String title;
     String description;
     String createDate;

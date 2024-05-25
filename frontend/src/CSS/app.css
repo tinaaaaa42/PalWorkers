@@ -375,8 +375,8 @@
 }
 
 .Weekcard {
-    height: 70px;
-    width: 180px;
+    height: 100px;
+    width: 220px;
     box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -395,12 +395,18 @@
 }
 .Weekcard .colorbar{
     width: 10px;
-    height: 70px;
+    height: 100px;
     background-color: rgba(0, 110, 255, 0.642);
 }
+.Weekcard .team{
+    font-size: 22px;
+    padding-left: 10px;
+    color: rgb(107, 103, 103);
+    margin-bottom: 3px;
+}
 .Weekcard .detail{
-    width: 170px;
-    height: 70px;
+    width: 200px;
+    height: 100px;
 }
 .Weekcard .line{
     display: flex;

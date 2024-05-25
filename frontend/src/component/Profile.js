@@ -95,16 +95,15 @@ function UserProfile() {
               <Avatar size={80} src={process.env.PUBLIC_URL + '/' + CurUser.profilelogo} />
               <Title level={4} style={{ marginTop: '20px' }}>{CurUser.username}</Title>
               <Menu
-                defaultSelectedKeys={['1']}
+                defaultSelectedKeys={['activity']}
                 mode="inline"
                 style={{ width: '100%' }}
                 onClick={({ key }) => setSelectedMenu(key)}
               >
                 <Menu.Item key="activity" icon={<BarChartOutlined />} style={{ height: '60px', lineHeight: '60px' }}>活动</Menu.Item>
-                <Menu.Item key="1" icon={<MailOutlined />} style={{ height: '60px', lineHeight: '60px' }}>邮箱</Menu.Item>
+                <Menu.Item key="1" icon={<MailOutlined />} style={{ height: '60px', lineHeight: '60px' }}>个人资料</Menu.Item>
                 <Menu.Item key="team" icon={<TeamOutlined />} style={{ height: '60px', lineHeight: '60px' }}>我的团队</Menu.Item>
                 <Menu.Item key="3" icon={<SettingOutlined />} style={{ height: '60px', lineHeight: '60px' }}>设置</Menu.Item>
-                <Menu.Item key="5" icon={<IdcardOutlined />} style={{ height: '60px', lineHeight: '60px' }}>账号</Menu.Item>
                 <Menu.Item key="6" icon={<NotificationOutlined />} style={{ height: '60px', lineHeight: '60px' }}>提醒</Menu.Item>
                 <Menu.Item key="4" icon={<LogoutOutlined />} style={{ height: '60px', lineHeight: '60px' }}>退出登录</Menu.Item>
               </Menu>

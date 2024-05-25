@@ -21,7 +21,7 @@ public class TaskTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pair_id", nullable = false)
     @JsonIgnore
-    private Long id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "task_id", nullable = false)

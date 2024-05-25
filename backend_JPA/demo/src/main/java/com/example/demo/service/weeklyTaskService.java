@@ -7,7 +7,7 @@ import com.example.demo.entity.WeeklyTask;
 import java.util.List;
 
 public interface weeklyTaskService {
-    List<WeeklyTask> findAll(long id);
+    List<WeeklyTask> findAll(int id);
 
     WeeklyTask addWeeklyTask(WeeklyTaskDto weeklyTaskDto, User user);
 }

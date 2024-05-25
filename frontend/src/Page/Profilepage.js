@@ -4,11 +4,14 @@ import Header from "../component/header";
 import Control from "../component/control";
 import React, { useState,useEffect} from 'react';
 import UserProfile from "../component/Profile";
+import Navbar from "../component/Navv";
 function Profilepage(){
+    const allteam=['Team4', 'Team5', 'Team6'];
     return (<>
     <div className="container">
         <Navleft></Navleft>
-        <Seconddir ></Seconddir>
+        {/* <Seconddir ></Seconddir> */}
+        <Navbar tasks={[]} title={"Profile"} allteam={allteam}></Navbar>
         <div className="mainpart">
         <Header></Header>
         <UserProfile></UserProfile>

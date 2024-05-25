@@ -18,7 +18,7 @@ function Weekcard(props){
                     <div className="title">{task.title}</div>
                     <div className="delete iconfont icon-lajixiang" onClick={handleClick}></div>
                 </div>
-                {/* <div className="tag">{}</div> */}
+                <div className='team'>team</div>
                 <div className='tags'>{task.taskTags.map(tag => (<div className="tag">{tag.tag.name}</div>))}</div>
             </div>
         </div>

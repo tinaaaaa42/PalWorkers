@@ -8,6 +8,7 @@
  import {useEffect, useState} from "react";
  import {get_weekly_task} from "../service/weekly_task";
  import {get_daily_task} from "../service/daily_task";
+import Navbar from "../component/Navv";
 
  function App() {
      const [dailyTasks, setDailyTasks] = useState([])
@@ -25,7 +26,8 @@
      <div className="App">
        <div className="container">
          <Navleft></Navleft>
-         <Seconddir></Seconddir>
+         {/* <Seconddir></Seconddir> */}
+         <Navbar tasks={dailyTasks} title={"Day"}></Navbar>
          <div className="mainpart">
          <Header></Header>
 

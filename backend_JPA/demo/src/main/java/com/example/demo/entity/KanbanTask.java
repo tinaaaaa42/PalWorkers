@@ -19,7 +19,7 @@ public class KanbanTask extends Task{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "kanban_id", nullable = false)
-    private Long id;
+    private int id;
 
 //    @ManyToOne(fetch = FetchType.LAZY, optional = false)
 //    @JoinColumn(name = "task_id", nullable = false)

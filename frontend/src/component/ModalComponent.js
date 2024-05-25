@@ -7,7 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import { DayTasks,Tasks,WeekTasks,Projects} from "../Data/data";
 import {createTask} from "../service/write"
 const ModalComponent = () => {
-  const { isModalOpen, closeModal ,type,key,message,importance,urgency,progress,projectid,tasks} = useContext(ModalContext);
+  const { isModalOpen, closeModal ,type,key,message,progress,projectid,task} = useContext(ModalContext);
 
 
 
@@ -24,15 +24,20 @@ const ModalComponent = () => {
       title: '',
       description: '',
       type:type,
-      time: new Date(),
+      startTime: new Date(),
+      dueTime: new Date(),
       tag:[],
       assigneeOptions:['User1','User2'],
       notes: '',
       files: [],
       note:[],
-      choosepro:['todo','inprogress','review','done'],
+      choosepro:'',
       chooseimpo:['important','unimportant'],
       chooseurg:['urgent','not urgent'],
+      team:'',
+      teamTasksAnticipaters:[],
+      teamTasksLeaders:[]
+
 
     });
       const handleSave = async (e) => {
@@ -69,12 +74,18 @@ const ModalComponent = () => {
                   });
                 };
 
-  const handleDateChange = (date) => {
+  const handledueDateChange = (date) => {
     setState({
       ...state,
-      time: date
+      dueTime: date
     });
   };
+   const handlestartDateChange = (date) => {
+      setState({
+        ...state,
+        startTime: date
+      });
+    };
 
   const handleLabelChange = (event) => {
     setState({
@@ -118,7 +129,6 @@ const ModalComponent = () => {
 //      console.log(type);
 //    });
 React.useEffect(() => {
-    // 根据 keyToFind 的值初始化 taskNam
     switch(type){
 
       case "day":{
@@ -131,83 +141,110 @@ React.useEffect(() => {
              break;
              }
 
-      const task = DayTasks.find(task => task.key === key);
-      if (task) {
+
         setState(prevState => ({
           ...prevState,
-          taskName: task.title,
-          tag:task.tag,
-          time:task.date,
+          choosepro:task.state,
+          taskName: task.title||'',
+          tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
+          startTime:task.createDate||'',
+          dueTime: task.dueDate || '',
           description:task.description
         }));
-        if(task.note!=null){
+        if(task.team!=null){
         setState(prevState => ({
               ...prevState,
-              note: task.note,
+              team: task.team.name,
+              teamTasksAnticipaters:task.teamTasksAnticipaters,
+              teamTasksLeaders:task.teamTasksLeaders
+
 
            }));}
-      }break;
+      break;
       }
       case "week":{
-       if(type=== 'new') {
-                   setState(prevState => ({
-                     ...prevState,
-                     taskName: '',
-                   }));
-                   break;
-                   }
-       const task = WeekTasks.find(task => task.id === key);
-            if (task) {
-              setState(prevState => ({
-                ...prevState,
-                taskName: task.title,
-                tag:task.tag,
-                time:task.date
-              }));
-              if(task.note!=null){
-              setState(prevState => ({
-                    ...prevState,
-                    note: task.note,
-
-                 }));}
-            }break;
-            }
-      case "kanban":{
-
        if(message=== 'new') {
                    setState(prevState => ({
                      ...prevState,
                      taskName: '',
-                     progress:''
                    }));
                    break;
                    }
-//         if(isproject){
-//
-//         }
-           let task;
-          if(projectid){
-          const project=Projects.find(project=>project.id==projectid)
-           task=project?.Tasks.find(task=>task.id===key)||null
-          }
-         else {task = Tasks.find(task => task.id === key)||null;}
-            if (task) {
-             console.log("task")
+
+
               setState(prevState => ({
                 ...prevState,
-                taskName: task.title,
-                tag:task.tag,
-                 time:task.date
-
+                choosepro:task.state,
+                taskName: task.title||'',
+                tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
+                startTime:task.createDate||'',
+                dueTime: task.dueDate || '',
+                description:task.description
               }));
-              if(task.note!=null){
+              if(task.team!=null){
               setState(prevState => ({
                     ...prevState,
-                    note: task.note,
+                    team: task.team.name,
+                    teamTasksAnticipaters:task.teamTasksAnticipaters,
+                    teamTasksLeaders:task.teamTasksLeaders
+
 
                  }));}
-            }break;
+            break;
             }
+      case "kanban":{
+ if(message=== 'new') {
+             setState(prevState => ({
+               ...prevState,
+               taskName: '',
+             }));
+             break;
+             }
+
+
+        setState(prevState => ({
+          ...prevState,
+          choosepro:task.state,
+          taskName: task.title||'',
+          tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
+          startTime:task.createDate||'',
+          dueTime: task.dueDate || '',
+          description:task.description
+        }));
+        if(task.team!=null){
+        setState(prevState => ({
+              ...prevState,
+              team: task.team.name,
+              teamTasksAnticipaters:task.teamTasksAnticipaters,
+              teamTasksLeaders:task.teamTasksLeaders
+
+
+           }));}
+      break;
+      }
+//           let task;
+//          if(projectid){
+//          const project=Projects.find(project=>project.id==projectid)
+//           task=project?.Tasks.find(task=>task.id===key)||null
+//          }
+//         else {task = Tasks.find(task => task.id === key)||null;}
+//            if (task) {
+//             console.log("task")
+//              setState(prevState => ({
+//                ...prevState,
+//                taskName: task.title,
+//                tag:task.tag,
+//                 dueTime:task.date
+//
+//              }));
+//              if(task.note!=null){
+//              setState(prevState => ({
+//                    ...prevState,
+//                    note: task.note,
+//
+//                 }));}
+//            }break;
+//            }
     }
   },[])
  const handleFileUpload = (event) => {
@@ -278,6 +315,15 @@ React.useEffect(() => {
                         onChange={handleInputtagChange}/>
                   </div>
                   <div className="label">
+                  <img className='pic' src={process.env.PUBLIC_URL + "/标签.png"}  alt="" ></img>
+                    Team:
+                    <input className='taginfo'
+                        type="text"
+                        name="taskName"
+                        value={state.team}
+                        onChange={handleInputtagChange}/>
+                  </div>
+                  <div className="label">
                   <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>
                     <label className='Userlabel'>
                       <div className='asstitle'>Assignee: </div>
@@ -293,20 +339,36 @@ React.useEffect(() => {
                     <label>
                     <img className='pic' src={process.env.PUBLIC_URL + "/进度.png"}  alt="" ></img>
                       progress:
-                      <select name="assignee" className='Progressselect'  value={state.assignee} onChange={handleAssigneeChange}>
-                        {state.choosepro.map((option) => (
-                          <option key={option} value={option}>{option}</option>
-                        ))}
+                      <select name="assignee" className='Progressselect'  value={state.choosepro} onChange={handleAssigneeChange}>
+                            <option value="todo">Todo</option>
+                            <option value="inprogress">In Progress</option>
+                            <option value="review">Review</option>
+                            <option value="done">Done</option>
                       </select>
                     </label>
+                  </div>
+
+                  <div className="label datelabel">
+                  <img className='pic' src={process.env.PUBLIC_URL + "/日历-内容页.png"}  alt="" ></img>
+                        <div className='Due'>Start:</div>
+                        <div>
+                        <DatePicker className='Date'
+                          selected={state.startTime}
+                          onChange={handlestartDateChange}
+                           dateFormat="yyyy-MM-dd"
+                            style={{
+                             borderRadius: '10px'
+                              }}
+                        />
+                        </div>
                   </div>
                   <div className="label datelabel">
                   <img className='pic' src={process.env.PUBLIC_URL + "/日历-内容页.png"}  alt="" ></img>
                       <div className='Due'>Due:</div>
                       <div>
                       <DatePicker className='Date'
-                        selected={state.time}
-                        onChange={handleDateChange}
+                        selected={state.dueTime}
+                        onChange={handledueDateChange}
                         dateFormat="yyyy-MM-dd"
                         style={{
                             borderRadius: '10px'

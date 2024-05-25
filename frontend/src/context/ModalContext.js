@@ -22,8 +22,8 @@ export const ModalProvider = ({ children }) => {
   const [urgency,setUrgency]=useState(0);
   const [projectid,setProjectid]=useState(null);
   const [progress,setProgress]=useState("todo");
-  const [tasks, setTasks] = useState()
-  const openModal = (theKey,theType,theMessage,theProjectid,theImportance,theUrgency,theProgress,tasks) => {
+  const [task, setTask] = useState()
+  const openModal = (theKey,theType,theMessage,theProjectid,theImportance,theUrgency,theProgress,task) => {
     setIsModalOpen(true);
     setKey(theKey);
     setType(theType);
@@ -32,7 +32,7 @@ export const ModalProvider = ({ children }) => {
     setProgress(theProgress);
     setUrgency(theUrgency);
      setProjectid(theProjectid);
-    setTasks(tasks)
+    setTask(task)
   };
 
   const closeModal = () => {
@@ -50,7 +50,7 @@ export const ModalProvider = ({ children }) => {
       urgency,
       progress,
       projectid,
-    tasks
+    task
   };
 
   return (

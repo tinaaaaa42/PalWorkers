@@ -3,9 +3,8 @@ import 'font-awesome/css/font-awesome.css';
 import { DayTasks} from "../Data/data";
 import ModalContext from '../context/ModalContext';
 const DayTodoCard = ({tasks}) => {
-  const data=DayTasks
-  //   const data=tasks;
-    console.log(tasks)
+//  const data=DayTasks
+     const data=tasks;
    const { openModal ,isModalOpen} = useContext(ModalContext);
 
   return (
@@ -19,7 +18,7 @@ const DayTodoCard = ({tasks}) => {
                 <div className="task-box"  >
                   {item.title}
                   <div className="image">
-                  <button className="edit" onClick={()=>openModal(item.id,"day",'3','3','3','3','3',)} >
+                  <button className="edit" onClick={()=>openModal(item.id,"day",'3','3','3','3','3',item)} >
                   <i className="fa fa-pencil" ></i>
                   </button>
                   <button className="delete-btn" aria-label="删除" onClick={() => console.log('Delete button clicked')}>

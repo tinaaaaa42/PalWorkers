@@ -2,7 +2,7 @@ import { post, PREFIX } from "./common";
 
 export async function createTask(newTaskData) {
     console.log(newTaskData)
-    const url = `${PREFIX}/tasks/kanban`;//地址
+    const url = `${PREFIX}/tasks/daily`;//地址
     try {
         const response = await post(url, newTaskData);
         console.log('任务创建成功:', response);

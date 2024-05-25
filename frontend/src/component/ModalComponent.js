@@ -7,7 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import { DayTasks,Tasks,WeekTasks,Projects} from "../Data/data";
 import {createTask} from "../service/write"
 const ModalComponent = () => {
-  const { isModalOpen, closeModal ,type,key,message,importance,urgency,progress,projectid} = useContext(ModalContext);
+  const { isModalOpen, closeModal ,type,key,message,importance,urgency,progress,projectid,tasks} = useContext(ModalContext);
 
 
 
@@ -21,13 +21,12 @@ const ModalComponent = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
   const [state, setState] = React.useState({
-      taskName: '',
+      title: '',
       description: '',
       type:type,
       time: new Date(),
-      tag:'',
+      tag:[],
       assigneeOptions:['User1','User2'],
-      image: null,
       notes: '',
       files: [],
       note:[],

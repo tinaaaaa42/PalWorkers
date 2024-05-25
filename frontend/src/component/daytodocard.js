@@ -18,7 +18,7 @@ const DayTodoCard = ({tasks}) => {
                 <div className="task-box"  >
                   {item.title}
                   <div className="image">
-                  <button className="edit" onClick={()=>openModal(item.id,"day",'3','3','3','3','3',item)} >
+                  <button className="edit" onClick={()=>openModal("day",item)} >
                   <i className="fa fa-pencil" ></i>
                   </button>
                   <button className="delete-btn" aria-label="删除" onClick={() => console.log('Delete button clicked')}>

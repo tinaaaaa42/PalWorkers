@@ -5,33 +5,18 @@ export const ModalContext = createContext({
   openModal: () => {},
   closeModal: () => {},
   type: "day",
-  key: 0,
   message: "new",
-  importance:0,
-  urgency:0,
-  progress:"todo",
-  projectid:null
 });
 
 export const ModalProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [type,setType]=useState("day");
-  const [message,setMessage]=useState("new");
-  const [key,setKey]=useState(0);
-  const [importance,setImportance]=useState(0);
-  const [urgency,setUrgency]=useState(0);
-  const [projectid,setProjectid]=useState(null);
-  const [progress,setProgress]=useState("todo");
+  const [message,setMessage]=useState(1);
   const [task, setTask] = useState()
-  const openModal = (theKey,theType,theMessage,theProjectid,theImportance,theUrgency,theProgress,task) => {
+  const openModal = (theType,task,theMessage) => {
     setIsModalOpen(true);
-    setKey(theKey);
     setType(theType);
     setMessage(theMessage);
-    setImportance(theImportance);
-    setProgress(theProgress);
-    setUrgency(theUrgency);
-     setProjectid(theProjectid);
     setTask(task)
   };
 
@@ -44,12 +29,7 @@ export const ModalProvider = ({ children }) => {
     openModal,
     closeModal,
     type,
-    key,
     message,
-      importance,
-      urgency,
-      progress,
-      projectid,
     task
   };
 

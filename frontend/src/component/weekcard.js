@@ -10,7 +10,7 @@ function Weekcard(props){
         let myseitch=1-isDel;
         setIsDel(myseitch);
       };
-    return (<div className="Weekcard card" onClick={()=>openModal(id,"week","detail")}>
+    return (<div className="Weekcard card" onClick={()=>openModal("week",task)}>
         <div className="colorandcontent">
             <div className="colorbar" style={{color:`blue`}}></div>
             <div className={`detail ${isDel ? 'Isdelete' : ''}`}>

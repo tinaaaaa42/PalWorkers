@@ -7,8 +7,13 @@ import 'react-quill/dist/quill.snow.css';
 import { DayTasks,Tasks,WeekTasks,Projects} from "../Data/data";
 import {createTask} from "../service/write"
 const ModalComponent = () => {
-  const { isModalOpen, closeModal ,type,key,message,progress,projectid,task} = useContext(ModalContext);
-
+  const { isModalOpen, closeModal ,type,message,task} = useContext(ModalContext);
+const messageToStatusMap = {
+  1: { important: 'true', urgent: 'true' },
+  2: { important: 'false', urgent: 'true' },
+  3: { important: 'true', urgent: 'false' },
+  4: { important: 'false', urgent: 'false' }
+};
 
 
   const getCurrentDateTime = () => {
@@ -21,7 +26,7 @@ const ModalComponent = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
   const [state, setState] = React.useState({
-      title: '',
+      tsakName: '',
       description: '',
       type:type,
       startTime: new Date(),
@@ -32,25 +37,45 @@ const ModalComponent = () => {
       files: [],
       note:[],
       choosepro:'',
-      chooseimpo:['important','unimportant'],
-      chooseurg:['urgent','not urgent'],
       team:'',
       teamTasksAnticipaters:[],
-      teamTasksLeaders:[]
-
+      teamTasksLeaders:[],
 
     });
-      const handleSave = async (e) => {
-          e.preventDefault();
-          try {
-            const response = await createTask(state);
-            console.log('任务创建成功:', response);
+    const { important, urgent } = messageToStatusMap[state.message] || { important: 'false', urgent: 'false' };
 
-          } catch (error) {
-            console.error('创建任务失败:', error);
-          }
-               closeModal();
-        };
+        const convertStateToBackendFormat = () => {
+            // 构造新的 JSON 对象
+            const backendData = {
+              task: {
+                title: state.taskName,
+                description: state.description,
+                createDate: state.startTime,
+                dueDate: state.dueTime,
+                type: state.type,
+                tags: state.tag,
+                expired: false
+              },
+              important: important,
+              urgent: urgent
+            };
+
+            return backendData;
+          };
+
+           const handleSave = async (e) => {
+                 const dataToSend = convertStateToBackendFormat();
+                    e.preventDefault();
+                    try {
+                      const response = await createTask(state);
+                      console.log('任务创建成功:', response);
+
+                    } catch (error) {
+                      console.error('创建任务失败:', error);
+                    }
+                         closeModal();
+                  };
+
 
 
        const handleInputChange = (event) => {
@@ -133,7 +158,7 @@ React.useEffect(() => {
 
       case "day":{
 
-      if(message=== 'new') {
+      if(!task) {
              setState(prevState => ({
                ...prevState,
                taskName: '',
@@ -163,10 +188,12 @@ React.useEffect(() => {
       break;
       }
       case "week":{
-       if(message=== 'new') {
+       if(!task) {
                    setState(prevState => ({
                      ...prevState,
                      taskName: '',
+
+
                    }));
                    break;
                    }
@@ -193,7 +220,7 @@ React.useEffect(() => {
             break;
             }
       case "kanban":{
- if(message=== 'new') {
+ if(!task) {
              setState(prevState => ({
                ...prevState,
                taskName: '',

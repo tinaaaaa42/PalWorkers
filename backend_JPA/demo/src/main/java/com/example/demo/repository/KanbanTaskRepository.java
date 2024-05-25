@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface KanbanTaskRepository extends JpaRepository<KanbanTask, Integer> {
     List<KanbanTask> findAllByUserId(int userId);
+
+
+//    KanbanTask findKanbanTaskByTaskId(int taskId);
 }

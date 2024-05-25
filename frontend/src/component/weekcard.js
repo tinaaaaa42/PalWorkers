@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ModalContext from '../context/ModalContext';
 import {useContext } from 'react';
 function Weekcard(props){
-    const {id,title,tags}=props;
+    const {id,task}=props;
     const [isDel, setIsDel] = useState(false);
     const { openModal ,isModalOpen} = useContext(ModalContext);
     const handleClick = (event) => {
@@ -15,11 +15,11 @@ function Weekcard(props){
             <div className="colorbar" style={{color:`blue`}}></div>
             <div className={`detail ${isDel ? 'Isdelete' : ''}`}>
                 <div className="line">
-                    <div className="title">{title}</div>
+                    <div className="title">{task.title}</div>
                     <div className="delete iconfont icon-lajixiang" onClick={handleClick}></div>
                 </div>
                 {/* <div className="tag">{}</div> */}
-                <div className='tags'>{tags.map(tag => (<div className="tag">{tag}</div>))}</div>
+                <div className='tags'>{task.taskTags.map(tag => (<div className="tag">{tag.tag.name}</div>))}</div>
             </div>
         </div>
         

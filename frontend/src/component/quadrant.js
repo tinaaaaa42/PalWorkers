@@ -54,7 +54,7 @@ function Quadrant({ quadrant ,Week_tasks}){
         <div className="quadrantcard">
             <div className="colorbar" style={colorStyle}><div>{content}</div><div className="iconfont icon-jiahao" onClick={()=>openModal(0,"week","new")}></div></div>
             {tasks.map(task => (
-            <Weekcard key={task.id} title={task.title} tags={task.tags} id={task.id}/>
+            <Weekcard key={task.id} task={task}/>
             ))}
         </div>
     </div>);

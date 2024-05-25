@@ -13,8 +13,9 @@ function Weekpage(){
     const init_tasks = async () => {
         let weekly_tasks = await get_weekly_task();
         setWeek_tasks(weekly_tasks)
-        setAllTags(new Set(weekly_tasks.flatMap(task=>task.tags)));
-        setAllTaskTitles(weekly_tasks.map(task => task.title));
+        console.log(weekly_tasks);
+        // setAllTags(new Set(weekly_tasks.flatMap(task=>task.tags)));
+        // setAllTaskTitles(weekly_tasks.map(task => task.title));
     }
 
     useEffect( () => {

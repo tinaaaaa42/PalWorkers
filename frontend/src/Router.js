@@ -4,6 +4,9 @@ import Projectpage from './Page/Projectpage';
 import Weekpage from './Page/Weekpage';
 import Daypage from './Page/Daypage';
 import Profilepage from './Page/Profilepage';
+import Loginpage from './Page/Loginpage';
+import NavbarExample from './component/Navv';
+import Navbar from './component/Navv';
 const router=createBrowserRouter([
     {
         path:'/',
@@ -23,6 +26,12 @@ const router=createBrowserRouter([
     },{
         path:'/profile',
         element:<Profilepage></Profilepage>
+    },{
+        path:'/login',
+        element:<Loginpage></Loginpage>
+    },{
+        path:'/test',
+        element:<Navbar></Navbar>
     }
 ])
 export default router;

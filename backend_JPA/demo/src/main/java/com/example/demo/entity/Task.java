@@ -54,7 +54,7 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
+    @JsonIgnoreProperties({"emailAddr", "notes","avatar"})
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ public class TeamTasksLeader {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    @JsonIgnore
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -22,6 +24,7 @@ public class TeamTasksLeader {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "leader_id", nullable = false)
+    @JsonIgnoreProperties({"emailAddr", "notes","avatar"})
     private User leader;
 
 }

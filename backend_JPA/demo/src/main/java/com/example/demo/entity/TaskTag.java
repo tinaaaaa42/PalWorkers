@@ -20,6 +20,7 @@ public class TaskTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pair_id", nullable = false)
+    @JsonIgnore
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

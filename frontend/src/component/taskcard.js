@@ -16,7 +16,9 @@ function Taskcard(props){
                     <a href=""><div className="delete iconfont icon-lajixiang"></div></a>
                 </div>
                 <div className='tags'>{task.taskTags.length === 0 ?(<div></div>):task.taskTags.map(tag=>(<div>{tag.tag.name}</div>))}</div>
+                <div className='team'>{task.team==null?1:task.team.name}</div>
                 <div className="detail">
+                    
                     <div className="Date">
                         {task.dueDate === null ?  <></>: task.dueDate} 
                     </div>

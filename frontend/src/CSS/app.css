@@ -262,12 +262,19 @@
     font-size: 20px;
     color: gray;
 }
+.Taskcard .team{
+    height: 29px;
+    font-size: 22px;
+    color:rgba(0, 26, 255, 0.441);
+    text-align: left;
+    margin: 2px 0 2px ;
+}
 .Kanban .detail,.Projectdetail .detail{
     display: flex;
 }
 .Kanban .tags,.Projectdetail .tags{
     margin-top: 8px;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
     display: flex;
 
 }
@@ -403,6 +410,7 @@
     padding-left: 10px;
     color: rgb(107, 103, 103);
     margin-bottom: 3px;
+    height: 29px;
 }
 .Weekcard .detail{
     width: 200px;

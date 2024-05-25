@@ -9,7 +9,7 @@ function Navleft(){
                 return '1';
         }
         switch(pathname) {
-            case '/':
+            case '/kanban':
                 return '1';
             case '/week':
                 return '3';
@@ -25,7 +25,7 @@ function Navleft(){
     const handleClick = (id, e) => {
         e.preventDefault(); // 阻止默认行为
         switch(id){
-            case '1':   navigate('/');
+            case '1':   navigate('/kanban');
                         break;
             case '2':   navigate('/day');
                          break;

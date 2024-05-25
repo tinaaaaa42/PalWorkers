@@ -7,10 +7,11 @@ import Profilepage from './Page/Profilepage';
 import Loginpage from './Page/Loginpage';
 import NavbarExample from './component/Navv';
 import Navbar from './component/Navv';
+import TeamTable from './component/Team';
 const router=createBrowserRouter([
     {
         path:'/',
-        element:<Kanbanpage></Kanbanpage>
+        element:<Loginpage></Loginpage>
     },
     {
         path:'/project/:projectid',
@@ -32,6 +33,12 @@ const router=createBrowserRouter([
     },{
         path:'/test',
         element:<Navbar></Navbar>
+    },{
+        path:'test2',
+        element:<TeamTable></TeamTable>
+    },{
+        path:'/kanban',
+        element:<Kanbanpage></Kanbanpage>
     }
 ])
 export default router;

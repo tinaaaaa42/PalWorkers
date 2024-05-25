@@ -60,4 +60,25 @@ const DayTasks=[
     {key:4,title:"宣讲会",tag:"讲座",completed: true,date:"2024-3-5",note:""},
     {key:5,title:"体侧",tag:"体育",completed: true,date:"2024-3-2",note:""}
 ]
+const Teams=[
+    {id:1,name:"team1",participant:[
+        {id:1,username:"user1"},
+        {id:2,username:"user2"},
+        {id:3,username:"user3"},
+    ],
+    leader:[
+        {id:4,username:"user4"},
+    ]
+},
+    {id:2,name:"team2",participant:[
+        {id:1,username:"user1"},
+        {id:2,username:"user2"},
+    ],
+    leader:[
+        {id:3,username:"user3"},
+        {id:4,username:"user4"},
+    ]
+    }
+]
+    
 export {CurUser,Tasks,Tag,Projects,WeekTasks,DayTasks};

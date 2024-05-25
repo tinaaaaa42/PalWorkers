@@ -11,5 +11,5 @@ public interface teamService {
 
     List<TeamMember> findTeamsByUserId(int userId);
 
-    Team addTeamByName(String teamName, User user);
+    String addTeamByName(String teamName, User user);
 }

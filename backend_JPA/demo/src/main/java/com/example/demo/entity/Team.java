@@ -23,6 +23,9 @@ public class Team {
     @Column(name = "name", nullable = false, length = 60)
     private String name;
 
+    @Column(name = "invitation_code", length = 6)
+    private String invitationCode;
+
     @OneToMany(mappedBy = "team")
     @JsonIgnore
     private Set<Task> tasks = new LinkedHashSet<>();

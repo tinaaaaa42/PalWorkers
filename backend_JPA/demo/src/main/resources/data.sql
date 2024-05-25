@@ -3,11 +3,11 @@ use palworkers;
 
 -- 初始化数据
 
-INSERT INTO teams (name) VALUES
-                                      ('技术部门'),
-                                      ( '市场部'),
-                                      ( '人力资源部'),
-                                      ('销售部');
+INSERT INTO teams (name,invitation_code) VALUES
+                                      ('技术部门','happpy'),
+                                      ( '市场部','looppy'),
+                                      ( '人力资源部','gaming'),
+                                      ('销售部','cookie');
 
 
 

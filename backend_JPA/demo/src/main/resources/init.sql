@@ -18,7 +18,8 @@ DROP TABLE IF EXISTS users;
 
 create table teams(
                       team_id int auto_increment not null primary key,
-    name varchar(60) not null
+    name varchar(60) not null,
+    invitation_code char(6) unique
 );
 
 create table users

@@ -31,8 +31,7 @@ public class teamController {
     }
 
     @PostMapping(value = "api/tasks/team")
-    public Team addTeam(@RequestBody String teamName, HttpSession session) {
-        System.out.println("teamName : " + teamName);
+    public String addTeam(@RequestBody String teamName, HttpSession session) {
         User user = (User) session.getAttribute("user");
         Integer userId = user.getId();
         if (userId == null) {

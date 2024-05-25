@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class teamServiceImpl implements teamService {
@@ -30,7 +31,7 @@ public class teamServiceImpl implements teamService {
     }
 
     @Override
-    public Team addTeamByName(String teamName, User user) {
+    public String  addTeamByName(String teamName, User user) {
         Team team = new Team();
         team.setName(teamName);
         teamRepository.save(team);
@@ -39,6 +40,17 @@ public class teamServiceImpl implements teamService {
         teamMember.setUser(user);
         teamMember.setLeader(true);
         teamMemberRepository.save(teamMember);
-        return teamRepository.save(team);
+
+        String invitationCode;
+        do {
+            invitationCode = generateInvitationCode();
+        } while (teamRepository.existsByInvitationCode(invitationCode));
+        team.setInvitationCode(invitationCode);
+        teamRepository.save(team);
+        return invitationCode;
+    }
+
+    private String generateInvitationCode() {
+        return UUID.randomUUID().toString().substring(0, 6).toUpperCase();
     }
 }

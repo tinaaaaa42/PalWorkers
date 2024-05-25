@@ -11,5 +11,7 @@ public interface TeamRepository extends JpaRepository<Team, Integer> {
 //
     Team save(Team team);
 
+    Boolean existsByInvitationCode(String invitationCode);
+
 //    Team addTeamByName(String teamName);
 }

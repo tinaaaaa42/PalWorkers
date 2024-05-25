@@ -47,6 +47,8 @@ public class weeklyTaskImpl implements weeklyTaskService {
         weeklyTask.setDueDate(LocalDate.parse(weeklyTaskDto.getTask().getDueDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         weeklyTask.setTitle(weeklyTaskDto.getTask().getTitle());
         weeklyTask.setType(weeklyTaskDto.getTask().getType());
+//        weeklyTask.setExpired(weeklyTaskDto.getTask().getExpired());
+        weeklyTask.setExpired(false);
 
         weeklyTaskRepository.save(weeklyTask);
         List<String> tags = weeklyTaskDto.getTask().getTags();

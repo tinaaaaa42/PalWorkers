@@ -23,17 +23,17 @@ public class weeklyTaskController {
     private WeeklyTaskRepository weeklyTaskRepository;
 
     @GetMapping(value = "api/tasks/weekly")
-//    public List<WeeklyTask> getAllWeeklyTask(HttpSession session) {
-//        User user = (User) session.getAttribute("user");
-//        Integer userId = user.getId();
-//        if (userId == null) {
-//            throw new RuntimeException("User not logged in");
-//        }
-//        return weeklyService.findAll(userId);
-//    }
-    public List<WeeklyTask> getAllWeeklyTask() {
-        return weeklyTaskRepository.findAll();
+    public List<WeeklyTask> getAllWeeklyTask(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return weeklyService.findAll(userId);
     }
+//    public List<WeeklyTask> getAllWeeklyTask() {
+//        return weeklyTaskRepository.findAll();
+//    }
 
     @PostMapping(value = "/api/tasks/weekly")
     public WeeklyTask addWeeklyTask(@RequestBody WeeklyTaskDto weeklyTaskDto, HttpSession session) {

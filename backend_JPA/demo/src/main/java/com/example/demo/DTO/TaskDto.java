@@ -15,5 +15,6 @@ public class TaskDto implements Serializable {
     String createDate;
     String dueDate;
     String type;
+    Boolean expired;
     List<String> tags;
 }

@@ -30,7 +30,7 @@ public class weeklyTaskImpl implements weeklyTaskService {
     @Autowired
     private TaskTagRepository taskTagRepository;
 
-    public List<WeeklyTask> findAll(long userId) {
+    public List<WeeklyTask> findAll(int userId) {
         return weeklyTaskRepository.findAllByUserId(userId);
     }
 

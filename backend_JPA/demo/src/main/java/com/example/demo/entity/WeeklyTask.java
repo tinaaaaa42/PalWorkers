@@ -18,7 +18,7 @@ public class WeeklyTask extends Task{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "weekly_id", nullable = false)
-    private Long id;
+    private int id;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "task_id")

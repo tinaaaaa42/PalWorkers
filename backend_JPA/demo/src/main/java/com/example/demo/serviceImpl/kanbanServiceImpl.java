@@ -33,8 +33,8 @@ public class kanbanServiceImpl implements kanbanTaskService {
     @Autowired
     private TaskTagRepository taskTagRepository;
 
-    public List<KanbanTask> findAll() {
-        return kanbanTaskRepository.findAll();
+    public List<KanbanTask> findAll(int userId) {
+        return kanbanTaskRepository.findAllByUserId(userId);
     }
 
     public KanbanTask addKanbanTask(KanbanTaskDto kanbanTaskDto) {

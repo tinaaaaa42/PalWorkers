@@ -31,9 +31,6 @@ public class weeklyTaskController {
         }
         return weeklyService.findAll(userId);
     }
-//    public List<WeeklyTask> getAllWeeklyTask() {
-//        return weeklyTaskRepository.findAll();
-//    }
 
     @PostMapping(value = "/api/tasks/weekly")
     public WeeklyTask addWeeklyTask(@RequestBody WeeklyTaskDto weeklyTaskDto, HttpSession session) {

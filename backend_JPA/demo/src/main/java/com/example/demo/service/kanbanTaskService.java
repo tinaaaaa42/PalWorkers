@@ -7,7 +7,7 @@ import com.example.demo.entity.KanbanTask;
 import java.util.List;
 
 public interface kanbanTaskService {
-    List<KanbanTask> findAll();
+    List<KanbanTask> findAll(int userId);
 
     KanbanTask addKanbanTask(KanbanTaskDto kanbanTaskDto);
 }

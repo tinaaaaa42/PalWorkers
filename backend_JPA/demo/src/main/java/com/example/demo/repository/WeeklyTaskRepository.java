@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface WeeklyTaskRepository extends JpaRepository<WeeklyTask, Long> {
-    List<WeeklyTask> findAllByUserId(Long userId);
+public interface WeeklyTaskRepository extends JpaRepository<WeeklyTask, Integer> {
+    List<WeeklyTask> findAllByUserId(int userId);
 }

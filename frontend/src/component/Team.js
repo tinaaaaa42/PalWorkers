@@ -99,7 +99,6 @@ const TeamTable = () => {
           dataSource={team.participant}
           pagination={false}
           rowKey="id"
-          
         />
         <p>
           <strong>Leaders:</strong>
@@ -128,8 +127,6 @@ const TeamTable = () => {
         const newInvitationCode = 'ABC123';
         setInvitationCode(newInvitationCode);
         message.success(`Team created! Invitation code: ${newInvitationCode}`);
-        setIsCreateModalVisible(false);
-        form.resetFields();
       })
       .catch((info) => {
         console.log('Validate Failed:', info);
@@ -151,6 +148,12 @@ const TeamTable = () => {
       });
   };
 
+  const handleCreateTeamComplete = () => {
+    setIsCreateModalVisible(false);
+    form.resetFields();
+    setInvitationCode('');
+  };
+
   return (
     <>
       <Button type="primary" onClick={() => setIsCreateModalVisible(true)}>
@@ -164,13 +167,12 @@ const TeamTable = () => {
         expandable={{ expandedRowRender }}
         dataSource={Teams}
         rowKey="id"
-        
       />
       <Modal
         title="Create Team"
         visible={isCreateModalVisible}
-        onOk={handleCreateTeam}
-        onCancel={() => setIsCreateModalVisible(false)}
+        onCancel={handleCreateTeamComplete}
+        footer={null} // 移除默认的 footer，替换为自定义的 footer
       >
         <Form form={form} layout="vertical" name="create_team_form">
           <Form.Item
@@ -186,6 +188,14 @@ const TeamTable = () => {
             <strong>Invitation Code:</strong> {invitationCode}
           </p>
         )}
+        <div style={{ textAlign: 'right' }}>
+          <Button type="primary" onClick={handleCreateTeam} style={{ marginRight: 8 }}>
+            OK
+          </Button>
+          <Button onClick={handleCreateTeamComplete}>
+            Complete
+          </Button>
+        </div>
       </Modal>
       <Modal
         title="Add Team"

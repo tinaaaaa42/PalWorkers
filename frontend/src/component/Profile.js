@@ -104,7 +104,6 @@ function UserProfile() {
                 <Menu.Item key="1" icon={<MailOutlined />} style={{ height: '60px', lineHeight: '60px' }}>邮箱</Menu.Item>
                 <Menu.Item key="team" icon={<TeamOutlined />} style={{ height: '60px', lineHeight: '60px' }}>我的团队</Menu.Item>
                 <Menu.Item key="3" icon={<SettingOutlined />} style={{ height: '60px', lineHeight: '60px' }}>设置</Menu.Item>
-                <Menu.Item key="5" icon={<IdcardOutlined />} style={{ height: '60px', lineHeight: '60px' }}>账号</Menu.Item>
                 <Menu.Item key="6" icon={<NotificationOutlined />} style={{ height: '60px', lineHeight: '60px' }}>提醒</Menu.Item>
                 <Menu.Item key="4" icon={<LogoutOutlined />} style={{ height: '60px', lineHeight: '60px' }}>退出登录</Menu.Item>
               </Menu>

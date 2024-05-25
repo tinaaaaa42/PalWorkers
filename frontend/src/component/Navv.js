@@ -1,108 +1,60 @@
 import React from 'react';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
-const items = [
-  {
-    key: 'sub1',
-    icon: <MailOutlined />,
-    label: 'Navigation One',
-    children: [
-      {
-        key: '1-1',
-        label: 'Item 1',
-        type: 'group',
-        children: [
-          {
-            key: '1',
-            label: 'Option 1',
-          },
-          {
-            key: '2',
-            label: 'Option 2',
-          },
-        ],
-      },
-      {
-        key: '1-2',
-        label: 'Item 2',
-        type: 'group',
-        children: [
-          {
-            key: '3',
-            label: 'Option 3',
-          },
-          {
-            key: '4',
-            label: 'Option 4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    key: 'sub2',
-    icon: <AppstoreOutlined />,
-    label: 'Navigation Two',
-    children: [
-      {
-        key: '5',
-        label: 'Option 5',
-      },
-      {
-        key: '6',
-        label: 'Option 6',
-      },
-      {
-        key: 'sub3',
-        label: 'Submenu',
-        children: [
-          {
-            key: '7',
-            label: 'Option 7',
-          },
-          {
-            key: '8',
-            label: 'Option 8',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    key: 'sub4',
-    label: 'Navigation Three',
-    icon: <SettingOutlined />,
-    children: [
-      {
-        key: '9',
-        label: 'Option 9',
-      },
-      {
-        key: '10',
-        label: 'Option 10',
-      },
-      {
-        key: '11',
-        label: 'Option 11',
-      },
-      {
-        key: '12',
-        label: 'Option 12',
-      },
-    ],
-  },
-];
-const onClick = (e) => {
-  console.log('click', e);
+import { AppstoreOutlined, MailOutlined, SettingOutlined, TagsOutlined, ContainerOutlined, ProjectOutlined } from '@ant-design/icons';
+import { Menu, Typography } from 'antd';
+
+const { Title } = Typography;
+
+const Navbar = () => {
+  const teams = ['Team1', 'Team2', 'Team3'];
+  const tags = ['Tag1', 'Tag2', 'Tag3'];
+  const tasks = ['Task1', 'Task2', 'Task3'];
+  const projects = ['Project1111', 'Project2', 'Project3'];
+  const renderItems = (icon, label, children) => ({
+    key: label.toLowerCase(),
+    icon: icon,
+    label,
+    children: children ? children.map((child, index) => ({
+      key: `${label.toLowerCase()}-${index}`,
+      label: child,
+    })) : [],
+    visible: children && children.length > 0,
+  });
+
+  const teamsItem = renderItems(<MailOutlined />, 'Teams', teams);
+  const tagsItem = renderItems(<TagsOutlined />, 'Tags', tags);
+  const tasksItem = renderItems(<ContainerOutlined />, 'Tasks', tasks);
+  const projectsItem = renderItems(<ProjectOutlined />, 'Projects', projects);
+
+  const items = [
+    teamsItem.visible && teamsItem,
+    tagsItem.visible && tagsItem,
+    tasksItem.visible && tasksItem,
+    projectsItem.visible && projectsItem,
+  ].filter(item => item); // 过滤掉不可见的项
+
+  const onClick = (e) => {
+    console.log('click', e);
+  };
+
+  return (
+    <div>
+      <Title level={3} style={{ padding: '16px 24px' }}>Navigation Menu</Title>
+      <Menu
+        onClick={onClick}
+        style={{
+          width: '220px',
+        }}
+        mode="inline"
+        items={items}
+      />
+    </div>
+  );
 };
-const Navbar = () => (
-  <Menu
-    onClick={onClick}
-    style={{
-      width: 256,
-    }}
-    mode="inline"
-    items={items}
-  />
-);
+
+// 示例数据
+
+
 export default Navbar;
+
+// 在使用该组件时，可以传入实际的 teams、tags、tasks 和 projects 数据
+// <Navbar teams={teams} tags={tags} tasks={tasks} projects={projects} />

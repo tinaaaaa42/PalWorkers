@@ -10,4 +10,6 @@ public interface dailyTaskService {
     List<DailyTask> findAll(int userId);
 
     DailyTask addDailyTask(DailyTaskDto dailyTaskDto, User user);
+
+    DailyTask updateDailyTask(DailyTaskDto dailyTaskDto, User user);
 }

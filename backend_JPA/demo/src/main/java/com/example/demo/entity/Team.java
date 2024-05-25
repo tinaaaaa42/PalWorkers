@@ -18,7 +18,7 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "team_id", nullable = false)
-    private Long id;
+    private int id;
 
     @Column(name = "name", nullable = false, length = 60)
     private String name;
@@ -28,7 +28,8 @@ public class Team {
     private Set<Task> tasks = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "team")
-    @JsonIgnore
+//    @JsonIgnore
+    @JsonIgnoreProperties("team")
     private Set<TeamMember> teamMembers = new LinkedHashSet<>();
 
 }

@@ -13,11 +13,12 @@ import lombok.Setter;
 public class TeamMember {
     @Id
     @Column(name = "id", nullable = false)
-    private Long id;
+    @JsonIgnore
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "team_id", nullable = false)
-    @JsonIgnore
+//    @JsonIgnore
     private Team team;
 
     @Column(name = "leader", nullable = false)

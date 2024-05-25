@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "../CSS/login.css"
 import { useNavigate } from 'react-router-dom';
+import {login} from "../service/login";
 
 function Loginpage(){
     const navigate = useNavigate();
@@ -11,14 +12,14 @@ function Loginpage(){
         setIsPanelActive(prevState => !prevState);
     };
     const handleLogin = async () => {
-        // const isAuthenticated = await Logincheck(email, password);
-        // if (isAuthenticated) {
-        //   navigate("/main");
-        // } else {
-        //   alert("邮箱或密码错误！");
-        //   setEmail('');
-        //   setPassword('');
-        // }
+        const isAuthenticated = await login(email, password);
+        if (isAuthenticated.status == 'success') {
+          navigate("/kanban");
+        } else {
+          alert("邮箱或密码错误！");
+          setEmail('');
+          setPassword('');
+        }
     };
     return (
         <div className="login">

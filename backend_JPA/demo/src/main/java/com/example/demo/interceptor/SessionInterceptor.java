@@ -20,9 +20,9 @@ public class SessionInterceptor implements HandlerInterceptor {
             return true;
         }
         System.out.println("Session is not logged in yet");
-//        response.setStatus(401);
-//        return false;
-        return true;
+        response.setStatus(401);
+        return false;
+//        return true;
 
     }
 }

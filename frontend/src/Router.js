@@ -8,6 +8,7 @@ import Loginpage from './Page/Loginpage';
 import NavbarExample from './component/Navv';
 import Navbar from './component/Navv';
 import TeamTable from './component/Team';
+import Profileinfo from './component/Profileinfo';
 const router=createBrowserRouter([
     {
         path:'/',
@@ -39,6 +40,9 @@ const router=createBrowserRouter([
     },{
         path:'/kanban',
         element:<Kanbanpage></Kanbanpage>
+    },{
+        path:'test3',
+        element:<Profileinfo></Profileinfo>
     }
 ])
 export default router;

@@ -4,6 +4,7 @@ import { UserOutlined, MailOutlined, TeamOutlined, SettingOutlined, LogoutOutlin
 import { Line, Pie } from '@ant-design/charts';
 import { CurUser } from '../Data/data';
 import TeamTable from './Team';  // 请确保导入了 TeamTable 组件
+import ProfileInfo from './Profileinfo';
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
@@ -79,6 +80,8 @@ function UserProfile() {
           </Card>
         </>
       );
+    }else if(selectedMenu=='intro'){
+      return <ProfileInfo></ProfileInfo>
     }
     return null;
   };
@@ -101,7 +104,7 @@ function UserProfile() {
                 onClick={({ key }) => setSelectedMenu(key)}
               >
                 <Menu.Item key="activity" icon={<BarChartOutlined />} style={{ height: '60px', lineHeight: '60px' }}>活动</Menu.Item>
-                <Menu.Item key="1" icon={<MailOutlined />} style={{ height: '60px', lineHeight: '60px' }}>个人资料</Menu.Item>
+                <Menu.Item key="intro" icon={<MailOutlined />} style={{ height: '60px', lineHeight: '60px' }}>个人资料</Menu.Item>
                 <Menu.Item key="team" icon={<TeamOutlined />} style={{ height: '60px', lineHeight: '60px' }}>我的团队</Menu.Item>
                 <Menu.Item key="3" icon={<SettingOutlined />} style={{ height: '60px', lineHeight: '60px' }}>设置</Menu.Item>
                 <Menu.Item key="6" icon={<NotificationOutlined />} style={{ height: '60px', lineHeight: '60px' }}>提醒</Menu.Item>

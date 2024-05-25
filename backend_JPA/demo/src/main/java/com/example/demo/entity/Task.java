@@ -54,8 +54,8 @@ public class Task {
     @JsonIgnoreProperties("task")
     private Set<TaskTag> taskTags = new LinkedHashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"emailAddr", "notes","avatar"})
     private User user;
 

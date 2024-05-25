@@ -15,7 +15,7 @@ public class TaskExpireChecker implements Observer {
     @Override
     public void update() {
         taskRepository.findAll().forEach(task -> {
-            if (task.getDueDate().isBefore(LocalDate.now())) {
+            if (task.getDueDate() != null && task.getDueDate().isBefore(LocalDate.now())) {
                 System.out.println("Task " + task.getId() + " has expired");
                 task.setExpired(true);
                 taskRepository.save(task);

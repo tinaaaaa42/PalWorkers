@@ -8,14 +8,22 @@ DROP TABLE IF EXISTS kanban_tasks;
 DROP TABLE IF EXISTS daily_tasks;
 DROP TABLE IF EXISTS task_tags;
 DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS team_tasks_anticipater;
+DROP TABLE IF EXISTS team_tasks_leader;
 DROP TABLE IF EXISTS tasks;
 DROP TABLE IF EXISTS user_auth;
+DROP TABLE IF EXISTS team_member;
+DROP TABLE IF EXISTS teams;
 DROP TABLE IF EXISTS users;
 
+create table teams(
+                      team_id bigint auto_increment not null primary key,
+    name varchar(60) not null
+);
 
 create table users
 (
-    user_id int auto_increment
+    user_id bigint auto_increment
         primary key ,
     username varchar(30) not null ,
     email_addr varchar(30) not null ,
@@ -23,23 +31,57 @@ create table users
     notes varchar(255) not null
 );
 
+# create table leader(
+#     id int auto_increment primary key ,
+#   team_id int not null ,
+#
+# );
+
+create table team_member(
+  id bigint auto_increment primary key ,
+  team_id bigint not null ,
+    user_id bigint not null ,
+    leader boolean not null,
+    foreign key (user_id) references users(user_id),
+    foreign key (team_id) references teams(team_id)
+);
+
 create table user_auth
 (
-    auth_id int auto_increment primary key ,
-    user_id int not null ,
+    auth_id bigint auto_increment primary key ,
+    user_id bigint not null ,
     password_hash varchar(255) not null ,
     foreign key (user_id) references users(user_id)
 );
 
+
 CREATE TABLE tasks (
                        task_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id int not null ,
+    user_id bigint ,
                        title VARCHAR(255) NOT NULL,
                        description TEXT,
                        create_date DATE NOT NULL,
                        due_date DATE,
                        type ENUM('kanban','weekly','daily') NOT NULL,
-    foreign key (user_id) references users(user_id)
+    team_id bigint,
+    foreign key (user_id) references users(user_id),
+    foreign key (team_id) references teams(team_id)
+);
+
+create table team_tasks_anticipater(
+  id int auto_increment primary key ,
+  task_id bigint not null ,
+  anticipater_id bigint not null ,
+  foreign key (task_id) references tasks(task_id),
+    foreign key (anticipater_id) references users(user_id)
+);
+
+create table team_tasks_leader(
+                                       id int auto_increment primary key ,
+                                       task_id bigint not null ,
+                                       leader_id bigint not null ,
+                                       foreign key (task_id) references tasks(task_id),
+                                       foreign key (leader_id) references users(user_id)
 );
 
 CREATE TABLE tags (

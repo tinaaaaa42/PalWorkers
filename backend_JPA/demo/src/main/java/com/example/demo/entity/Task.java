@@ -57,10 +57,15 @@ public class Task {
     @JsonIgnore
     private User user;
 
-//    @OneToMany(mappedBy = "task",cascade = CascadeType.ALL , orphanRemoval = true)
-//    private Set<WeeklyTask> weeklyTasks = new LinkedHashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
 
-//    @OneToMany(mappedBy = "task",cascade = CascadeType.ALL , orphanRemoval = true)
-//    private Set<DailyTask> dailyTasks = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "task")
+    private Set<TeamTasksAnticipater> teamTasksAnticipaters = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "task")
+    private Set<TeamTasksLeader> teamTasksLeaders = new LinkedHashSet<>();
 
 }

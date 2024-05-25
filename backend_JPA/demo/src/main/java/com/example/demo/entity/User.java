@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // 忽略 Hibernate 代理相关属性
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +33,11 @@ public class User {
     private String notes;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
+    @JsonIgnore // 忽略 tasks 属性，避免循环调用
     private Set<Task> tasks = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "user")
-//    @JsonIgnore
-    private Set<UserAuth> userAuths = new LinkedHashSet<>();
-
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+//    @JsonIgnoreProperties({"user", "hibernateLazyInitializer", "handler"}) // 忽略 user 属性和 Hibernate 代理属性
+    @JsonIgnore
+    private UserAuth userAuth;
 }

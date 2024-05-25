@@ -18,7 +18,8 @@ public class SessionConfig implements WebMvcConfigurer {
         registry.addInterceptor(sessionInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login/*")
-                .excludePathPatterns("/api/login");
+                .excludePathPatterns("/api/login")
+                .excludePathPatterns("*");
     }
     @Override
     public void addCorsMappings(CorsRegistry registry) {

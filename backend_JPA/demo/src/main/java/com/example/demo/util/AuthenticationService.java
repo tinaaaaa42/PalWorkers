@@ -24,10 +24,12 @@ public class AuthenticationService {
         // 2 for successful, 0 for unmatched username && pwd, 1 for banned users
         User user = userService.findUserByUsername(loginRequest.getUsername());
         if (user != null) {
-            UserAuth userAuth = user.getUserAuths().stream()
-                    .filter(ua -> ua.getUser().equals(user)) // 找到与当前user关联的UserAuth实例
-                    .findFirst()
-                    .orElse(null);
+//            UserAuth userAuth = user.getUserAuths().stream()
+//                    .filter(ua -> ua.getUser().equals(user)) // 找到与当前user关联的UserAuth实例
+//                    .findFirst()
+//                    .orElse(null);
+            UserAuth userAuth = new UserAuth();
+            userAuth = user.getUserAuth();
             if (userAuth != null && userAuth.getPasswordHash().equals(loginRequest.getPassword())) {
                 session.setAttribute("user", user);
                 return 2;

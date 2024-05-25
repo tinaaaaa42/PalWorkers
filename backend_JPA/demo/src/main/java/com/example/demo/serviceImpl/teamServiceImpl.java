@@ -50,6 +50,20 @@ public class teamServiceImpl implements teamService {
         return invitationCode;
     }
 
+    @Override
+    public Team joinTeam(String invitationCode, User user) {
+        Team team = teamRepository.findByInvitationCode(invitationCode);
+        if (team == null) {
+            return null;
+        }
+        TeamMember teamMember = new TeamMember();
+        teamMember.setTeam(team);
+        teamMember.setUser(user);
+        teamMember.setLeader(false);
+        teamMemberRepository.save(teamMember);
+        return team;
+    }
+
     private String generateInvitationCode() {
         return UUID.randomUUID().toString().substring(0, 6).toUpperCase();
     }

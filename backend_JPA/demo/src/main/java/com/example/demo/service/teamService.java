@@ -12,4 +12,6 @@ public interface teamService {
     List<TeamMember> findTeamsByUserId(int userId);
 
     String addTeamByName(String teamName, User user);
+
+    Team joinTeam(String invitationCode, User user);
 }

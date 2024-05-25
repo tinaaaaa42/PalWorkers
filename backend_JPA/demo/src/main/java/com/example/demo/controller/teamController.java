@@ -30,13 +30,23 @@ public class teamController {
         return teamService.findTeamsByUserId(userId);
     }
 
-    @PostMapping(value = "api/tasks/team")
-    public String addTeam(@RequestBody String teamName, HttpSession session) {
+    @PostMapping(value = "api/tasks/create_team")
+    public String createTeam(@RequestBody String teamName, HttpSession session) {
         User user = (User) session.getAttribute("user");
         Integer userId = user.getId();
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
         return teamService.addTeamByName(teamName, user);
+    }
+
+    @PostMapping(value = "api/tasks/join_team")
+    public Team joinTeam(@RequestBody String invitationCode, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return teamService.joinTeam(invitationCode, user);
     }
 }

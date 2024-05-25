@@ -31,8 +31,13 @@ public class kanbanTaskController {
     }
 
     @PostMapping(value = "/api/tasks/kanban")
-    public KanbanTask addKanbanTask(@RequestBody KanbanTaskDto kanbanTaskDto) {
-        return kanbantaskService.addKanbanTask(kanbanTaskDto);
+    public KanbanTask addKanbanTask(@RequestBody KanbanTaskDto kanbanTaskDto, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return kanbantaskService.addKanbanTask(kanbanTaskDto, user);
     }
 
 

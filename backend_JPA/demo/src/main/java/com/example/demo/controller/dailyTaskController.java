@@ -3,8 +3,10 @@ package com.example.demo.controller;
 
 import com.example.demo.DTO.DailyTaskDto;
 import com.example.demo.entity.DailyTask;
+import com.example.demo.entity.User;
 import com.example.demo.repository.DailyTaskRepository;
 import com.example.demo.service.dailyTaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +19,22 @@ public class dailyTaskController {
     dailyTaskService dailyTaskService;
 
     @GetMapping(value = "/api/tasks/daily")
-    public List<DailyTask> getDailyTasks() {
-        return dailyTaskService.findAll();
+    public List<DailyTask> getDailyTasks(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return dailyTaskService.findAll(userId);
     }
 
     @PostMapping(value = "/api/tasks/daily")
-    public DailyTask createDailyTask(@RequestBody DailyTaskDto dailyTaskDto) {
-        return dailyTaskService.addDailyTask(dailyTaskDto);
+    public DailyTask createDailyTask(@RequestBody DailyTaskDto dailyTaskDto, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return dailyTaskService.addDailyTask(dailyTaskDto, user);
     }
 }

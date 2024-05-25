@@ -2,10 +2,7 @@ package com.example.demo.serviceImpl;
 
 import com.example.demo.DTO.KanbanTaskDto;
 import com.example.demo.DTO.TaskDto;
-import com.example.demo.entity.KanbanTask;
-import com.example.demo.entity.Tag;
-import com.example.demo.entity.Task;
-import com.example.demo.entity.TaskTag;
+import com.example.demo.entity.*;
 import com.example.demo.repository.KanbanTaskRepository;
 import com.example.demo.repository.TagRepository;
 import com.example.demo.repository.TaskRepository;
@@ -37,9 +34,10 @@ public class kanbanServiceImpl implements kanbanTaskService {
         return kanbanTaskRepository.findAllByUserId(userId);
     }
 
-    public KanbanTask addKanbanTask(KanbanTaskDto kanbanTaskDto) {
+    public KanbanTask addKanbanTask(KanbanTaskDto kanbanTaskDto, User user) {
         KanbanTask kanbanTask = new KanbanTask();
         kanbanTask.setState(kanbanTaskDto.getState());
+        kanbanTask.setUser(user);
 
         // 创建 Task 实例，但不一定需要立即保存
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -48,6 +46,8 @@ public class kanbanServiceImpl implements kanbanTaskService {
         kanbanTask.setDueDate(LocalDate.parse(kanbanTaskDto.getTask().getDueDate(),formatter));
         kanbanTask.setTitle(kanbanTaskDto.getTask().getTitle());
         kanbanTask.setType(kanbanTaskDto.getTask().getType());
+        kanbanTask.setExpired(false);
+
 
         kanbanTaskRepository.save(kanbanTask);
 

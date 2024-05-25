@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,10 @@ public class kanbanTaskController {
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
-        return kanbantaskService.findAll(userId);
+        List<KanbanTask> kanbanTasks = new ArrayList<>();
+        kanbanTasks.addAll(kanbantaskService.findAll(userId));
+
+        return kanbanTasks;
     }
 
     @PostMapping(value = "/api/tasks/kanban")

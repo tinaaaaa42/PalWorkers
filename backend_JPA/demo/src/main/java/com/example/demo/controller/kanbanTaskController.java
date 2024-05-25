@@ -44,16 +44,7 @@ public class kanbanTaskController {
         }
         List<KanbanTask> kanbanTasks = new ArrayList<>();
         kanbanTasks.addAll(kanbantaskService.findAll(userId));
-        List<TeamTasksLeader> leader_tasks = teamTasksLeaderRepository.findTasksByLeader(user);
-        for (TeamTasksLeader leader_task : leader_tasks) {
-            String type = leader_task.getTask().getType();
-            if (type.equals("kanban")) {
-                int task_id = leader_task.getTask().getId();
-                KanbanTask tmp = taskRepository.findKanbanTaskById(task_id);
-                kanbanTasks.add(tmp);
-//                KanbanTask tmp = kanbanTaskRepository.findKanbanTaskByTaskId(task_id);
-            }
-        }
+        kanbanTasks.addAll(kanbantaskService.findteamTaskByUserId(user));
         return kanbanTasks;
     }
 

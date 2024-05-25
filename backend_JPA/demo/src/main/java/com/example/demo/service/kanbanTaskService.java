@@ -10,5 +10,7 @@ import java.util.List;
 public interface kanbanTaskService {
     List<KanbanTask> findAll(int userId);
 
+    List<KanbanTask> findteamTaskByUserId(User user);
+
     KanbanTask addKanbanTask(KanbanTaskDto kanbanTaskDto, User user);
 }

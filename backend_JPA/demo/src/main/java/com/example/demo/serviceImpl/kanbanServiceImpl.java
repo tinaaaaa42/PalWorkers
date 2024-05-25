@@ -3,10 +3,7 @@ package com.example.demo.serviceImpl;
 import com.example.demo.DTO.KanbanTaskDto;
 import com.example.demo.DTO.TaskDto;
 import com.example.demo.entity.*;
-import com.example.demo.repository.KanbanTaskRepository;
-import com.example.demo.repository.TagRepository;
-import com.example.demo.repository.TaskRepository;
-import com.example.demo.repository.TaskTagRepository;
+import com.example.demo.repository.*;
 import com.example.demo.service.kanbanTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +27,12 @@ public class kanbanServiceImpl implements kanbanTaskService {
 
     @Autowired
     private TaskTagRepository taskTagRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
+    TeamTasksLeaderRepository teamTasksLeaderRepository;
 
     public List<KanbanTask> findAll(int userId) {
         return kanbanTaskRepository.findAllByUserId(userId);
@@ -72,4 +76,17 @@ public class kanbanServiceImpl implements kanbanTaskService {
         return kanbanTaskRepository.save(kanbanTask);
     }
 
+    @Override
+    public List<KanbanTask> findteamTaskByUserId(User user) {
+        List<KanbanTask> kanbanTasks = new ArrayList<>();
+        List<TeamTasksLeader> leader_tasks = teamTasksLeaderRepository.findTasksByLeader(user);
+        for (TeamTasksLeader leader_task : leader_tasks) {
+            String type = leader_task.getTask().getType();
+            if (type.equals("kanban")) {
+                int task_id = leader_task.getTask().getId();
+                kanbanTasks.add(taskRepository.findKanbanTaskById(task_id));
+            }
+        }
+        return kanbanTasks;
+    }
 }

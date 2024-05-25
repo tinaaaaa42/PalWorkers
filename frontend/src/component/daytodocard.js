@@ -2,8 +2,10 @@ import React, { useState,useContext } from 'react';
 import 'font-awesome/css/font-awesome.css';
 import { DayTasks} from "../Data/data";
 import ModalContext from '../context/ModalContext';
-const DayTodoCard = () => {
+const DayTodoCard = ({tasks}) => {
   const data=DayTasks
+  //   const data=tasks;
+    console.log(tasks)
    const { openModal ,isModalOpen} = useContext(ModalContext);
 
   return (
@@ -17,14 +19,14 @@ const DayTodoCard = () => {
                 <div className="task-box"  >
                   {item.title}
                   <div className="image">
-                  <button className="edit" onClick={()=>openModal(item.key,"day")} >
+                  <button className="edit" onClick={()=>openModal(item.id,"day",'3','3','3','3','3',)} >
                   <i className="fa fa-pencil" ></i>
                   </button>
                   <button className="delete-btn" aria-label="删除" onClick={() => console.log('Delete button clicked')}>
                     <i className="fa fa-trash-o"></i>
                   </button>
                   <button className="check">
-                     <i className={`fa fa-check-circle ${item.completed ? 'text-success' : ''}`}></i>
+                     {/*<i className={`fa fa-check-circle ${item.completed ? 'text-success' : ''}`}></i>*/}
                   </button>
                   </div>
                 </div>

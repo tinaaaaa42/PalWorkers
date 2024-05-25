@@ -2,6 +2,7 @@ package com.example.demo.serviceImpl;
 
 import com.example.demo.entity.Team;
 import com.example.demo.entity.TeamMember;
+import com.example.demo.entity.User;
 import com.example.demo.repository.TeamMemberRepository;
 import com.example.demo.repository.TeamRepository;
 import com.example.demo.service.teamService;
@@ -26,5 +27,18 @@ public class teamServiceImpl implements teamService {
     @Override
     public List<TeamMember> findTeamsByUserId(int userId) {
         return teamMemberRepository.findTeamsByUserId(userId);
+    }
+
+    @Override
+    public Team addTeamByName(String teamName, User user) {
+        Team team = new Team();
+        team.setName(teamName);
+        teamRepository.save(team);
+        TeamMember teamMember = new TeamMember();
+        teamMember.setTeam(team);
+        teamMember.setUser(user);
+        teamMember.setLeader(true);
+        teamMemberRepository.save(teamMember);
+        return teamRepository.save(team);
     }
 }

@@ -6,10 +6,7 @@ import com.example.demo.entity.User;
 import com.example.demo.service.teamService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +28,16 @@ public class teamController {
             throw new RuntimeException("User not logged in");
         }
         return teamService.findTeamsByUserId(userId);
+    }
+
+    @PostMapping(value = "api/tasks/team")
+    public Team addTeam(@RequestBody String teamName, HttpSession session) {
+        System.out.println("teamName : " + teamName);
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return teamService.addTeamByName(teamName, user);
     }
 }

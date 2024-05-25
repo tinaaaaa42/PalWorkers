@@ -7,4 +7,9 @@ import java.util.List;
 
 public interface TeamRepository extends JpaRepository<Team, Integer> {
     Team findTeamById(int id);
+
+//
+    Team save(Team team);
+
+//    Team addTeamByName(String teamName);
 }

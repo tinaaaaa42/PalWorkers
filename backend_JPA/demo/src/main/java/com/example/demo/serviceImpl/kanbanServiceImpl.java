@@ -34,6 +34,9 @@ public class kanbanServiceImpl implements kanbanTaskService {
     @Autowired
     TeamTasksLeaderRepository teamTasksLeaderRepository;
 
+    @Autowired
+    TeamTasksAnticipaterRepository teamTasksAnticipaterRepository;
+
     public List<KanbanTask> findAll(int userId) {
         return kanbanTaskRepository.findAllByUserId(userId);
     }
@@ -80,10 +83,18 @@ public class kanbanServiceImpl implements kanbanTaskService {
     public List<KanbanTask> findteamTaskByUserId(User user) {
         List<KanbanTask> kanbanTasks = new ArrayList<>();
         List<TeamTasksLeader> leader_tasks = teamTasksLeaderRepository.findTasksByLeader(user);
+        List<TeamTasksAnticipater> anticipaters_tasks = teamTasksAnticipaterRepository.findTasksByAnticipater(user);
         for (TeamTasksLeader leader_task : leader_tasks) {
             String type = leader_task.getTask().getType();
             if (type.equals("kanban")) {
                 int task_id = leader_task.getTask().getId();
+                kanbanTasks.add(taskRepository.findKanbanTaskById(task_id));
+            }
+        }
+        for (TeamTasksAnticipater anticipater_task : anticipaters_tasks) {
+            String type = anticipater_task.getTask().getType();
+            if (type.equals("kanban")) {
+                int task_id = anticipater_task.getTask().getId();
                 kanbanTasks.add(taskRepository.findKanbanTaskById(task_id));
             }
         }

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,7 +30,10 @@ public class weeklyTaskController {
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
-        return weeklyService.findAll(userId);
+        List<WeeklyTask> weeklyTasks = new ArrayList<>();
+        weeklyTasks.addAll(weeklyService.findAll(userId));
+        weeklyTasks.addAll(weeklyService.findteamTasksByUser(user));
+        return weeklyTasks;
     }
 
     @PostMapping(value = "/api/tasks/weekly")

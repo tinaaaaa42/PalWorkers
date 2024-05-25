@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,10 @@ public class dailyTaskController {
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
-        return dailyTaskService.findAll(userId);
+        List<DailyTask> dailyTasks = new ArrayList<>();
+        dailyTasks.addAll(dailyTaskService.findAll(userId));
+        dailyTasks.addAll(dailyTaskService.findteamtasksByUser(user));
+        return dailyTasks;
     }
 
     @PostMapping(value = "/api/tasks/daily")

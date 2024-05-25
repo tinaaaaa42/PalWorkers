@@ -2,10 +2,7 @@ package com.example.demo.serviceImpl;
 
 import com.example.demo.DTO.WeeklyTaskDto;
 import com.example.demo.entity.*;
-import com.example.demo.repository.TagRepository;
-import com.example.demo.repository.TaskRepository;
-import com.example.demo.repository.TaskTagRepository;
-import com.example.demo.repository.WeeklyTaskRepository;
+import com.example.demo.repository.*;
 import com.example.demo.service.weeklyTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +27,15 @@ public class weeklyTaskImpl implements weeklyTaskService {
 
     @Autowired
     private TaskTagRepository taskTagRepository;
+
+    @Autowired
+    private TeamTasksLeaderRepository teamTasksLeaderRepository;
+
+    @Autowired
+    private TeamTasksAnticipaterRepository teamTasksAnticipaterRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     public List<WeeklyTask> findAll(int userId) {
         return weeklyTaskRepository.findAllByUserId(userId);
@@ -70,5 +77,27 @@ public class weeklyTaskImpl implements weeklyTaskService {
         weeklyTask.setTaskTags(taskTags);
 
         return weeklyTaskRepository.save(weeklyTask);
+    }
+
+    @Override
+    public List<WeeklyTask> findteamTasksByUser(User user) {
+        List<WeeklyTask> weeklyTasks = new ArrayList<>();
+        List<TeamTasksLeader> leader_tasks = teamTasksLeaderRepository.findTasksByLeader(user);
+        List<TeamTasksAnticipater> anticipaters_tasks = teamTasksAnticipaterRepository.findTasksByAnticipater(user);
+        for (TeamTasksLeader leader_task : leader_tasks) {
+            String type = leader_task.getTask().getType();
+            if (type.equals("weekly")) {
+                int task_id = leader_task.getTask().getId();
+                weeklyTasks.add(taskRepository.findWeeklyTaskById(task_id));
+            }
+        }
+        for (TeamTasksAnticipater anticipater_task : anticipaters_tasks) {
+            String type = anticipater_task.getTask().getType();
+            if (type.equals("weekly")) {
+                int task_id = anticipater_task.getTask().getId();
+                weeklyTasks.add(taskRepository.findWeeklyTaskById(task_id));
+            }
+        }
+        return weeklyTasks;
     }
 }

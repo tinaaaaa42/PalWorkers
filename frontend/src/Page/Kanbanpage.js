@@ -6,6 +6,7 @@ import Kanban from "../component/Kanban";
 import ModalContext from '../context/ModalContext';
 import React, { useContext ,useState,useEffect} from 'react';
 import {get_kanban_task} from "../service/kanban_task";
+import Navbar from "../component/Navv";
 function Kanbanpage(){
     const { openModal ,isModalOpen} = useContext(ModalContext);
     const [kanbantasks, setKanban_tasks] = useState([]);
@@ -28,7 +29,8 @@ function Kanbanpage(){
     return (<>
     <div className="container">
         <Navleft></Navleft>
-        <Seconddir tags={allTags} taskstitle={allTaskTitles}></Seconddir>
+        {/* <Seconddir tags={allTags} taskstitle={allTaskTitles}></Seconddir> */}
+        <Navbar tasks={kanbantasks} title={"Kanban"}></Navbar>
         <div className="mainpart">
         <Header></Header>
         <Control taskhandler={handleClick}></Control>

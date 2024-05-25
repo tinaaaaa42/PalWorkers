@@ -1,14 +1,30 @@
 import React from 'react';
 import { AppstoreOutlined, MailOutlined, SettingOutlined, TagsOutlined, ContainerOutlined, ProjectOutlined } from '@ant-design/icons';
 import { Menu, Typography } from 'antd';
-
+import { useLocation, useNavigate } from 'react-router-dom';
 const { Title } = Typography;
 
-const Navbar = () => {
+const Navbar = ({tasks,title,allteam}) => {
+  const location = useLocation();
+  const isProfilePage = location.pathname === '/profile';
   const teams = ['Team1', 'Team2', 'Team3'];
   const tags = ['Tag1', 'Tag2', 'Tag3'];
-  const tasks = ['Task1', 'Task2', 'Task3'];
-  const projects = ['Project1111', 'Project2', 'Project3'];
+  const tasksName = tasks.map(task => task.title);
+  const taskTagsSet = new Set();
+  const teamSet = new Set();
+  tasks.forEach(task => {
+    task.taskTags.forEach(tag => {
+      taskTagsSet.add(tag.tag.name);
+    });
+  });
+  tasks.forEach(task => {
+    if(task.team)
+    teamSet.add(task.team.name);
+  });
+  const uniqueTags = Array.from(taskTagsSet);
+  const uniqueTeams= Array.from(teamSet);
+  const projects = ['Project', 'Project2', 'Project3'];
+  const teamsname=isProfilePage?allteam:uniqueTeams;
   const renderItems = (icon, label, children) => ({
     key: label.toLowerCase(),
     icon: icon,
@@ -20,9 +36,9 @@ const Navbar = () => {
     visible: children && children.length > 0,
   });
 
-  const teamsItem = renderItems(<MailOutlined />, 'Teams', teams);
-  const tagsItem = renderItems(<TagsOutlined />, 'Tags', tags);
-  const tasksItem = renderItems(<ContainerOutlined />, 'Tasks', tasks);
+  const teamsItem = renderItems(<MailOutlined />, 'Teams', teamsname);
+  const tagsItem = renderItems(<TagsOutlined />, 'Tags', uniqueTags);
+  const tasksItem = renderItems(<ContainerOutlined />, 'Tasks', tasksName);
   const projectsItem = renderItems(<ProjectOutlined />, 'Projects', projects);
 
   const items = [
@@ -38,7 +54,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <Title level={3} style={{ padding: '16px 24px' }}>Navigation Menu</Title>
+      <Title level={3} style={{ padding: '16px 24px' }}>{title}</Title>
       <Menu
         onClick={onClick}
         style={{

@@ -18,12 +18,17 @@ function Profilepage(){
     useEffect( () => {
         init_team();
     }, []);
+    const teamNames=[];
+    team.forEach(teamData => {
+        const teamName = teamData.team.name;
+        teamNames.push(teamName);
+    });
     const allteam=['Team4', 'Team5', 'Team6'];
     return (<>
     <div className="container">
         <Navleft></Navleft>
         {/* <Seconddir ></Seconddir> */}
-        <Navbar tasks={[]} title={"Profile"} allteam={allteam}></Navbar>
+        <Navbar tasks={[]} title={"Profile"} allteam={allteam} teamss={teamNames}></Navbar>
         <div className="mainpart">
         <Header></Header>
         <UserProfile></UserProfile>

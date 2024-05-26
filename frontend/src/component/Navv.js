@@ -4,7 +4,7 @@ import { Menu, Typography } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 const { Title } = Typography;
 
-const Navbar = ({tasks,title,allteam}) => {
+const Navbar = ({tasks,title,allteam,teamss}) => {
   const location = useLocation();
   const isProfilePage = location.pathname === '/profile';
   const teams = ['Team1', 'Team2', 'Team3'];
@@ -24,7 +24,7 @@ const Navbar = ({tasks,title,allteam}) => {
   const uniqueTags = Array.from(taskTagsSet);
   const uniqueTeams= Array.from(teamSet);
   const projects = ['Project', 'Project2', 'Project3'];
-  const teamsname=isProfilePage?allteam:uniqueTeams;
+  const teamsname=isProfilePage?teamss:uniqueTeams;
   const renderItems = (icon, label, children) => ({
     key: label.toLowerCase(),
     icon: icon,

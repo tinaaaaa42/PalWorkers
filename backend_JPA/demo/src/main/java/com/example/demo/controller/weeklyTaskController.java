@@ -36,14 +36,14 @@ public class weeklyTaskController {
         return weeklyTasks;
     }
 
-    @PostMapping(value = "/api/tasks/weekly")
-    public WeeklyTask addWeeklyTask(@RequestBody WeeklyTaskDto weeklyTaskDto, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        Integer userId = user.getId();
-        if (userId == null) {
-            throw new RuntimeException("User not logged in");
-        }
-        return weeklyService.addWeeklyTask(weeklyTaskDto, user);
-    }
+//    @PostMapping(value = "/api/tasks/weekly")
+//    public WeeklyTask addWeeklyTask(@RequestBody WeeklyTaskDto weeklyTaskDto, HttpSession session) {
+//        User user = (User) session.getAttribute("user");
+//        Integer userId = user.getId();
+//        if (userId == null) {
+//            throw new RuntimeException("User not logged in");
+//        }
+//        return weeklyService.addWeeklyTask(weeklyTaskDto, user);
+//    }
 
 }

@@ -48,15 +48,15 @@ public class kanbanTaskController {
         return kanbanTasks;
     }
 
-    @PostMapping(value = "/api/tasks/kanban")
-    public KanbanTask addKanbanTask(@RequestBody KanbanTaskDto kanbanTaskDto, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        Integer userId = user.getId();
-        if (userId == null) {
-            throw new RuntimeException("User not logged in");
-        }
-        return kanbantaskService.addKanbanTask(kanbanTaskDto, user);
-    }
+//    @PostMapping(value = "/api/tasks/kanban")
+//    public KanbanTask addKanbanTask(@RequestBody KanbanTaskDto kanbanTaskDto, HttpSession session) {
+//        User user = (User) session.getAttribute("user");
+//        Integer userId = user.getId();
+//        if (userId == null) {
+//            throw new RuntimeException("User not logged in");
+//        }
+//        return kanbantaskService.addKanbanTask(kanbanTaskDto, user);
+//    }
 
 
 }

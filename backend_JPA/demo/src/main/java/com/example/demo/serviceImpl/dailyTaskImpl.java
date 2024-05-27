@@ -39,80 +39,80 @@ public class dailyTaskImpl implements dailyTaskService {
         return dailyTaskRepository.findAllByUserId(userId);
     }
 
-    @Override
-    public DailyTask addDailyTask(DailyTaskDto dailyTaskDto, User user) {
-        DailyTask dailyTask = new DailyTask();
-        dailyTask.setDescription(dailyTaskDto.getTask().getDescription());
-        dailyTask.setCreateDate(LocalDate.parse(dailyTaskDto.getTask().getCreateDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        dailyTask.setDueDate(LocalDate.parse(dailyTaskDto.getTask().getDueDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        dailyTask.setTitle(dailyTaskDto.getTask().getTitle());
-        dailyTask.setType(dailyTaskDto.getTask().getType());
-        dailyTask.setUser(user);
-        dailyTask.setExpired(false);
-
-        // Save the task
-        dailyTaskRepository.save(dailyTask);
-
-        List<String> tags = dailyTaskDto.getTask().getTags();
-        Set<TaskTag> taskTags = new HashSet<>();
-        for (int i = 0; i < tags.size(); i++) {
-            String tag_name = tags.get(i);
-            Tag tag = tagRepository.findByName(tag_name);
-            if (tag == null) {
-                tag = new Tag();
-                tag.setName(tag_name);
-                tagRepository.save(tag);
-            }
-            TaskTag taskTag = new TaskTag();
-            taskTag.setTask(dailyTask);
-            taskTag.setTag(tag);
-            taskTagRepository.save(taskTag);
-            taskTags.add(taskTag);
-        }
-        dailyTask.setTaskTags(taskTags);
-
-        // Associate the task with the weeklyTask
-
-        return dailyTaskRepository.save(dailyTask);
-    }
-
-    @Override
-    public DailyTask updateDailyTask(DailyTaskDto dailyTaskDto, User user) {
-        int task_id = dailyTaskDto.getTask().getTask_id();
-        DailyTask dailyTask = dailyTaskRepository.findById(task_id).get();
-        dailyTask.setDescription(dailyTaskDto.getTask().getDescription());
-        dailyTask.setCreateDate(LocalDate.parse(dailyTaskDto.getTask().getCreateDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        dailyTask.setDueDate(LocalDate.parse(dailyTaskDto.getTask().getDueDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        dailyTask.setTitle(dailyTaskDto.getTask().getTitle());
-        dailyTask.setType(dailyTaskDto.getTask().getType());
-        dailyTask.setUser(user);
-        dailyTask.setExpired(false);
-
-        // Save the task
-        dailyTaskRepository.save(dailyTask);
-
-        List<String> tags = dailyTaskDto.getTask().getTags();
-        Set<TaskTag> taskTags = new HashSet<>();
-        for (int i = 0; i < tags.size(); i++) {
-            String tag_name = tags.get(i);
-            Tag tag = tagRepository.findByName(tag_name);
-            if (tag == null) {
-                tag = new Tag();
-                tag.setName(tag_name);
-                tagRepository.save(tag);
-            }
-            TaskTag taskTag = new TaskTag();
-            taskTag.setTask(dailyTask);
-            taskTag.setTag(tag);
-            taskTagRepository.save(taskTag);
-            taskTags.add(taskTag);
-        }
-        dailyTask.setTaskTags(taskTags);
-
-        // Associate the task with the weeklyTask
-
-        return dailyTaskRepository.save(dailyTask);
-    }
+//    @Override
+//    public DailyTask addDailyTask(DailyTaskDto dailyTaskDto, User user) {
+//        DailyTask dailyTask = new DailyTask();
+//        dailyTask.setDescription(dailyTaskDto.getTask().getDescription());
+//        dailyTask.setCreateDate(LocalDate.parse(dailyTaskDto.getTask().getCreateDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//        dailyTask.setDueDate(LocalDate.parse(dailyTaskDto.getTask().getDueDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//        dailyTask.setTitle(dailyTaskDto.getTask().getTitle());
+//        dailyTask.setType(dailyTaskDto.getTask().getType());
+//        dailyTask.setUser(user);
+//        dailyTask.setExpired(false);
+//
+//        // Save the task
+//        dailyTaskRepository.save(dailyTask);
+//
+//        List<String> tags = dailyTaskDto.getTask().getTags();
+//        Set<TaskTag> taskTags = new HashSet<>();
+//        for (int i = 0; i < tags.size(); i++) {
+//            String tag_name = tags.get(i);
+//            Tag tag = tagRepository.findByName(tag_name);
+//            if (tag == null) {
+//                tag = new Tag();
+//                tag.setName(tag_name);
+//                tagRepository.save(tag);
+//            }
+//            TaskTag taskTag = new TaskTag();
+//            taskTag.setTask(dailyTask);
+//            taskTag.setTag(tag);
+//            taskTagRepository.save(taskTag);
+//            taskTags.add(taskTag);
+//        }
+//        dailyTask.setTaskTags(taskTags);
+//
+//        // Associate the task with the weeklyTask
+//
+//        return dailyTaskRepository.save(dailyTask);
+//    }
+//
+//    @Override
+//    public DailyTask updateDailyTask(DailyTaskDto dailyTaskDto, User user) {
+//        int task_id = dailyTaskDto.getTask().getTask_id();
+//        DailyTask dailyTask = dailyTaskRepository.findById(task_id).get();
+//        dailyTask.setDescription(dailyTaskDto.getTask().getDescription());
+//        dailyTask.setCreateDate(LocalDate.parse(dailyTaskDto.getTask().getCreateDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//        dailyTask.setDueDate(LocalDate.parse(dailyTaskDto.getTask().getDueDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//        dailyTask.setTitle(dailyTaskDto.getTask().getTitle());
+//        dailyTask.setType(dailyTaskDto.getTask().getType());
+//        dailyTask.setUser(user);
+//        dailyTask.setExpired(false);
+//
+//        // Save the task
+//        dailyTaskRepository.save(dailyTask);
+//
+//        List<String> tags = dailyTaskDto.getTask().getTags();
+//        Set<TaskTag> taskTags = new HashSet<>();
+//        for (int i = 0; i < tags.size(); i++) {
+//            String tag_name = tags.get(i);
+//            Tag tag = tagRepository.findByName(tag_name);
+//            if (tag == null) {
+//                tag = new Tag();
+//                tag.setName(tag_name);
+//                tagRepository.save(tag);
+//            }
+//            TaskTag taskTag = new TaskTag();
+//            taskTag.setTask(dailyTask);
+//            taskTag.setTag(tag);
+//            taskTagRepository.save(taskTag);
+//            taskTags.add(taskTag);
+//        }
+//        dailyTask.setTaskTags(taskTags);
+//
+//        // Associate the task with the weeklyTask
+//
+//        return dailyTaskRepository.save(dailyTask);
+//    }
 
     @Override
     public List<DailyTask> findteamtasksByUser(User user) {

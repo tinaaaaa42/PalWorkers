@@ -32,24 +32,24 @@ public class dailyTaskController {
         return dailyTasks;
     }
 
-    @PostMapping(value = "/api/tasks/daily")
-    public DailyTask createDailyTask(@RequestBody DailyTaskDto dailyTaskDto, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        Integer userId = user.getId();
-        if (userId == null) {
-            throw new RuntimeException("User not logged in");
-        }
-        return dailyTaskService.addDailyTask(dailyTaskDto, user);
-    }
-
-    @PutMapping(value = "/api/tasks/daily")
-    public DailyTask updateDailyTask(@RequestBody DailyTaskDto dailyTaskDto, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        Integer userId = user.getId();
-        if (userId == null) {
-            throw new RuntimeException("User not logged in");
-        }
-        return dailyTaskService.updateDailyTask(dailyTaskDto, user);
-
-    }
+//    @PostMapping(value = "/api/tasks/daily")
+//    public DailyTask createDailyTask(@RequestBody DailyTaskDto dailyTaskDto, HttpSession session) {
+//        User user = (User) session.getAttribute("user");
+//        Integer userId = user.getId();
+//        if (userId == null) {
+//            throw new RuntimeException("User not logged in");
+//        }
+//        return dailyTaskService.addDailyTask(dailyTaskDto, user);
+//    }
+//
+//    @PutMapping(value = "/api/tasks/daily")
+//    public DailyTask updateDailyTask(@RequestBody DailyTaskDto dailyTaskDto, HttpSession session) {
+//        User user = (User) session.getAttribute("user");
+//        Integer userId = user.getId();
+//        if (userId == null) {
+//            throw new RuntimeException("User not logged in");
+//        }
+//        return dailyTaskService.updateDailyTask(dailyTaskDto, user);
+//
+//    }
 }

@@ -77,4 +77,20 @@ public class Task {
     @Column(name = "due_time")
     private LocalTime dueTime;
 
+    public Task(Task task) {
+        this.id = task.getId();
+        this.title = task.getTitle();
+        this.description = task.getDescription();
+        this.createDate = task.getCreateDate();
+        this.dueDate = task.getDueDate();
+        this.type = task.getType();
+        this.taskTags = task.getTaskTags();
+        this.user = task.getUser();
+        this.team = task.getTeam();
+        this.teamTasksAnticipaters = task.getTeamTasksAnticipaters();
+        this.teamTasksLeaders = task.getTeamTasksLeaders();
+        this.expired = task.getExpired();
+        this.dueTime = task.getDueTime();
+    }
+
 }

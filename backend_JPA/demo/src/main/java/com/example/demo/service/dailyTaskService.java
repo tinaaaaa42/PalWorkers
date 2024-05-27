@@ -11,7 +11,7 @@ public interface dailyTaskService {
 
     List<DailyTask> findteamtasksByUser(User user);
 
-    DailyTask addDailyTask(DailyTaskDto dailyTaskDto, User user);
-
-    DailyTask updateDailyTask(DailyTaskDto dailyTaskDto, User user);
+//    DailyTask addDailyTask(DailyTaskDto dailyTaskDto, User user);
+//
+//    DailyTask updateDailyTask(DailyTaskDto dailyTaskDto, User user);
 }

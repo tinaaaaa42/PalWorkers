@@ -9,7 +9,7 @@ import java.util.List;
 public interface weeklyTaskService {
     List<WeeklyTask> findAll(int id);
 
-    WeeklyTask addWeeklyTask(WeeklyTaskDto weeklyTaskDto, User user);
+//    WeeklyTask addWeeklyTask(WeeklyTaskDto weeklyTaskDto, User user);
 
     List<WeeklyTask> findteamTasksByUser(User user);
 }

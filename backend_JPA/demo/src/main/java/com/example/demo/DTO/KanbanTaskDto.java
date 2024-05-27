@@ -1,5 +1,6 @@
 package com.example.demo.DTO;
 
+import lombok.Data;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -7,8 +8,13 @@ import java.io.Serializable;
 /**
  * DTO for {@link com.example.demo.entity.KanbanTask}
  */
-@Value
-public class KanbanTaskDto implements Serializable {
-    TaskDto task;
+//@Value
+@Data
+public class KanbanTaskDto extends TaskDto {
+//    TaskDto task;
     String state;
+
+    public KanbanTaskDto() {
+        this.setType("kanban");
+    }
 }

@@ -31,6 +31,14 @@ import jakarta.persistence.Table;
 @Table(name = "daily_tasks")
 public class DailyTask extends Task {
 
+//    public DailyTask(Task task) {
+//        super(task);
+//    }
+//
+//    public DailyTask() {
+//
+//    }
+
     // No additional fields for now
 
     // Getters and setters

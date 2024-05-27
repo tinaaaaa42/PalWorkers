@@ -12,5 +12,5 @@ public interface kanbanTaskService {
 
     List<KanbanTask> findteamTaskByUserId(User user);
 
-    KanbanTask addKanbanTask(KanbanTaskDto kanbanTaskDto, User user);
+//    KanbanTask addKanbanTask(KanbanTaskDto kanbanTaskDto, User user);
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Input, Avatar, Tag, Form, Modal, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { create_team } from '../service/team';
 
 const Teams = [
   {
@@ -29,14 +30,69 @@ const Teams = [
 
 const currentUser = { id: 1, username: 'user1' };
 
-const TeamTable = () => {
+const TeamTable = ({team}) => {
+  console.log(team)
   const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [invitationCode, setInvitationCode] = useState('');
   const [form] = Form.useForm();
   const [addForm] = Form.useForm();
+  const transformData = (rawData) => {
+    const teams = rawData.reduce((acc, team) => {
+      const transformedTeam = {
+        id: team.team.id,
+        name: team.team.name,
+        participant: [],
+        leader: [],
+      };
 
+      console.log(transformedTeam)
+  
+      // Add participants
+      team.team.teamMembers.forEach((member) => {
+        if (!member.leader) {
+          transformedTeam.participant.push({
+            id: member.user.id,
+            username: member.user.username,
+            avatar: null, // Assuming avatar is not provided in the raw data
+          });
+        }
+      });
+  
+      team.team.teamMembers.forEach((member) => {
+        if (member.leader) {
+          transformedTeam.leader.push({
+            id: member.user.id,
+            username: member.user.username,
+            avatar: null, // Assuming avatar is not provided in the raw data
+          });
+        }
+      });
+  
+      acc.push(transformedTeam);
+      return acc;
+    }, []);
+
+    // Add current user information if provided
+    // const currentUser = team.team.teamMembers.find((member) => member.user.username === team.user.username);
+    const currentUser = team[0].user;
+    console.log(currentUser)
+    // if (currentUser) {
+    //   teams[0].participant.push({
+    //     id: currentUser.id,
+    //     username: currentUser.username,
+    //     avatar: null, 
+    //   });
+    // }
+  
+    return teams;
+  };
+  
+  const Teams = transformData(team);
+  console.log(Teams);
+  
   const expandedRowRender = (team) => {
+    //console.log(curUser);
     const participantColumns = [
       {
         title: 'Avatar',
@@ -117,20 +173,21 @@ const TeamTable = () => {
     { title: 'Team Name', dataIndex: 'name', key: 'name' },
   ];
 
-  const handleCreateTeam = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        // 模拟发送请求到后台创建团队
-        console.log('Creating team with name:', values.teamName);
-        // 模拟后台返回邀请码
-        const newInvitationCode = 'ABC123';
-        setInvitationCode(newInvitationCode);
-        message.success(`Team created! Invitation code: ${newInvitationCode}`);
-      })
-      .catch((info) => {
-        console.log('Validate Failed:', info);
-      });
+  const handleCreateTeam = async(teamName) => {
+    try {
+      const newInvitationCode = await create_team(teamName);
+      // 设置邀请码
+      // const newInvitationCode = "123456";
+      console.log(newInvitationCode);
+      setInvitationCode(newInvitationCode);
+      // 显示成功消息
+      message.success(`Team created! Invitation code: ${newInvitationCode}`);
+    } catch (error) {
+      // 打印验证失败的信息
+      console.log('Validate Failed:', error);
+      // 可能还需要处理错误情况，比如显示错误消息
+      message.error('Failed to create team. Please try again.');
+    }
   };
 
   const handleAddTeam = () => {
@@ -189,7 +246,7 @@ const TeamTable = () => {
           </p>
         )}
         <div style={{ textAlign: 'right' }}>
-          <Button type="primary" onClick={handleCreateTeam} style={{ marginRight: 8 }}>
+          <Button type="primary" onClick={() => handleCreateTeam(form.getFieldValue('teamName'))} style={{ marginRight: 8 }}>
             OK
           </Button>
           <Button onClick={handleCreateTeamComplete}>

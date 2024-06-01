@@ -31,7 +31,7 @@ function Profilepage(){
         <Navbar tasks={[]} title={"Profile"} allteam={allteam} teamss={teamNames}></Navbar>
         <div className="mainpart">
         <Header></Header>
-        <UserProfile></UserProfile>
+        <UserProfile team={team}></UserProfile>
         </div>
     </div>
     </>);

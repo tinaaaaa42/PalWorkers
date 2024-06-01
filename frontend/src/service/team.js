@@ -16,16 +16,14 @@ export async function get_team() {
 }
 
 export async function create_team(teamName) {
-    const url = `${PREFIX}/tasks/team`;
+    console.log(teamName)
+    const url = `${PREFIX}/tasks/create_team`;
     let team;
     try {
         team = await post(url,teamName)
     } catch (e) {
         console.log(e);
-        team = {
-            total: 0,
-            items: []
-        };
+        team = null;
     }
-    return team;
+    return team.cookie;
 }

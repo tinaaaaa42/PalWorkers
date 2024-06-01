@@ -9,7 +9,7 @@ import ProfileInfo from './Profileinfo';
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
-function UserProfile() {
+function UserProfile({team}) {
   const [selectedMenu, setSelectedMenu] = useState('activity');
 
   const data = [
@@ -68,7 +68,7 @@ function UserProfile() {
 
   const renderContent = () => {
     if (selectedMenu === 'team') {
-      return <TeamTable / >;
+      return <TeamTable team={team}/ >;
     } else if (selectedMenu === 'activity') {
       return (
         <>

@@ -14,3 +14,18 @@ export async function get_daily_task () {
     }
     return daily_tasks;
 }
+
+export async function getDailyTask (date) {
+    const url = `${PREFIX}/tasks/daily/date=${date}`;
+    let daily_tasks;
+    try {
+        daily_tasks = await getJson(url);
+    } catch (e) {
+        console.log(e);
+        daily_tasks = {
+            total: 0,
+            items: []
+        };
+    }
+    return daily_tasks;
+}

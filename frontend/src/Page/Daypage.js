@@ -30,7 +30,6 @@ import Navbar from "../component/Navv";
          <Navbar tasks={dailyTasks} title={"Day"}></Navbar>
          <div className="mainpart">
          <Header></Header>
-
          <div class="two-columns">
          <div><Daytodo tasks={dailyTasks}></Daytodo></div>
            <div> <Dayphoto></Dayphoto> </div>

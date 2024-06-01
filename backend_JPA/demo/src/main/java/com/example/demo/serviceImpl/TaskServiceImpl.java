@@ -85,6 +85,7 @@ public class TaskServiceImpl implements TaskService {
         task.setType(type);
         task.setExpired(expired);
         task.setCompleted(false);
+        taskRepository.save(task);
 
         Set<TaskTag> tags = new LinkedHashSet<>();
         for (String tagName : taskDto.getTags()) {
@@ -98,9 +99,11 @@ public class TaskServiceImpl implements TaskService {
             taskTag.setTag(tag);
             taskTag.setTask(task);
             tags.add(taskTag);
+            taskTagRepository.save(taskTag);
         }
         task.setTaskTags(tags);
 
+        // double save to ensure taskTags are saved
         taskRepository.save(task);
         switch (type.toLowerCase()) {
             case "daily":
@@ -172,8 +175,10 @@ public class TaskServiceImpl implements TaskService {
         task.setType(type);
         task.setExpired(expired);
         task.setCompleted(false);
+        taskRepository.save(task);
 
         Set<TaskTag> tags = new LinkedHashSet<>();
+        Set<TaskTag> oldTags = task.getTaskTags();
         for (String tagName : taskDto.getTags()) {
             Tag tag = tagRepository.findByName(tagName);
             if (tag == null) {
@@ -185,9 +190,15 @@ public class TaskServiceImpl implements TaskService {
             taskTag.setTag(tag);
             taskTag.setTask(task);
             tags.add(taskTag);
+            taskTagRepository.save(taskTag);
         }
+        Set<TaskTag> toRemove = new LinkedHashSet<>(oldTags);
+        toRemove.removeAll(tags);
+        taskTagRepository.deleteAll(toRemove);
+
         task.setTaskTags(tags);
 
+        // double save as creating
         taskRepository.save(task);
         switch (type.toLowerCase()) {
             case "daily":

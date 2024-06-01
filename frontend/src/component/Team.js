@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Input, Avatar, Tag, Form, Modal, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { create_team } from '../service/team';
+import { create_team, join_team } from '../service/team';
 
 const Teams = [
   {
@@ -190,19 +190,16 @@ const TeamTable = ({team}) => {
     }
   };
 
-  const handleAddTeam = () => {
-    addForm
-      .validateFields()
-      .then((values) => {
-        // 模拟发送请求到后台加入团队
-        console.log('Adding team with code:', values.invitationCode);
-        message.success(`Joined team with invitation code: ${values.invitationCode}`);
+  const handleAddTeam = async(invitationCode) => {
+    try{
+        const team=await join_team(invitationCode);  
+        console.log('Adding team with code:', invitationCode);
+        message.success(`Joined team with invitation code: ${invitationCode}`);
         setIsAddModalVisible(false);
         addForm.resetFields();
-      })
-      .catch((info) => {
-        console.log('Validate Failed:', info);
-      });
+    }catch (error){
+      message.error('Failed to add team. Please try again.');
+    }
   };
 
   const handleCreateTeamComplete = () => {
@@ -257,7 +254,7 @@ const TeamTable = ({team}) => {
       <Modal
         title="Add Team"
         visible={isAddModalVisible}
-        onOk={handleAddTeam}
+        onOk={() => handleAddTeam(addForm.getFieldValue('invitationCode'))}
         onCancel={() => setIsAddModalVisible(false)}
       >
         <Form form={addForm} layout="vertical" name="add_team_form">

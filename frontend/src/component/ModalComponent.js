@@ -5,7 +5,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { DayTasks,Tasks,WeekTasks,Projects} from "../Data/data";
-import {createTask} from "../service/write"
+import {createWeeklyTask} from "../service/weekly_write"
+import {createDailyTask} from "../service/daily_write"
+import {createKanbanTask} from "../service/kanbantask_write"
 const ModalComponent = () => {
   const { isModalOpen, closeModal ,type,message,task} = useContext(ModalContext);
 
@@ -46,10 +48,11 @@ const ModalComponent = () => {
         return `${year}-${month}-${day}`;
         }
 
-        const convertStateToBackendFormat = () => {
+        const convertWeeklyStateToBackendFormat = () => {
+//        const tags = state.tag.length===[] ? [] : [state.tag];
             // 构造新的 JSON 对象
             const backendData = {
-              task: {
+
               id:task.id||null,
                 title: state.taskName,
                 description: state.description,
@@ -57,26 +60,80 @@ const ModalComponent = () => {
                 dueDate: formatDate(state.dueTime),
                 type: state.type,
                 tags: [],
-              },
-              important: "true",
-              urgent: "true"
+              important: state.important,
+              urgent: state.urgent,
+              expired:false
             };
-            console.log(backendData)
             return backendData;
           };
+           const convertDailyStateToBackendFormat = () => {
 
-           const handleSave = async (e) => {
-                 const dataToSend = convertStateToBackendFormat();
-                    e.preventDefault();
+                       const backendData = {
+
+                        id:task.id||null,
+                          title: state.taskName,
+                          description: state.description,
+                          createDate: formatDate(state.startTime),
+                          dueDate: formatDate(state.dueTime),
+                          type: state.type,
+                          tags: [],
+                          expired:false
+                        };
+                      return backendData;
+                    };
+           const convertKanbanStateToBackendFormat = () => {
+
+                       const backendData = {
+                                     task: {
+                                     id:task.id||null,
+                                       title: state.taskName,
+                                       description: state.description,
+                                       createDate: formatDate(state.startTime),
+                                       dueDate: formatDate(state.dueTime),
+                                       type: state.type,
+                                       tags: [],
+                                     },
+                                     state:state.choosepro
+                                   };
+                      return backendData;
+                    };
+//           const convertWeeklyStateToBackendFormat = () => {
+//                       const backendData = {
+//
+//                        id:task.id||null,
+//                          title: state.taskName,
+//                          description: state.description,
+//                          createDate: formatDate(state.startTime),
+//                          dueDate: formatDate(state.dueTime),
+//                          type: state.type,
+//                          tags: [],
+//                        };
+//                      return backendData;
+//                    };
+
+
+
+                const handleSave = async (e) => {
+
+                    let response;
+                      e.preventDefault();
                     try {
-                      const response = await createTask(dataToSend);
-                      console.log('任务创建成功:', response);
-
-                    } catch (error) {
+                    switch(type){
+                    case "day":
+                      response = await createDailyTask(convertDailyStateToBackendFormat());break;
+                     case "week":
+                       response = await createWeeklyTask(convertWeeklyStateToBackendFormat());break;
+                      case "kanban":
+                        response = await createKanbanTask(convertDailyStateToBackendFormat());break;
+                        }
+                    }
+                    catch (error) {
                       console.error('创建任务失败:', error);
                     }
                          closeModal();
+
                   };
+
 
 
 
@@ -127,6 +184,12 @@ const ModalComponent = () => {
       assignee: event.target.value
     });
   };
+  const handleProChange = (event) => {
+      setState({
+        ...state,
+        choosepro: event.target.value
+      });
+    };
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -156,6 +219,30 @@ const ModalComponent = () => {
 //      console.log(type);
 //    });
 React.useEffect(() => {
+          if(message==1)
+             setState(prevState => ({
+               ...prevState,
+               important: true,
+               urgent:true
+             }));
+          if(message==2)
+             setState(prevState => ({
+               ...prevState,
+               important: true,
+               urgent:false
+             }));
+          if(message==3)
+             setState(prevState => ({
+               ...prevState,
+               important: false,
+               urgent:true
+             }));
+          if(message==4)
+             setState(prevState => ({
+               ...prevState,
+               important: false,
+               urgent:false
+             }));
     switch(type){
 
       case "day":{
@@ -197,9 +284,7 @@ React.useEffect(() => {
                      ...prevState,
                      taskName: '',
                      type:"weekly"
-
-
-                   }));
+                     }));
                    break;
                    }
 
@@ -226,9 +311,10 @@ React.useEffect(() => {
             break;
             }
       case "kanban":{
- if(!task) {
+            if(!task) {
              setState(prevState => ({
                ...prevState,
+               type:"kanban",
                taskName: '',
              }));
              break;
@@ -237,6 +323,7 @@ React.useEffect(() => {
 
         setState(prevState => ({
           ...prevState,
+          type:"kanban",
           choosepro:task.state,
           taskName: task.title||'',
           tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
@@ -244,15 +331,15 @@ React.useEffect(() => {
           dueTime: task.dueDate || '',
           description:task.description
         }));
-        if(task.team!=null){
-        setState(prevState => ({
-              ...prevState,
-              team: task.team.name,
-              teamTasksAnticipaters:task.teamTasksAnticipaters,
-              teamTasksLeaders:task.teamTasksLeaders
-
-
-           }));}
+//        if(task.team!=null){
+//        setState(prevState => ({
+//              ...prevState,
+//              team: task.team.name,
+//              teamTasksAnticipaters:task.teamTasksAnticipaters,
+//              teamTasksLeaders:task.teamTasksLeaders
+//
+//
+//           }));}
       break;
       }
 //           let task;
@@ -372,7 +459,7 @@ React.useEffect(() => {
                     <label>
                     <img className='pic' src={process.env.PUBLIC_URL + "/进度.png"}  alt="" ></img>
                       progress:
-                      <select name="assignee" className='Progressselect'  value={state.choosepro} onChange={handleAssigneeChange}>
+                      <select name="assignee" className='Progressselect'  value={state.choosepro} onChange={handleProChange}>
                             <option value="todo">Todo</option>
                             <option value="inprogress">In Progress</option>
                             <option value="review">Review</option>

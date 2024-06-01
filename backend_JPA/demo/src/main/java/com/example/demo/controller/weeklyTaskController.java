@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,16 +24,18 @@ public class weeklyTaskController {
     @Autowired
     private WeeklyTaskRepository weeklyTaskRepository;
 
-    @GetMapping(value = "api/tasks/weekly")
-    public List<WeeklyTask> getAllWeeklyTask(HttpSession session) {
+    @GetMapping(value = "api/tasks/weekly/start={startDate}/end={endDate}")
+    public List<WeeklyTask> getAllWeeklyTask(HttpSession session, @PathVariable String startDate, @PathVariable String endDate) {
         User user = (User) session.getAttribute("user");
         Integer userId = user.getId();
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
         List<WeeklyTask> weeklyTasks = new ArrayList<>();
-        weeklyTasks.addAll(weeklyService.findAll(userId));
-        weeklyTasks.addAll(weeklyService.findteamTasksByUser(user));
+        weeklyTasks.addAll(weeklyService.findAll(userId,start,end));
+        weeklyTasks.addAll(weeklyService.findteamTasksByUser(user,start,end));
         return weeklyTasks;
     }
 

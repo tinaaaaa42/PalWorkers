@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.TeamDto;
 import com.example.demo.entity.Team;
 import com.example.demo.entity.TeamMember;
 import com.example.demo.entity.User;
 import com.example.demo.service.teamService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,13 +33,16 @@ public class teamController {
     }
 
     @PostMapping(value = "api/tasks/create_team")
-    public String createTeam(@RequestBody String teamName, HttpSession session) {
+    public TeamDto createTeam(@RequestBody String teamName, HttpSession session) {
         User user = (User) session.getAttribute("user");
         Integer userId = user.getId();
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
-        return teamService.addTeamByName(teamName, user);
+        String cookie = teamService.addTeamByName(teamName,user);
+        TeamDto teamDto = new TeamDto();
+        teamDto.setCookie(cookie);
+        return teamDto;
     }
 
     @PostMapping(value = "api/tasks/join_team")

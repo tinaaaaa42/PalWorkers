@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,16 +36,18 @@ public class kanbanTaskController {
     @Autowired
     TaskRepository taskRepository;
 
-    @GetMapping(value = "/api/tasks/kanban")
-    public List<KanbanTask> getAllKanbanTask(HttpSession session) {
+    @GetMapping(value = "/api/tasks/kanban/start={startDate}/end={endDate}")
+    public List<KanbanTask> getAllKanbanTask(HttpSession session, @PathVariable String startDate, @PathVariable String endDate) {
         User user = (User) session.getAttribute("user");
         Integer userId = user.getId();
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
         List<KanbanTask> kanbanTasks = new ArrayList<>();
-        kanbanTasks.addAll(kanbantaskService.findAll(userId));
-        kanbanTasks.addAll(kanbantaskService.findteamTaskByUserId(user));
+        kanbanTasks.addAll(kanbantaskService.findAll(userId, start, end));
+        kanbanTasks.addAll(kanbantaskService.findteamTaskByUserId(user,start,end));
         return kanbanTasks;
     }
 

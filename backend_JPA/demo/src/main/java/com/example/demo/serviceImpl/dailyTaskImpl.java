@@ -35,7 +35,7 @@ public class dailyTaskImpl implements dailyTaskService {
     private TaskRepository taskRepository;
 
     @Override
-    public List<DailyTask> findAll(int userId) {
+    public List<DailyTask> findAll(int userId, LocalDate startDate, LocalDate endDate) {
         return dailyTaskRepository.findAllByUserId(userId);
     }
 
@@ -115,20 +115,22 @@ public class dailyTaskImpl implements dailyTaskService {
 //    }
 
     @Override
-    public List<DailyTask> findteamtasksByUser(User user) {
+    public List<DailyTask> findteamtasksByUser(User user,LocalDate start,LocalDate end) {
         List<DailyTask> dailyTasks = new ArrayList<>();
         List<TeamTasksLeader> leader_tasks = teamTasksLeaderRepository.findTasksByLeader(user);
         List<TeamTasksAnticipater> anticipaters_tasks = teamTasksAnticipaterRepository.findTasksByAnticipater(user);
         for (TeamTasksLeader leader_task : leader_tasks) {
             String type = leader_task.getTask().getType();
-            if (type.equals("daily")) {
+            LocalDate createDate = leader_task.getTask().getCreateDate();
+            if (type.equals("daily") && createDate.isBefore(end) && createDate.isAfter(start)) {
                 int task_id = leader_task.getTask().getId();
                 dailyTasks.add(taskRepository.findDailyTaskById(task_id));
             }
         }
         for (TeamTasksAnticipater anticipater_task : anticipaters_tasks) {
             String type = anticipater_task.getTask().getType();
-            if (type.equals("daily")) {
+            LocalDate createDate = anticipater_task.getTask().getCreateDate();
+            if (type.equals("daily") && createDate.isBefore(end) && createDate.isAfter(start)) {
                 int task_id = anticipater_task.getTask().getId();
                 dailyTasks.add(taskRepository.findDailyTaskById(task_id));
             }

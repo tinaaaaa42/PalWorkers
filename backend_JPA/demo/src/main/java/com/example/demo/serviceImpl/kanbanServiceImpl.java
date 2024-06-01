@@ -37,8 +37,9 @@ public class kanbanServiceImpl implements kanbanTaskService {
     @Autowired
     TeamTasksAnticipaterRepository teamTasksAnticipaterRepository;
 
-    public List<KanbanTask> findAll(int userId) {
-        return kanbanTaskRepository.findAllByUserId(userId);
+    public List<KanbanTask> findAll(int userId, LocalDate startDate, LocalDate endDate) {
+        return kanbanTaskRepository.findByUserIdAndCreateDateBetween(userId,startDate,endDate);
+//        return kanbanTaskRepository.findAllByUserId(userId);
     }
 
 //    public KanbanTask addKanbanTask(KanbanTaskDto kanbanTaskDto, User user) {
@@ -80,20 +81,22 @@ public class kanbanServiceImpl implements kanbanTaskService {
 //    }
 
     @Override
-    public List<KanbanTask> findteamTaskByUserId(User user) {
+    public List<KanbanTask> findteamTaskByUserId(User user,LocalDate start, LocalDate end) {
         List<KanbanTask> kanbanTasks = new ArrayList<>();
         List<TeamTasksLeader> leader_tasks = teamTasksLeaderRepository.findTasksByLeader(user);
         List<TeamTasksAnticipater> anticipaters_tasks = teamTasksAnticipaterRepository.findTasksByAnticipater(user);
         for (TeamTasksLeader leader_task : leader_tasks) {
             String type = leader_task.getTask().getType();
-            if (type.equals("kanban")) {
+            LocalDate createDate = leader_task.getTask().getCreateDate();
+            if (type.equals("kanban") && createDate.isBefore(end) && createDate.isAfter(start)) {
                 int task_id = leader_task.getTask().getId();
                 kanbanTasks.add(taskRepository.findKanbanTaskById(task_id));
             }
         }
         for (TeamTasksAnticipater anticipater_task : anticipaters_tasks) {
             String type = anticipater_task.getTask().getType();
-            if (type.equals("kanban")) {
+            LocalDate createDate = anticipater_task.getTask().getCreateDate();
+            if (type.equals("kanban") && createDate.isBefore(end) && createDate.isAfter(start)) {
                 int task_id = anticipater_task.getTask().getId();
                 kanbanTasks.add(taskRepository.findKanbanTaskById(task_id));
             }

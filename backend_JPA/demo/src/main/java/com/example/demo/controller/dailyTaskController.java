@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,16 +20,17 @@ public class dailyTaskController {
     @Autowired
     dailyTaskService dailyTaskService;
 
-    @GetMapping(value = "/api/tasks/daily")
-    public List<DailyTask> getDailyTasks(HttpSession session) {
+    @GetMapping(value = "/api/tasks/daily/date={date}")
+    public List<DailyTask> getDailyTasks(HttpSession session, @PathVariable String date) {
         User user = (User) session.getAttribute("user");
         Integer userId = user.getId();
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
-        List<DailyTask> dailyTasks = new ArrayList<>();
-        dailyTasks.addAll(dailyTaskService.findAll(userId));
-        dailyTasks.addAll(dailyTaskService.findteamtasksByUser(user));
+//        LocalDate date = LocalDate.parse(date);
+//        List<DailyTask> dailyTasks = new ArrayList<>();
+//        dailyTasks.addAll(dailyTaskService.findAll(userId,start,end));
+//        dailyTasks.addAll(dailyTaskService.findteamtasksByUser(user,start,end));
         return dailyTasks;
     }
 

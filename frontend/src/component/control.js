@@ -4,14 +4,14 @@ import MonthPicker from "./MonthPicker";
 import { Tag } from "../Data/data";
 import { useLocation } from "react-router-dom";
 import { Button } from "antd";
-function Control({taskhandler}){
+function Control({taskhandler,handleDaySearch,handleWeekSearch}){
     const location = useLocation();
     const renderPicker = () => {
         switch (location.pathname) {
         case '/day':
-            return <DayPicker />;
+            return <DayPicker handleDaySearch={handleDaySearch}/>;
         case '/week':
-            return <WeekPicker />;
+            return <WeekPicker handleWeekSearch={handleWeekSearch}/>;
         case '/kanban':
             return <MonthPicker />;
         default:
@@ -29,7 +29,7 @@ function Control({taskhandler}){
                     New Project
                 </Button></>);
             default:
-                return null; // 你可以在这里设置一个默认的 Picker 组件
+                return null;
             }
     }
     return (

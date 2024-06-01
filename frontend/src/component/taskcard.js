@@ -7,7 +7,7 @@ function Taskcard(props){
     const { openModal ,isModalOpen} = useContext(ModalContext);
     const location = useLocation();
     return (
-    <div className="Taskcard" onClick={()=>openModal(id,"kanban","detail")}>
+    <div className="Taskcard" onClick={()=>openModal("kanban",task,'')}>
         <div class="card" >
             <div className="colorbar" style={{color:`blue`}}></div>
             <div>

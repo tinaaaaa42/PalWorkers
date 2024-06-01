@@ -42,6 +42,8 @@ const ModalComponent = () => {
     });
 //传回日期格式
     function formatDate(date) {
+      const regex = /^\d{4}-\d{2}-\d{2}$/;
+      if(regex.test(date))return date;
         const year = date.getFullYear();
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const day = date.getDate().toString().padStart(2, '0');
@@ -51,7 +53,7 @@ const ModalComponent = () => {
         const convertWeeklyStateToBackendFormat = () => {
 //        const tags = state.tag.length===[] ? [] : [state.tag];
             // 构造新的 JSON 对象
-            const backendData = {
+            let backendData = {
 
               id:task.id||null,
                 title: state.taskName,
@@ -64,6 +66,7 @@ const ModalComponent = () => {
               urgent: state.urgent,
               expired:false
             };
+
             return backendData;
           };
            const convertDailyStateToBackendFormat = () => {
@@ -73,33 +76,33 @@ const ModalComponent = () => {
                         id:task.id||null,
                           title: state.taskName,
                           description: state.description,
-                          createDate: '',
-                          dueDate: '',
+                          createDate:formatDate(state.startTime),
+                          dueDate: formatDate(state.dueTime),
                           type: state.type,
                           tags: [],
                           expired:false
                         };
                         console.log(backendData.id)
-                        if(task.id){
-                        backendData.createDate=task.createDate;
-                        backendData.dueDate=task.dueDate;
-                        }
-                        else{
-                        backendData.createDate=formatDate(state.startTime);
-                         backendData.dueDate=formatDate(state.dueTime);
-                        }
-                        console.log(backendData)
+//                        if(task.id){
+//                        backendData.createDate=task.createDate;
+//                        backendData.dueDate=task.dueDate;
+//                        }
+//                        else{
+//                        backendData.createDate=formatDate(state.startTime);
+//                         backendData.dueDate=formatDate(state.dueTime);
+//                        }
+//                        console.log(backendData)
                       return backendData;
                     };
            const convertKanbanStateToBackendFormat = () => {
 
-                       const backendData = {
+                       let backendData = {
 
                                      id:task.id||null,
                                        title: state.taskName,
                                        description: state.description,
                                        createDate: formatDate(state.startTime),
-                                       dueDate: formatDate(state.dueTime),
+                                       dueDate:formatDate(state.dueTime),
                                        type: state.type,
                                        tags: [],
                                      state:state.choosepro

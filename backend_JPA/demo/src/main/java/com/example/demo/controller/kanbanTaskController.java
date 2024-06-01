@@ -36,6 +36,21 @@ public class kanbanTaskController {
     @Autowired
     TaskRepository taskRepository;
 
+    @GetMapping(value = "/api/tasks/kanban")
+    public List<KanbanTask> getAllKanbanTask(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        LocalDate start = LocalDate.parse("1990-01-01");
+        LocalDate end = LocalDate.parse("2040-01-01");
+        List<KanbanTask> kanbanTasks = new ArrayList<>();
+        kanbanTasks.addAll(kanbantaskService.findAll(userId, start, end));
+        kanbanTasks.addAll(kanbantaskService.findteamTaskByUserId(user,start,end));
+        return kanbanTasks;
+    }
+
     @GetMapping(value = "/api/tasks/kanban/start={startDate}/end={endDate}")
     public List<KanbanTask> getAllKanbanTask(HttpSession session, @PathVariable String startDate, @PathVariable String endDate) {
         User user = (User) session.getAttribute("user");

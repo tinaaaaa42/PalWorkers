@@ -72,4 +72,14 @@ public class TaskController {
         return taskService.getMonthlyStatistics(userId);
 
     }
+
+    @GetMapping(value = "api/tasks/notify")
+    public NotifyDto Notify(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return taskService.notifyUser(userId);
+    }
 }

@@ -271,5 +271,39 @@ public class TaskServiceImpl implements TaskService {
         }
         return monthlyStatistics;
     }
+
+    @Override
+    public NotifyDto notifyUser(int userId) {
+        List<NotifyItemDto> expired = new ArrayList<>();
+        List<NotifyItemDto> urgent = new ArrayList<>();
+        NotifyDto notifyDto = new NotifyDto();
+        List<Task> allTasks = taskRepository.findByUserId(userId);
+        for (Task task : allTasks) {
+            LocalDate completedDate = task.getCompletedDate();
+            LocalDate dueDate = task.getDueDate();
+            if (dueDate == null) {
+                continue;
+            }
+            if (completedDate == null && dueDate.isBefore(LocalDate.now())) {
+                NotifyItemDto notifyItemDto = new NotifyItemDto();
+                notifyItemDto.setId(task.getId());
+                notifyItemDto.setDueDate(task.getDueDate().toString());
+                notifyItemDto.setName(task.getTitle());
+                expired.add(notifyItemDto);
+            }
+            else {
+                if (completedDate == null && dueDate.isBefore(LocalDate.now().plusDays(7))) {
+                    NotifyItemDto notifyItemDto = new NotifyItemDto();
+                    notifyItemDto.setId(task.getId());
+                    notifyItemDto.setDueDate(task.getDueDate().toString());
+                    notifyItemDto.setName(task.getTitle());
+                    urgent.add(notifyItemDto);
+                }
+            }
+        }
+        notifyDto.setExpired(expired);
+        notifyDto.setUrgent(urgent);
+        return notifyDto;
+    }
 }
 

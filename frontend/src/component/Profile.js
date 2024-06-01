@@ -9,28 +9,24 @@ import ProfileInfo from './Profileinfo';
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
-function UserProfile({team}) {
+function UserProfile({team,week_data,kanban_data}) {
   const [selectedMenu, setSelectedMenu] = useState('activity');
 
-  const data = [
-    { date: '2024-05-10', type: 'Added', value: 5 },
-    { date: '2024-05-11', type: 'Added', value: 20 },
-    { date: '2024-05-12', type: 'Added', value: 10 },
-    { date: '2024-05-13', type: 'Added', value: 15 },
-    { date: '2024-05-14', type: 'Added', value: 9 },
-    { date: '2024-05-10', type: 'Completed', value: 3 },
-    { date: '2024-05-11', type: 'Completed', value: 15 },
-    { date: '2024-05-12', type: 'Completed', value: 8 },
-    { date: '2024-05-13', type: 'Completed', value: 10 },
-    { date: '2024-05-14', type: 'Completed', value: 5 },
-  ];
+  // const data = [
+  //   { date: '2024-05-10', type: 'Added', value: 5 },
+  //   { date: '2024-05-11', type: 'Added', value: 20 },
+  //   { date: '2024-05-12', type: 'Added', value: 10 },
+  //   { date: '2024-05-13', type: 'Added', value: 15 },
+  //   { date: '2024-05-14', type: 'Added', value: 9 },
+  //   { date: '2024-05-10', type: 'Completed', value: 3 },
+  //   { date: '2024-05-11', type: 'Completed', value: 15 },
+  //   { date: '2024-05-12', type: 'Completed', value: 8 },
+  //   { date: '2024-05-13', type: 'Completed', value: 10 },
+  //   { date: '2024-05-14', type: 'Completed', value: 5 },
+  // ];
+  const data = week_data;
 
-  const taskData = [
-    { type: 'Todo', value: 30 },
-    { type: 'In Progress', value: 40 },
-    { type: 'Review', value: 15 },
-    { type: 'Completed', value: 15 },
-  ];
+  const taskData = kanban_data;
 
   const lineConfig = {
     data,

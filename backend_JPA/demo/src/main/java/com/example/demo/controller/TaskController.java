@@ -82,4 +82,24 @@ public class TaskController {
         }
         return taskService.notifyUser(userId);
     }
+
+    @PutMapping(value = "api/tasks/complete")
+    public boolean completeTask(HttpSession session, @RequestParam int taskId) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return taskService.completeTask(user, taskId);
+    }
+
+    @PutMapping(value = "api/tasks/alterKanbanState")
+    public boolean alterKanbanState(HttpSession session, @RequestParam int taskId) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return taskService.advanceTask(user, taskId);
+    }
 }

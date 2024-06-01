@@ -33,6 +33,45 @@ public class TaskServiceImpl implements TaskService {
     private KanbanTaskRepository kanbanTaskRepository;
 
     @Override
+    public boolean advanceTask(User user, int taskId) {
+        KanbanTask kanbanTask = taskRepository.findKanbanTaskById(taskId);
+        if (kanbanTask == null) {
+            System.out.println("Task not found");
+            return false;
+        }
+        User real_user = kanbanTask.getUser();
+        if (real_user.getId() != user.getId()) {
+            return false;
+        }
+        String state = kanbanTask.getState();
+        String next_state = alterState(state);
+        if (next_state.equals("totally completed")) {
+            kanbanTask.setCompleted(true);
+        }
+        kanbanTask.setState(next_state);
+        kanbanTaskRepository.save(kanbanTask);
+        return true;
+    }
+
+    @Override
+    public boolean completeTask(User user, int taskId) {
+        Task task = taskRepository.findTaskById(taskId);
+        if (task == null) {
+            System.out.println("Task not found");
+            return false;
+        }
+        User real_user = task.getUser();
+        if (real_user.getId() != user.getId()) {
+            return false;
+        }
+        task.setCompleted(true);
+        taskRepository.save(task);
+        return true;
+    }
+
+
+
+    @Override
     public Task createTask(TaskDto taskDto) {
         Task task;
         int task_id = taskDto.getTask_id();
@@ -304,6 +343,19 @@ public class TaskServiceImpl implements TaskService {
         notifyDto.setExpired(expired);
         notifyDto.setUrgent(urgent);
         return notifyDto;
+    }
+
+    private String alterState(String state) {
+        if (state.equals("todo")) {
+            return "inprogress";
+        }
+        else if (state.equals("inprogress")) {
+            return "review";
+        }
+        else if (state.equals("review")) {
+            return "done";
+        }
+        return "totally completed";
     }
 }
 

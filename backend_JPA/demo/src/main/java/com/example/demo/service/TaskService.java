@@ -5,6 +5,7 @@ import com.example.demo.DTO.NotifyDto;
 import com.example.demo.DTO.TaskDto;
 import com.example.demo.DTO.WeekStatistics;
 import com.example.demo.entity.Task;
+import com.example.demo.entity.User;
 
 import java.util.List;
 
@@ -17,4 +18,8 @@ public interface TaskService {
     List<MonthStatistics> getMonthlyStatistics(int userId);
 
     NotifyDto notifyUser(int userId);
+
+    boolean completeTask(User user, int taskId);
+
+    boolean advanceTask(User user, int taskId);
 }

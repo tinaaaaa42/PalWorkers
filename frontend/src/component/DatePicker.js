@@ -2,7 +2,6 @@ import React from 'react';
 import { Row, Col, Button, DatePicker, Space } from 'antd';
 
 const DayPicker = () => {
-  // 单个日期选择器的值
   const [singleDate, setSingleDate] = React.useState(null);
 
   // 选择单个日期的事件处理
@@ -19,7 +18,7 @@ const DayPicker = () => {
             allowClear
             onChange={onSingleDateChange}
             placeholder="选择日期"style={{height:'45px',width:'300px'}}
-            size="large" // 增加日期选择器的尺寸
+            size="large" 
           />
           <Button type="primary" size="large" onClick={() => console.log('选中的单个日期:', singleDate)}>
             确定
@@ -32,5 +31,37 @@ const DayPicker = () => {
     </Row>
   );
 };
+const WeekPicker = () => {
+    // 周选择器的值
+    const [weekDate, setWeekDate] = React.useState(null);
+  
+    // 选择周日期的事件处理
+    const onWeekDateChange = (range, dateString) => {
+      setWeekDate(range);
+    };
+  
+    return (
+      <Row gutter={16} justify="center" align="middle">
+        <Col span={12}>
+          <Space direction="horizontal" size={12} style={{ marginBottom: '15px' }}>
+            <DatePicker
+              mode="week"
+              allowClear
+              onChange={onWeekDateChange}
+              placeholder={['开始日期', '结束日期']}
+              style={{ height: '45px', width: '300px' }}
+              size="large"
+            />
+            <Button type="primary" size="large" onClick={() => console.log('选中的周日期:', weekDate)}>
+              确定
+            </Button>
+            <Button type="primary" size="large" onClick={() => console.log('选中的周日期:', weekDate)}>
+              取消
+            </Button>
+          </Space>
+        </Col>
+      </Row>
+    );
+  };
 
-export default DayPicker;
+export default { DayPicker, WeekPicker };

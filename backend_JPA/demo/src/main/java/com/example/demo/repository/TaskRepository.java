@@ -6,6 +6,7 @@ import com.example.demo.entity.Task;
 import com.example.demo.entity.WeeklyTask;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
@@ -15,5 +16,7 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 
     DailyTask findDailyTaskById(int id);
 
-    List<Task> findByUserId(int Userid);
+    List<Task> findByUserIdAndCreateDateEquals(int Userid, LocalDate createDate);
+
+    List<KanbanTask> findKanbanTaskByUserIdAndCreateDateBetween(int Userid, LocalDate startDate, LocalDate endDate);
 }

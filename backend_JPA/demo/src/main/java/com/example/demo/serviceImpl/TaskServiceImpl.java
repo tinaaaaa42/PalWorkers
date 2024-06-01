@@ -1,19 +1,17 @@
 package com.example.demo.serviceImpl;
 
-import com.example.demo.DTO.KanbanTaskDto;
-import com.example.demo.DTO.TaskDto;
-import com.example.demo.DTO.WeeklyTaskDto;
+import com.example.demo.DTO.*;
 import com.example.demo.entity.*;
 import com.example.demo.repository.*;
 import com.example.demo.service.TaskService;
 import com.example.demo.util.SessionUtils;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -120,6 +118,52 @@ public class TaskServiceImpl implements TaskService {
                 break;
         }
         return task;
+    }
+
+    public List<WeekStatistics> getWeeklyStatistics(int userId){
+        List<WeekStatistics> weeklyStatistics = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        for (int i = 6; i >= 0; --i) {
+            LocalDate date = today.minusDays(i);
+            List<Task> tasks = taskRepository.findByUserIdAndCreateDateEquals(userId,date);
+            WeekStatistics weekStatistic = new WeekStatistics();
+            weekStatistic.setDate(date.toString());
+            weekStatistic.setType("Added");
+            weekStatistic.setValue(tasks.size());
+            weeklyStatistics.add(weekStatistic);
+            WeekStatistics weekStatistic_completed = new WeekStatistics();
+            weekStatistic_completed.setDate(date.toString());
+            weekStatistic_completed.setType("Completed");
+            Integer counter = 0;
+            for (Task task : tasks) {
+                if (task.getCompletedDate() == date) {
+                    counter++;
+                }
+            }
+            weekStatistic_completed.setValue(counter);
+            weeklyStatistics.add(weekStatistic_completed);
+        }
+        return weeklyStatistics;
+    }
+
+    @Override
+    public List<MonthStatistics> getMonthlyStatistics(int userId) {
+        List<MonthStatistics> monthlyStatistics = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        LocalDate monty_ago = LocalDate.now().minusMonths(1);
+        List<KanbanTask> kanbanTasks = taskRepository.findKanbanTaskByUserIdAndCreateDateBetween(userId,monty_ago,today);
+        Map<String, Integer> statistics = new HashMap<>();
+        for (KanbanTask kanbanTask : kanbanTasks) {
+            String type = kanbanTask.getState();
+            statistics.put(type,statistics.getOrDefault(type,0) + 1);
+        }
+        for (String type : statistics.keySet()) {
+            MonthStatistics monthStatistic = new MonthStatistics();
+            monthStatistic.setType(type);
+            monthStatistic.setValue(statistics.get(type));
+            monthlyStatistics.add(monthStatistic);
+        }
+        return monthlyStatistics;
     }
 }
 

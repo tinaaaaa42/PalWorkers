@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.DTO.DailyTaskDto;
+import com.example.demo.DTO.KanbanTaskDto;
 import com.example.demo.DTO.TaskDto;
 import com.example.demo.DTO.WeeklyTaskDto;
 import com.example.demo.entity.DailyTask;
+import com.example.demo.entity.KanbanTask;
 import com.example.demo.entity.Task;
 import com.example.demo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,7 @@ public class TaskController {
     }
 
     @PostMapping(value = "/api/tasks/kanban")
-    public Task createTask(@RequestBody TaskDto taskDto) {
-        return taskService.createTask(taskDto);
+    public Task createTask(@RequestBody KanbanTaskDto kanbanTaskDto) {
+        return taskService.createTask(kanbanTaskDto);
     }
 }

@@ -108,8 +108,8 @@ INSERT INTO kanban_tasks (task_id, state) VALUES
                                               (@kanban_task_id + 1, 'inprogress'),
                                               (@kanban_task_id + 2, 'review'),
                                               (@kanban_task_id + 3, 'todo'),
-                                              (@kanban_task_id + 4, 'down'),
-                                              (11,'down'),
+                                              (@kanban_task_id + 4, 'done'),
+                                              (11,'done'),
                                               (14, 'todo'),  -- 新增团队看板任务
                                               (15, 'inprogress');  -- 新增团队看板任务
 

@@ -16,10 +16,10 @@ function Kanban({kanban_tasks,kanban_project}){
     //     init_kanban_tasks();
     // }, []);
 
-    const TodoTasks = kanban_tasks.filter(task => task.state === "todo");
-    const InprogressTasks = kanban_tasks.filter(task => task.state === "inprogress");
-    const ReviewTasks=kanban_tasks.filter(task => task.state === "review");
-    const DownTasks=kanban_tasks.filter(task => task.state === "down");
+    const TodoTasks = kanban_tasks?.filter(task => task.state === "todo") || [];
+    const InprogressTasks = kanban_tasks?.filter(task => task.state === "inprogress") || [];
+    const ReviewTasks = kanban_tasks?.filter(task => task.state === "review") || [];
+    const DownTasks = kanban_tasks?.filter(task => task.state === "down") || [];
     console.log(TodoTasks);
     // const InprogressTasks=kanban_tasks.filter(task => task.state === "inprogress");
     // const ReviewTasks=kanban_tasks.filter(task => task.state === "review");
@@ -30,33 +30,33 @@ function Kanban({kanban_tasks,kanban_project}){
     <div className="Kanban">
         <div className="column">
             <h2>To Do</h2>
-            {TodoTasks.map((task) => (
+            {TodoTasks!=null?TodoTasks.map((task) => (
                 <Taskcard key={task.id} task={task}/>
-            ))}
+            )):<></>}
             {/* {todoProjects.map((project) => (
                 <Projectcard key={project.id} project={project} />
             ))} */}
         </div>
         <div className="column">
             <h2>In Progress</h2>
-            {InprogressTasks.map((task) => (
+            {InprogressTasks!=null?InprogressTasks.map((task) => (
                 <Taskcard task={task}/>
-            ))}
+            )):<></>}
             {/* {InprogressProjects.map((project) => (
                 <Projectcard key={project.id} project={project} />
             ))} */}
         </div>
             <div className="column">
             <h2>Review</h2>
-            {ReviewTasks.map((task) => (
+            {ReviewTasks!=null?ReviewTasks.map((task) => (
                 <Taskcard key={task.id} task={task}/>
-            ))}
+            )):<></>}
         </div>
         <div className="column">
             <h2>Done</h2>
-            {DownTasks.map((task) => (
+            {DownTasks!=null?DownTasks.map((task) => (
                 <Taskcard key={task.id} task={task}/>
-            ))}
+            )):<></>}
             <a href=""><div className="card empty"><div className="add iconfont icon-jiahao"></div></div></a>
         </div>
         

@@ -19,9 +19,6 @@ function Kanbanpage(){
         let kanban_tasks = await get_kanban_task();
         console.log(kanban_tasks);
         setKanban_tasks(kanban_tasks);
-        // setAllTags(new Set(kanban_tasks.flatMap(task => task.tags)));
-        // setAllTaskTitles(kanban_tasks.map(task => task.title));
-        //console.log(allTags);
     }
     const handleClick = () => {
         openModal("kanban","","");

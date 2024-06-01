@@ -41,8 +41,8 @@ function Quadrant({ quadrant ,Week_tasks}){
         return task.urgent === true && task.important === false;
     } else if (quadrant === 4) {
         return task.urgent === false && task.important === false;
-    }
-    return false;
+    }else 
+    return [];
     });
 
     console.log(tasks)
@@ -53,9 +53,9 @@ function Quadrant({ quadrant ,Week_tasks}){
     return (<div className="Quadrant">
         <div className="quadrantcard">
             <div className="colorbar" style={colorStyle}><div>{content}</div><div className="iconfont icon-jiahao" onClick={()=>openModal("week",'',quadrant)}></div></div>
-            {tasks.map(task => (
+            {tasks!=null?tasks.map(task => (
             <Weekcard key={task.id} task={task}/>
-            ))}
+            )):<></>}
         </div>
     </div>);
 }

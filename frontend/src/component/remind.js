@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Space, message } from 'antd';
 import { CheckSquareOutlined, DeleteOutlined } from '@ant-design/icons';
+import { completeTask } from '../service/advance';
 
 const Remind = (remindtask) => {
   const [expiredTasks, setExpiredTasks] = useState([
@@ -16,14 +17,20 @@ const Remind = (remindtask) => {
     setExpiredTasks(remindtask.remindtask.expired);
     setUrgentTasks(remindtask.remindtask.urgent);
     }, []);
-  const handleComplete = (id, type) => {
-    if (type === 'expired') {
-      setExpiredTasks(expiredTasks.filter(task => task.id !== id));
-      message.success('任务已完成');
-    } else if (type === 'urgent') {
-      setUrgentTasks(urgentTasks.filter(task => task.id !== id));
-      message.success('任务已完成');
+  const handleComplete = async(id, type) => {
+    try{
+      if (type === 'expired') {
+        // setExpiredTasks(expiredTasks.filter(task => task.id !== id));
+        const response=await completeTask(id);
+        message.success('任务已完成');
+      } else if (type === 'urgent') {
+        const response=await completeTask(id);
+        message.success('任务已完成');
+      }
+    }catch{
+
     }
+    
   };
 
   const handleDelete = (id, type) => {

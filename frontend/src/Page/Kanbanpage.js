@@ -24,7 +24,7 @@ function Kanbanpage(){
         //console.log(allTags);
     }
     const handleClick = () => {
-        openModal(0,"kanban","new");
+        openModal("kanban","","");
     };
     return (<>
     <div className="container">

@@ -33,7 +33,7 @@ const ModalComponent = () => {
       notes: '',
       files: [],
       note:[],
-      choosepro:'',
+      choosepro:'todo',
       team:'',
       teamTasksAnticipaters:[],
       teamTasksLeaders:[],
@@ -84,7 +84,7 @@ const ModalComponent = () => {
            const convertKanbanStateToBackendFormat = () => {
 
                        const backendData = {
-                                     task: {
+
                                      id:task.id||null,
                                        title: state.taskName,
                                        description: state.description,
@@ -92,7 +92,6 @@ const ModalComponent = () => {
                                        dueDate: formatDate(state.dueTime),
                                        type: state.type,
                                        tags: [],
-                                     },
                                      state:state.choosepro
                                    };
                       return backendData;
@@ -117,14 +116,15 @@ const ModalComponent = () => {
 
                     let response;
                       e.preventDefault();
-                    try {
+                    try {console.error('创建任务:', true);
+                    console.log(type)
                     switch(type){
                     case "day":
                       response = await createDailyTask(convertDailyStateToBackendFormat());break;
                      case "week":
                        response = await createWeeklyTask(convertWeeklyStateToBackendFormat());break;
                       case "kanban":
-                        response = await createKanbanTask(convertDailyStateToBackendFormat());break;
+                        response = await createKanbanTask(convertKanbanStateToBackendFormat());break;
                         }
                     }
                     catch (error) {

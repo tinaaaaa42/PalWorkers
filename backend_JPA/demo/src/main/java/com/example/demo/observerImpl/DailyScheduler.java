@@ -39,7 +39,7 @@ public class DailyScheduler implements Subject {
         notifyObservers();
     }
 
-    @Scheduled(cron = "0 * 16 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void dailyCheck() {
         System.out.println("Daily check started");
         notifyObservers();

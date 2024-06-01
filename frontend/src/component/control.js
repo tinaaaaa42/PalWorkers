@@ -4,7 +4,7 @@ import MonthPicker from "./MonthPicker";
 import { Tag } from "../Data/data";
 import { useLocation } from "react-router-dom";
 import { Button } from "antd";
-function Control({taskhandler,handleDaySearch,handleWeekSearch}){
+function Control({taskhandler,handleDaySearch,handleWeekSearch,handleKanbanSearch}){
     const location = useLocation();
     const renderPicker = () => {
         switch (location.pathname) {
@@ -13,7 +13,7 @@ function Control({taskhandler,handleDaySearch,handleWeekSearch}){
         case '/week':
             return <WeekPicker handleWeekSearch={handleWeekSearch}/>;
         case '/kanban':
-            return <MonthPicker />;
+            return <MonthPicker handleKanbanSearch={handleKanbanSearch}/>;
         default:
             return null; // 你可以在这里设置一个默认的 Picker 组件
         }

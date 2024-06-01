@@ -13,6 +13,8 @@ public interface TeamRepository extends JpaRepository<Team, Integer> {
 
     Boolean existsByInvitationCode(String invitationCode);
 
+    Boolean existsByName(String name);
+
     Team findByInvitationCode(String invitationCode);
 
 //    Team addTeamByName(String teamName);

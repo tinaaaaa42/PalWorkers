@@ -42,6 +42,10 @@ public class teamController {
         String cookie = teamService.addTeamByName(teamName,user);
         TeamDto teamDto = new TeamDto();
         teamDto.setCookie(cookie);
+        teamDto.setStatus(true);
+        if (cookie == null) {
+            teamDto.setStatus(false);
+        }
         return teamDto;
     }
 

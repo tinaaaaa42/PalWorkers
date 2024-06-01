@@ -2,6 +2,8 @@ import ModalContext from '../context/ModalContext';
 import React, { useState,useContext } from 'react';
 import { Projects} from "../Data/data";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Button } from 'antd';
+import { RightSquareOutlined } from '@ant-design/icons';
 function Taskcard(props){
     const { id,task} = props;
     const { openModal ,isModalOpen} = useContext(ModalContext);
@@ -12,7 +14,8 @@ function Taskcard(props){
             <div className="colorbar" style={{color:`blue`}}></div>
             <div>
                 <div className="title">
-                    <div>{task.title.length<=4?task.title:`${task.title.substring(0,4)}...`}</div>
+                    <div className='titlename'>{task.title.length<=4?task.title:`${task.title.substring(0,4)}...`}</div>
+                    <Button icon={<RightSquareOutlined style={{fontSize:'21px',color:'gray'}}/>}style={{position:'absolute',right:'32px',border:'none'}}></Button>
                     <a href=""><div className="delete iconfont icon-lajixiang"></div></a>
                 </div>
                 <div className='tags'>{task.taskTags.length === 0 ?(<div></div>):task.taskTags.map(tag=>(<div>{tag.tag.name}</div>))}</div>

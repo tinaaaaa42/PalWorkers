@@ -253,13 +253,21 @@
 }
 .Kanban .title,.Projectdetail .title{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    position: relative;
+    width: 230px;
+}
+.Kanban .title .titlename{
+    width: 210px;
+    text-align: left;
 }
 .Taskcard .cardcontent,.Projectcard .cardcontent{
     width: 212px;
 }
 .Taskcard .card .delete,.Projectcard .card .delete{
-    font-size: 20px;
+    position: absolute;
+    right: 5px;
+    font-size: 22px;
     color: gray;
 }
 .Taskcard .team{
@@ -684,7 +692,7 @@ textarea:focus {
     border: none;
     width: auto;
     padding: 0;
-    max-width: 100px;
+    max-width: 400px;
     outline: none;
     box-shadow: none;
     justify-content: center;
@@ -760,7 +768,7 @@ textarea:focus {
     width: 160px;
     border: none;
     border-radius: 5px;
-    background-color:#8888881a ;
+    background-color:#bcbaba1a ;
     text-align: center;
     box-sizing: border-box;
 }
@@ -774,7 +782,7 @@ textarea:focus {
 }
 .Modal .Userlabel .User{
     width: 160px;
-    background-color: #8888881a ;
+    background-color:#bcbaba1a ;
     text-align: center;
     border-radius: 5px;
     height: 28px;
@@ -815,7 +823,8 @@ textarea:focus {
     padding: 10px 20px; /* 内边距 */
     /* 添加一些外边距，以便框不紧贴页面边缘 */
     margin: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }
 .Modal .compile-title{
     font-size: 24px;

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import ModalContext from '../context/ModalContext';
 import {useContext } from 'react';
+import { Button } from 'antd';
+import { CheckSquareOutlined } from '@ant-design/icons';
 function Weekcard(props){
     const {id,task}=props;
     const [isDel, setIsDel] = useState(false);
@@ -15,7 +17,8 @@ function Weekcard(props){
             <div className="colorbar" style={{color:`blue`}}></div>
             <div className={`detail ${isDel ? 'Isdelete' : ''}`}>
                 <div className="line">
-                    <div className="title">{task.title}</div>
+                    <div className="title">{task.title.length<=4?task.title:`${task.title.substring(0,4)}...`}</div>
+                    <Button icon={<CheckSquareOutlined style={{fontSize:'20px',color:'gray'}}/>}style={{position:'absolute',right:'20px',border:'none'}}></Button>
                     <div className="delete iconfont icon-lajixiang" onClick={handleClick}></div>
                 </div>
                 <div className='team'>{task.team==null?1:task.team.name}</div>

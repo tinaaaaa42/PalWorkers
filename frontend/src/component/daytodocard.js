@@ -2,6 +2,8 @@ import React, { useState,useContext } from 'react';
 import 'font-awesome/css/font-awesome.css';
 import { DayTasks} from "../Data/data";
 import ModalContext from '../context/ModalContext';
+import { CheckCircleOutlined, CheckOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 const DayTodoCard = ({tasks}) => {
 //  const data=DayTasks
      const data=tasks;
@@ -18,6 +20,7 @@ const DayTodoCard = ({tasks}) => {
                 <div className="task-box"  >
                   {item.title}
                   <div className="image">
+                  <Button shape="circle" style={{border:'none',marginTop:'5px',marginRight:'11px'}}icon={<CheckCircleOutlined  style={{fontSize:'34px',color:'#b9b6b6'}}/>}/>
                   <button className="edit" onClick={()=>openModal("day",item,'')} >
                   <i className="fa fa-pencil" ></i>
                   </button>

@@ -10,8 +10,8 @@ import {get_kanban_statistics, get_week_statistics} from "../service/profile";
 import {get_kanban_task} from "../service/kanban_task";
 function Profilepage(){
     const [team, setTeam] = useState([])
-    const [week_data, setWeek_data] = useState()
-    const [kanban_data, setKanban_data] = useState()
+    const [week_data, setWeek_data] = useState([])
+    const [kanban_data, setKanban_data] = useState([])
 
     const init_team = async () => {
         let team = await get_team();

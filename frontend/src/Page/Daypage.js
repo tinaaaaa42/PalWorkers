@@ -15,8 +15,6 @@ import Navbar from "../component/Navv";
      const init_tasks = async () => {
          let dailyTasks = await get_daily_task();
          setDailyTasks(dailyTasks)
-         // setAllTags(new Set(weekly_tasks.flatMap(task=>task.tags)));
-         // setAllTaskTitles(weekly_tasks.map(task => task.title));
      }
 
      useEffect( () => {
@@ -30,6 +28,7 @@ import Navbar from "../component/Navv";
          <Navbar tasks={dailyTasks} title={"Day"}></Navbar>
          <div className="mainpart">
          <Header></Header>
+         <Control></Control>
          <div class="two-columns">
          <div><Daytodo tasks={dailyTasks}></Daytodo></div>
            <div> <Dayphoto></Dayphoto> </div>

@@ -47,6 +47,7 @@ public class TaskServiceImpl implements TaskService {
         String next_state = alterState(state);
         if (next_state.equals("totally completed")) {
             kanbanTask.setCompleted(true);
+            kanbanTask.setCompletedDate(LocalDate.now());
         }
         kanbanTask.setState(next_state);
         kanbanTaskRepository.save(kanbanTask);
@@ -65,6 +66,7 @@ public class TaskServiceImpl implements TaskService {
             return false;
         }
         task.setCompleted(true);
+        task.setCompletedDate(LocalDate.now());
         taskRepository.save(task);
         return true;
     }

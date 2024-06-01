@@ -10,10 +10,7 @@ import com.example.demo.entity.Task;
 import com.example.demo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
@@ -34,5 +31,20 @@ public class TaskController {
     @PostMapping(value = "/api/tasks/kanban")
     public Task createTask(@RequestBody KanbanTaskDto kanbanTaskDto) {
         return taskService.createTask(kanbanTaskDto);
+    }
+
+    @PutMapping(value = "/api/tasks/weekly")
+    public Task updateTask(@RequestBody WeeklyTaskDto weeklyTaskDto) {
+        return taskService.updateTask(weeklyTaskDto);
+    }
+
+    @PutMapping(value = "/api/tasks/daily")
+    public Task updateTask(@RequestBody DailyTaskDto dailyTaskDto) {
+        return taskService.updateTask(dailyTaskDto);
+    }
+
+    @PutMapping(value = "/api/tasks/kanban")
+    public Task updateTask(@RequestBody KanbanTaskDto kanbanTaskDto) {
+        return taskService.updateTask(kanbanTaskDto);
     }
 }

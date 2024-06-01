@@ -121,5 +121,98 @@ public class TaskServiceImpl implements TaskService {
         }
         return task;
     }
+
+    @Override
+    public Task updateTask(TaskDto taskDto) {
+        Task task;
+        int task_id = taskDto.getTask_id();
+        String title = taskDto.getTitle();
+        String description = taskDto.getDescription();
+        String createDate = taskDto.getCreateDate();
+        String dueDate = taskDto.getDueDate();
+        String type = taskDto.getType();
+        Boolean expired = taskDto.getExpired();
+
+        System.out.println("Task ID: " + task_id);
+
+        if (title == null) {
+            throw new IllegalArgumentException("Title cannot be null");
+        }
+        if (createDate == null) {
+            throw new IllegalArgumentException("Create date cannot be null");
+        }
+        if (type == null) {
+            throw new IllegalArgumentException("Type cannot be null");
+        }
+        if (expired == null) {
+            expired = false;
+        }
+
+        switch (type.toLowerCase()) {
+            case "daily":
+                task = taskRepository.findTaskById(task_id);
+                break;
+            case "weekly":
+                task = taskRepository.findTaskById(task_id);
+                ((WeeklyTask) task).setImportant(((WeeklyTaskDto)taskDto).getImportant());
+                ((WeeklyTask) task).setUrgent(((WeeklyTaskDto)taskDto).getUrgent());
+                break;
+            case "kanban":
+                task = taskRepository.findTaskById(task_id);
+                ((KanbanTask) task).setState(((KanbanTaskDto)taskDto).getState());
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid task type");
+        }
+
+        if (task == null) {
+            throw new IllegalArgumentException("Task not found");
+        }
+
+        HttpSession session = SessionUtils.getSession();
+        User user = (User) session.getAttribute("user");
+
+        task.setUser(user);
+        task.setId(task_id);
+        task.setTitle(title);
+        task.setDescription(description);
+        task.setCreateDate(LocalDate.parse(createDate));
+        task.setDueDate(LocalDate.parse(dueDate));
+        task.setType(type);
+        task.setExpired(expired);
+        task.setCompleted(false);
+
+        Set<TaskTag> tags = new LinkedHashSet<>();
+        for (String tagName : taskDto.getTags()) {
+            Tag tag = tagRepository.findByName(tagName);
+            if (tag == null) {
+                tag = new Tag();
+                tag.setName(tagName);
+                tagRepository.save(tag);
+            }
+            TaskTag taskTag = new TaskTag();
+            taskTag.setTag(tag);
+            taskTag.setTask(task);
+            tags.add(taskTag);
+        }
+        task.setTaskTags(tags);
+
+//        taskRepository.save(task);
+        switch (type.toLowerCase()) {
+            case "daily":
+                assert task instanceof DailyTask;
+                dailyTaskRepository.save((DailyTask) task);
+                break;
+            case "weekly":
+                assert task instanceof WeeklyTask;
+                weeklyTaskRepository.save((WeeklyTask) task);
+                break;
+            case "kanban":
+                assert task instanceof KanbanTask;
+                kanbanTaskRepository.save((KanbanTask) task);
+                break;
+        }
+        return task;
+    }
 }
 

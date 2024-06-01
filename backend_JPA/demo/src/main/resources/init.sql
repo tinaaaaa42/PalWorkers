@@ -65,6 +65,7 @@ CREATE TABLE tasks (
                        due_date DATE,
                        type ENUM('kanban','weekly','daily') NOT NULL,
     team_id int,
+    completed boolean not null default false,
     expired BOOLEAN NOT NULL DEFAULT FALSE,
     due_time TIME,
     foreign key (user_id) references users(user_id),

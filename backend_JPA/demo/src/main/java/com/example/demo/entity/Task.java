@@ -74,6 +74,10 @@ public class Task {
     @Column(name = "expired", nullable = false)
     private Boolean expired;
 
+    @ColumnDefault("0")
+    @Column(name = "completed", nullable = false)
+    private Boolean completed;
+
     @Column(name = "due_time")
     private LocalTime dueTime;
 

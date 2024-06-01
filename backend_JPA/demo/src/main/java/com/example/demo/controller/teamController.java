@@ -33,7 +33,7 @@ public class teamController {
     }
 
     @PostMapping(value = "api/tasks/create_team")
-    public TeamDto createTeam(@RequestBody String teamName, HttpSession session) {
+    public TeamDto createTeam(@RequestParam String teamName, HttpSession session) {
         User user = (User) session.getAttribute("user");
         Integer userId = user.getId();
         if (userId == null) {
@@ -50,7 +50,7 @@ public class teamController {
     }
 
     @PostMapping(value = "api/tasks/join_team")
-    public Team joinTeam(@RequestBody String invitationCode, HttpSession session) {
+    public Team joinTeam(@RequestParam String invitationCode, HttpSession session) {
         User user = (User) session.getAttribute("user");
         Integer userId = user.getId();
         if (userId == null) {

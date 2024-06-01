@@ -8,9 +8,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface dailyTaskService {
-    List<DailyTask> findAll(int userId, LocalDate startDate, LocalDate endDate);
+    List<DailyTask> findAll(int userId, LocalDate date);
 
-    List<DailyTask> findteamtasksByUser(User user, LocalDate startDate, LocalDate endDate);
+    List<DailyTask> findteamtasksByUser(User user, LocalDate date);
 
 //    DailyTask addDailyTask(DailyTaskDto dailyTaskDto, User user);
 //

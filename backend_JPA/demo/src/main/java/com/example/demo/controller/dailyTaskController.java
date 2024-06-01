@@ -27,10 +27,10 @@ public class dailyTaskController {
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
-//        LocalDate date = LocalDate.parse(date);
-//        List<DailyTask> dailyTasks = new ArrayList<>();
-//        dailyTasks.addAll(dailyTaskService.findAll(userId,start,end));
-//        dailyTasks.addAll(dailyTaskService.findteamtasksByUser(user,start,end));
+        LocalDate currentDate = LocalDate.parse(date);
+        List<DailyTask> dailyTasks = new ArrayList<>();
+        dailyTasks.addAll(dailyTaskService.findAll(userId,currentDate));
+        dailyTasks.addAll(dailyTaskService.findteamtasksByUser(user,currentDate));
         return dailyTasks;
     }
 

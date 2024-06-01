@@ -10,6 +10,6 @@ import java.util.List;
 public interface DailyTaskRepository extends JpaRepository<DailyTask, Integer> {
     List<DailyTask> findAllByUserId(int userId);
 
-    List<DailyTask> findByUserIdAndCreateDateBetween(int userId, LocalDate startDate, LocalDate endDate);
+    List<DailyTask> findByUserIdAndCreateDateEquals(int userId, LocalDate createDate);
 
 }

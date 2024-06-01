@@ -1,65 +1,70 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button, Space, message } from 'antd';
 import { CheckSquareOutlined, DeleteOutlined } from '@ant-design/icons';
 
-const Remind = () => {
+const Remind = (remindtask) => {
   const [expiredTasks, setExpiredTasks] = useState([
-    { key: '1', name: 'Expired Task 1', ddl: '2024-05-01' },
-    { key: '2', name: 'Expired Task 2', ddl: '2024-05-02' },
+    // { id: '1', name: 'Expired Task 1', ddl: '2024-05-01' },
+    // { id: '2', name: 'Expired Task 2', ddl: '2024-05-02' },
   ]);
 
   const [urgentTasks, setUrgentTasks] = useState([
-    { key: '1', name: 'Urgent Task 1', ddl: '2024-06-01' },
-    { key: '2', name: 'Urgent Task 2', ddl: '2024-06-02' },
+    // { id: '1', name: 'Urgent Task 1', ddl: '2024-06-01' },
+    // { id: '2', name: 'Urgent Task 2', ddl: '2024-06-02' },
   ]);
-
-  const handleComplete = (key, type) => {
+  useEffect( () => {
+    setExpiredTasks(remindtask.remindtask.expired);
+    setUrgentTasks(remindtask.remindtask.urgent);
+    }, []);
+  const handleComplete = (id, type) => {
     if (type === 'expired') {
-      setExpiredTasks(expiredTasks.filter(task => task.key !== key));
+      setExpiredTasks(expiredTasks.filter(task => task.id !== id));
       message.success('任务已完成');
     } else if (type === 'urgent') {
-      setUrgentTasks(urgentTasks.filter(task => task.key !== key));
+      setUrgentTasks(urgentTasks.filter(task => task.id !== id));
       message.success('任务已完成');
     }
   };
 
-  const handleDelete = (key, type) => {
+  const handleDelete = (id, type) => {
     if (type === 'expired') {
-      setExpiredTasks(expiredTasks.filter(task => task.key !== key));
+      setExpiredTasks(expiredTasks.filter(task => task.id !== id));
       message.success('任务已删除');
     } else if (type === 'urgent') {
-      setUrgentTasks(urgentTasks.filter(task => task.key !== key));
+      setUrgentTasks(urgentTasks.filter(task => task.id !== id));
       message.success('任务已删除');
     }
   };
+
+  console.log(urgentTasks)
 
   const getColumns = (type) => [
     {
       title: '任务名',
       dataIndex: 'name',
-      key: 'name',
+      id: 'name',
     },
     {
       title: 'DDL',
-      dataIndex: 'ddl',
-      key: 'ddl',
+      dataIndex: 'dueDate',
+      id: 'dueDate',
     },
     {
       title: '操作',
-      key: 'action',
+      id: 'action',
       render: (_, record) => (
         <Space size="middle">
           <Button
             type="primary"
             shape="square"
             icon={<CheckSquareOutlined style={{fontSize:'24px'}}/>}
-            onClick={() => handleComplete(record.key, type)}
+            onClick={() => handleComplete(record.id, type)}
           />
           <Button
             type="danger"
             shape="circle"
             icon={<DeleteOutlined style={{color:'red',fontSize:'24px'}}/>}
-            onClick={() => handleDelete(record.key, type)}
+            onClick={() => handleDelete(record.id, type)}
           />
         </Space>
       ),
@@ -73,7 +78,7 @@ const Remind = () => {
         columns={getColumns('expired')}
         dataSource={expiredTasks}
         pagination={false}
-        rowKey="key"
+        rowid="id"
         style={{width:'750px'}}
       />
       <h2 style={{ marginTop: '20px' }}>紧急任务</h2>
@@ -82,7 +87,7 @@ const Remind = () => {
         dataSource={urgentTasks}
         pagination={false}
         style={{width:'750px'}}
-        rowKey="key"
+        rowid="id"
       />
     </div>
   );

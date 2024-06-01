@@ -10,7 +10,7 @@ import Remind from './remind';
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
-function UserProfile({team,week_data,kanban_data}) {
+function UserProfile({team,week_data,kanban_data,remindtask}) {
   const [selectedMenu, setSelectedMenu] = useState('activity');
 
   // const data = [
@@ -80,10 +80,12 @@ function UserProfile({team,week_data,kanban_data}) {
     }else if(selectedMenu=='intro'){
       return <ProfileInfo></ProfileInfo>
     }else if(selectedMenu=='remind'){
-      return <Remind></Remind>
+      return <Remind remindtask={remindtask}></Remind>
     }
     return null;
   };
+
+  console.log(remindtask)
 
   return (
     <Layout className="layout" style={{ minHeight: '100vh' }}>

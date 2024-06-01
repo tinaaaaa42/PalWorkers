@@ -8,6 +8,9 @@ import { DayTasks,Tasks,WeekTasks,Projects} from "../Data/data";
 import {createWeeklyTask} from "../service/weekly_write"
 import {createDailyTask} from "../service/daily_write"
 import {createKanbanTask} from "../service/kanbantask_write"
+import {changeWeeklyTask} from "../service/weekly_change"
+import {changeDailyTask} from "../service/daily_change"
+import {changeKanbanTask} from "../service/kanbantask_change"
 const ModalComponent = () => {
   const { isModalOpen, closeModal ,type,message,task} = useContext(ModalContext);
 
@@ -38,7 +41,7 @@ const ModalComponent = () => {
       teamTasksAnticipaters:[],
       teamTasksLeaders:[],
       important:true,
-      urgent:false
+      urgent:true
     });
 //传回日期格式
     function formatDate(date) {
@@ -55,34 +58,35 @@ const ModalComponent = () => {
             // 构造新的 JSON 对象
             let backendData = {
 
-              id:task.id||null,
+              task_id:task.id||null,
                 title: state.taskName,
                 description: state.description,
                 createDate: formatDate(state.startTime),
                 dueDate: formatDate(state.dueTime),
                 type: state.type,
-                tags: [],
+               tags: [state.tag],
               important: state.important,
               urgent: state.urgent,
               expired:false
-            };
+            };if(!state.tag)backendData.tags=[];
+
 
             return backendData;
           };
            const convertDailyStateToBackendFormat = () => {
-
+console.log(state.tag)
                        const backendData = {
 
-                        id:task.id||null,
+                        task_id:task.id||null,
                           title: state.taskName,
                           description: state.description,
                           createDate:formatDate(state.startTime),
                           dueDate: formatDate(state.dueTime),
                           type: state.type,
-                          tags: [],
+                          tags: [state.tag],
                           expired:false
                         };
-                        console.log(backendData.id)
+                        console.log(backendData)
 //                        if(task.id){
 //                        backendData.createDate=task.createDate;
 //                        backendData.dueDate=task.dueDate;
@@ -92,21 +96,22 @@ const ModalComponent = () => {
 //                         backendData.dueDate=formatDate(state.dueTime);
 //                        }
 //                        console.log(backendData)
-                      return backendData;
-                    };
+                            if(!state.tag)backendData.tags=[];
+                                return backendData;
+                            };
            const convertKanbanStateToBackendFormat = () => {
 
                        let backendData = {
 
-                                     id:task.id||null,
+                                     task_id:task.id||null,
                                        title: state.taskName,
                                        description: state.description,
                                        createDate: formatDate(state.startTime),
                                        dueDate:formatDate(state.dueTime),
                                        type: state.type,
-                                       tags: [],
+                                       tags: [state.tag],
                                      state:state.choosepro
-                                   };
+                                   };if(!state.tag)backendData.tags=[];
                       return backendData;
                     };
 //           const convertWeeklyStateToBackendFormat = () => {
@@ -131,6 +136,7 @@ const ModalComponent = () => {
                       e.preventDefault();
                     try {console.error('创建任务:', true);
                     console.log(type)
+                    if(!task.id){
                     switch(type){
                     case "day":
                       response = await createDailyTask(convertDailyStateToBackendFormat());break;
@@ -138,8 +144,19 @@ const ModalComponent = () => {
                        response = await createWeeklyTask(convertWeeklyStateToBackendFormat());break;
                       case "kanban":
                         response = await createKanbanTask(convertKanbanStateToBackendFormat());break;
+                        }}
+
+                    else {
+                    switch(type){
+
+                    case "day":
+                      response = await changeDailyTask(convertDailyStateToBackendFormat());break;
+                     case "week":
+                       response = await changeWeeklyTask(convertWeeklyStateToBackendFormat());break;
+                      case "kanban":
+                        response = await changeKanbanTask(convertKanbanStateToBackendFormat());break;
                         }
-                    }
+                    }}
                     catch (error) {
                       console.error('创建任务失败:', error);
                     }
@@ -302,6 +319,7 @@ React.useEffect(() => {
                    }
 
 
+
               setState(prevState => ({
                 ...prevState,
                 type:"weekly",
@@ -310,7 +328,9 @@ React.useEffect(() => {
                 tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
                 startTime:task.createDate||'',
                 dueTime: task.dueDate || '',
-                description:task.description
+                description:task.description,
+                urgent:task.urgent,
+                important:task.important
               }));
               if(task.team!=null){
               setState(prevState => ({
@@ -468,7 +488,7 @@ React.useEffect(() => {
                     </label>
                   </div>
 
-                  <div className="label">
+                  {type=="kanban"&&(<div className="label">
                     <label>
                     <img className='pic' src={process.env.PUBLIC_URL + "/进度.png"}  alt="" ></img>
                       progress:
@@ -479,7 +499,7 @@ React.useEffect(() => {
                             <option value="done">Done</option>
                       </select>
                     </label>
-                  </div>
+                  </div>)}
 
                   <div className="label datelabel">
                   <img className='pic' src={process.env.PUBLIC_URL + "/日历-内容页.png"}  alt="" ></img>

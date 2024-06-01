@@ -36,6 +36,11 @@ function Kanbanpage(){
     const handleClick = () => {
         openModal("kanban","","");
     };
+    const handleReset=()=>{
+        setDates([new Date(Date.now() - 29 * 24 * 60 * 60 * 1000), new Date()]);
+        const [start, end] = dates;
+        fetchKanbanTasks(start.toISOString().split('T')[0], end.toISOString().split('T')[0]);
+    }
     return (<>
     <div className="container">
         <Navleft></Navleft>
@@ -43,7 +48,7 @@ function Kanbanpage(){
         <Navbar tasks={kanbantasks} title={"Kanban"}></Navbar>
         <div className="mainpart">
         <Header></Header>
-        <Control taskhandler={handleClick} handleKanbanSearch={handleKanbanSearch}></Control>
+        <Control taskhandler={handleClick} handleKanbanSearch={handleKanbanSearch} handleReset={handleReset}></Control>
         <Kanban kanban_tasks={kanbantasks}></Kanban>
         </div>
     </div>

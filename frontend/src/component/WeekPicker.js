@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { Row, Col, Button, DatePicker, Space } from 'antd';
 const { RangePicker } = DatePicker;
-const WeekPicker = ({handleWeekSearch}) => {
+const WeekPicker = ({handleWeekSearch,handleReset}) => {
     // 周选择器的值
     const [weekDate, setWeekDate] = React.useState(null);
     const [dates, setDates] = useState(null);
@@ -17,6 +17,10 @@ const WeekPicker = ({handleWeekSearch}) => {
         handleWeekSearch(dates[0],dates[1]);
       }
     }
+    const HandleReset=()=>{
+      setDates(null)
+      handleReset();
+    }
     return (
       <Row gutter={16} justify="center" align="middle">
         <Col span={12}>
@@ -25,7 +29,7 @@ const WeekPicker = ({handleWeekSearch}) => {
             <Button type="primary" size="large" onClick={()=>HandleSearch(dates)}>
               确定
             </Button>
-            <Button type="primary" size="large" onClick={() => console.log('选中的周日期:', weekDate)}>
+            <Button type="primary" size="large" onClick={HandleReset}>
               取消
             </Button>
           </Space>

@@ -33,6 +33,47 @@ public class TaskServiceImpl implements TaskService {
     private KanbanTaskRepository kanbanTaskRepository;
 
     @Override
+    public boolean advanceTask(User user, int taskId) {
+        KanbanTask kanbanTask = taskRepository.findKanbanTaskById(taskId);
+        if (kanbanTask == null) {
+            System.out.println("Task not found");
+            return false;
+        }
+        User real_user = kanbanTask.getUser();
+        if (real_user.getId() != user.getId()) {
+            return false;
+        }
+        String state = kanbanTask.getState();
+        String next_state = alterState(state);
+        if (next_state.equals("totally completed")) {
+            kanbanTask.setCompleted(true);
+            kanbanTask.setCompletedDate(LocalDate.now());
+        }
+        kanbanTask.setState(next_state);
+        kanbanTaskRepository.save(kanbanTask);
+        return true;
+    }
+
+    @Override
+    public boolean completeTask(User user, int taskId) {
+        Task task = taskRepository.findTaskById(taskId);
+        if (task == null) {
+            System.out.println("Task not found");
+            return false;
+        }
+        User real_user = task.getUser();
+        if (real_user.getId() != user.getId()) {
+            return false;
+        }
+        task.setCompleted(true);
+        task.setCompletedDate(LocalDate.now());
+        taskRepository.save(task);
+        return true;
+    }
+
+
+
+    @Override
     public Task createTask(TaskDto taskDto) {
         Task task;
         int task_id = taskDto.getTask_id();
@@ -281,6 +322,53 @@ public class TaskServiceImpl implements TaskService {
             monthlyStatistics.add(monthStatistic);
         }
         return monthlyStatistics;
+    }
+
+    @Override
+    public NotifyDto notifyUser(int userId) {
+        List<NotifyItemDto> expired = new ArrayList<>();
+        List<NotifyItemDto> urgent = new ArrayList<>();
+        NotifyDto notifyDto = new NotifyDto();
+        List<Task> allTasks = taskRepository.findByUserId(userId);
+        for (Task task : allTasks) {
+            LocalDate completedDate = task.getCompletedDate();
+            LocalDate dueDate = task.getDueDate();
+            if (dueDate == null) {
+                continue;
+            }
+            if (completedDate == null && dueDate.isBefore(LocalDate.now())) {
+                NotifyItemDto notifyItemDto = new NotifyItemDto();
+                notifyItemDto.setId(task.getId());
+                notifyItemDto.setDueDate(task.getDueDate().toString());
+                notifyItemDto.setName(task.getTitle());
+                expired.add(notifyItemDto);
+            }
+            else {
+                if (completedDate == null && dueDate.isBefore(LocalDate.now().plusDays(7))) {
+                    NotifyItemDto notifyItemDto = new NotifyItemDto();
+                    notifyItemDto.setId(task.getId());
+                    notifyItemDto.setDueDate(task.getDueDate().toString());
+                    notifyItemDto.setName(task.getTitle());
+                    urgent.add(notifyItemDto);
+                }
+            }
+        }
+        notifyDto.setExpired(expired);
+        notifyDto.setUrgent(urgent);
+        return notifyDto;
+    }
+
+    private String alterState(String state) {
+        if (state.equals("todo")) {
+            return "inprogress";
+        }
+        else if (state.equals("inprogress")) {
+            return "review";
+        }
+        else if (state.equals("review")) {
+            return "done";
+        }
+        return "totally completed";
     }
 }
 

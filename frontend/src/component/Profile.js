@@ -5,11 +5,12 @@ import { Line, Pie } from '@ant-design/charts';
 import { CurUser } from '../Data/data';
 import TeamTable from './Team';  // 请确保导入了 TeamTable 组件
 import ProfileInfo from './Profileinfo';
+import Remind from './remind';
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
-function UserProfile({team,week_data,kanban_data}) {
+function UserProfile({team,week_data,kanban_data,remindtask}) {
   const [selectedMenu, setSelectedMenu] = useState('activity');
 
   // const data = [
@@ -78,9 +79,13 @@ function UserProfile({team,week_data,kanban_data}) {
       );
     }else if(selectedMenu=='intro'){
       return <ProfileInfo></ProfileInfo>
+    }else if(selectedMenu=='remind'){
+      return <Remind remindtask={remindtask}></Remind>
     }
     return null;
   };
+
+  console.log(remindtask)
 
   return (
     <Layout className="layout" style={{ minHeight: '100vh' }}>
@@ -103,7 +108,7 @@ function UserProfile({team,week_data,kanban_data}) {
                 <Menu.Item key="intro" icon={<MailOutlined />} style={{ height: '60px', lineHeight: '60px' }}>个人资料</Menu.Item>
                 <Menu.Item key="team" icon={<TeamOutlined />} style={{ height: '60px', lineHeight: '60px' }}>我的团队</Menu.Item>
                 <Menu.Item key="3" icon={<SettingOutlined />} style={{ height: '60px', lineHeight: '60px' }}>设置</Menu.Item>
-                <Menu.Item key="6" icon={<NotificationOutlined />} style={{ height: '60px', lineHeight: '60px' }}>提醒</Menu.Item>
+                <Menu.Item key="remind" icon={<NotificationOutlined />} style={{ height: '60px', lineHeight: '60px' }}>提醒</Menu.Item>
                 <Menu.Item key="4" icon={<LogoutOutlined />} style={{ height: '60px', lineHeight: '60px' }}>退出登录</Menu.Item>
               </Menu>
             </Card>

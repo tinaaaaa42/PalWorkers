@@ -36,10 +36,10 @@ const Navbar = ({tasks,title,allteam,teamss}) => {
     visible: children && children.length > 0,
   });
 
-  const teamsItem = renderItems(<MailOutlined />, 'Teams', teamsname);
-  const tagsItem = renderItems(<TagsOutlined />, 'Tags', uniqueTags);
-  const tasksItem = renderItems(<ContainerOutlined />, 'Tasks', tasksName);
-  const projectsItem = renderItems(<ProjectOutlined />, 'Projects', projects);
+  const teamsItem = renderItems(<MailOutlined style={{fontSize:'20px'}}/>, 'Teams', teamsname);
+  const tagsItem = renderItems(<TagsOutlined style={{fontSize:'20px'}}/>, 'Tags', uniqueTags);
+  const tasksItem = renderItems(<ContainerOutlined style={{fontSize:'20px'}}/>, 'Tasks', tasksName);
+  const projectsItem = renderItems(<ProjectOutlined style={{fontSize:'20px'}}/>, 'Projects', projects);
 
   const items = [
     teamsItem.visible && teamsItem,
@@ -54,11 +54,12 @@ const Navbar = ({tasks,title,allteam,teamss}) => {
 
   return (
     <div>
-      <Title level={3} style={{ padding: '16px 24px' }}>{title}</Title>
+      <Title level={3} style={{ padding: '16px 24px' ,fontSize:'35px'}}>{title}</Title>
       <Menu
         onClick={onClick}
         style={{
           width: '220px',
+          fontSize:'20px'
         }}
         mode="inline"
         items={items}

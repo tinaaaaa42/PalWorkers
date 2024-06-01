@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { Input } from 'antd';
 import { DayTasks,Tasks,WeekTasks,Projects} from "../Data/data";
 import {createWeeklyTask} from "../service/weekly_write"
 import {createDailyTask} from "../service/daily_write"
@@ -426,7 +427,7 @@ React.useEffect(() => {
               <div className="container">
                 <div className="form-container">
                   <div className="label">
-                    <input
+                    <Input
                         type="text"
                         name="taskName"
                         value={state.taskName}
@@ -447,7 +448,7 @@ React.useEffect(() => {
                   </div>
                   <div className="column">
                       Add File:
-                      <input className='logfile'
+                      <Input className='logfile'
                         type="file"
                         onChange={handleFileChange}
                         multiple
@@ -461,7 +462,7 @@ React.useEffect(() => {
                   <div className="label">
                   <img className='pic' src={process.env.PUBLIC_URL + "/标签.png"}  alt="" ></img>
                     Tag:
-                    <input className='taginfo'
+                    <Input className='taginfo'
                         type="text"
                         name="taskName"
                         value={state.tag}
@@ -470,7 +471,7 @@ React.useEffect(() => {
                   <div className="label">
                   <img className='pic' src={process.env.PUBLIC_URL + "/标签.png"}  alt="" ></img>
                     Team:
-                    <input className='taginfo'
+                    <Input className='taginfo'
                         type="text"
                         name="taskName"
                         value={state.team}

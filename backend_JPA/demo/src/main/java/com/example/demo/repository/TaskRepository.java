@@ -25,4 +25,5 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 
     List<KanbanTask> findKanbanTaskByUserIdAndCreateDateBetween(int Userid, LocalDate startDate, LocalDate endDate);
 
+    Task findById(int id);
 }

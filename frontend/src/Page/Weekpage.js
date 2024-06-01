@@ -37,6 +37,11 @@ function Weekpage(){
         setDates([start, end]);
         fetchWeeklyTasks(start.toISOString().split('T')[0], end.toISOString().split('T')[0]);
     };
+    const handleReset=()=>{
+        setDates([new Date(Date.now() - 6 * 24 * 60 * 60 * 1000), new Date()]);
+        const [start, end] = dates;
+        fetchWeeklyTasks(start.toISOString().split('T')[0], end.toISOString().split('T')[0]);
+    }
     return (<>
     <div className="container">
         <Navleft></Navleft>
@@ -44,7 +49,7 @@ function Weekpage(){
         <Navbar tasks={weektasks} title={"Week"}></Navbar>
         <div className="mainpart">
         <Header></Header>
-        <Control handleWeekSearch={handleWeekSearch}></Control>
+        <Control handleWeekSearch={handleWeekSearch} handleReset={handleReset}></Control>
         <div className="firstline">
             <Quadrant quadrant={1} Week_tasks={weektasks}></Quadrant>
             <Quadrant quadrant={2} Week_tasks={weektasks}></Quadrant>

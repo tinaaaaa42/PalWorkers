@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Button, DatePicker, Space } from 'antd';
 
-const DayPicker = ({handleDaySearch}) => {
+const DayPicker = ({handleDaySearch,handleReset}) => {
   const [singleDate, setSingleDate] = React.useState(null);
 
   // 选择单个日期的事件处理
@@ -11,6 +11,10 @@ const DayPicker = ({handleDaySearch}) => {
   const handleSearch = (date) => {
     handleDaySearch(date);
   };
+  const HandleReset=()=>{
+    setSingleDate(null);
+    handleReset();
+  }
   return (
     <Row gutter={16} justify="center" align="middle">
       <Col span={12}>
@@ -25,7 +29,7 @@ const DayPicker = ({handleDaySearch}) => {
           <Button type="primary" size="large" onClick={() => handleSearch(singleDate)}>
             确定
           </Button>
-          <Button type="primary" size="large" onClick={() => console.log('选中的单个日期:', singleDate)}>
+          <Button type="primary" size="large" onClick={HandleReset}>
             取消
           </Button>
         </Space>

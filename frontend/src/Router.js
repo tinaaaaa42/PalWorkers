@@ -7,6 +7,7 @@ import Profilepage from './Page/Profilepage';
 import Loginpage from './Page/Loginpage';
 import NavbarExample from './component/Navv';
 import Navbar from './component/Navv';
+import Remind from './component/remind';
 import TeamTable from './component/Team';
 import Profileinfo from './component/Profileinfo';
 const router=createBrowserRouter([
@@ -33,7 +34,7 @@ const router=createBrowserRouter([
         element:<Loginpage></Loginpage>
     },{
         path:'/test',
-        element:<Navbar></Navbar>
+        element:<Remind></Remind>
     },{
         path:'test2',
         element:<TeamTable></TeamTable>

@@ -87,6 +87,7 @@ public class TaskServiceImpl implements TaskService {
         task.setDueDate(LocalDate.parse(dueDate));
         task.setType(type);
         task.setExpired(expired);
+        task.setCompleted(false);
 
         Set<TaskTag> tags = new LinkedHashSet<>();
         for (String tagName : taskDto.getTags()) {

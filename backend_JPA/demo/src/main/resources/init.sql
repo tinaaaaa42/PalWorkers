@@ -63,6 +63,7 @@ CREATE TABLE tasks (
                        description TEXT,
                        create_date DATE NOT NULL,
                        due_date DATE,
+                    completed_date DATE,
                        type ENUM('kanban','weekly','daily') NOT NULL,
     team_id int,
     completed boolean not null default false,

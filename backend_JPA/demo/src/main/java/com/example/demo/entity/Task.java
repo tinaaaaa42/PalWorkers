@@ -43,6 +43,9 @@ public class Task {
     @Column(name = "due_date")
     private LocalDate dueDate;
 
+    @Column(name = "completed_date")
+    private LocalDate completedDate;
+
     @Lob
     @Column(name = "type", nullable = false)
     private String type;
@@ -75,7 +78,7 @@ public class Task {
     private Boolean expired;
 
     @ColumnDefault("0")
-    @Column(name = "completed", nullable = false)
+    @Column(name = "completed")
     private Boolean completed;
 
     @Column(name = "due_time")

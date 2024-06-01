@@ -73,12 +73,22 @@ const ModalComponent = () => {
                         id:task.id||null,
                           title: state.taskName,
                           description: state.description,
-                          createDate: formatDate(state.startTime),
-                          dueDate: formatDate(state.dueTime),
+                          createDate: '',
+                          dueDate: '',
                           type: state.type,
                           tags: [],
                           expired:false
                         };
+                        console.log(backendData.id)
+                        if(task.id){
+                        backendData.createDate=task.createDate;
+                        backendData.dueDate=task.dueDate;
+                        }
+                        else{
+                        backendData.createDate=formatDate(state.startTime);
+                         backendData.dueDate=formatDate(state.dueTime);
+                        }
+                        console.log(backendData)
                       return backendData;
                     };
            const convertKanbanStateToBackendFormat = () => {

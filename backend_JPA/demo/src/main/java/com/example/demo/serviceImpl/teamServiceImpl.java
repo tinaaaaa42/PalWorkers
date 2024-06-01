@@ -32,6 +32,9 @@ public class teamServiceImpl implements teamService {
 
     @Override
     public String  addTeamByName(String teamName, User user) {
+        if (teamRepository.existsByName(teamName)){
+            return null;
+        }
         Team team = new Team();
         team.setName(teamName);
         teamRepository.save(team);

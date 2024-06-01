@@ -20,6 +20,20 @@ public class dailyTaskController {
     @Autowired
     dailyTaskService dailyTaskService;
 
+    @GetMapping(value = "/api/tasks/daily")
+    public List<DailyTask> getDailyTasks(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        LocalDate currentDate = LocalDate.now();
+        List<DailyTask> dailyTasks = new ArrayList<>();
+        dailyTasks.addAll(dailyTaskService.findAll(userId,currentDate));
+        dailyTasks.addAll(dailyTaskService.findteamtasksByUser(user,currentDate));
+        return dailyTasks;
+    }
+
     @GetMapping(value = "/api/tasks/daily/date={date}")
     public List<DailyTask> getDailyTasks(HttpSession session, @PathVariable String date) {
         User user = (User) session.getAttribute("user");

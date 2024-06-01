@@ -24,6 +24,21 @@ public class weeklyTaskController {
     @Autowired
     private WeeklyTaskRepository weeklyTaskRepository;
 
+    @GetMapping(value = "api/tasks/weekly")
+    public List<WeeklyTask> getAllWeeklyTask(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        LocalDate start = LocalDate.parse("1990-01-01");
+        LocalDate end = LocalDate.parse("2040-01-01");
+        List<WeeklyTask> weeklyTasks = new ArrayList<>();
+        weeklyTasks.addAll(weeklyService.findAll(userId,start,end));
+        weeklyTasks.addAll(weeklyService.findteamTasksByUser(user,start,end));
+        return weeklyTasks;
+    }
+
     @GetMapping(value = "api/tasks/weekly/start={startDate}/end={endDate}")
     public List<WeeklyTask> getAllWeeklyTask(HttpSession session, @PathVariable String startDate, @PathVariable String endDate) {
         User user = (User) session.getAttribute("user");

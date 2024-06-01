@@ -106,7 +106,7 @@ SET @kanban_task_id = 6;
 INSERT INTO kanban_tasks (task_id, state) VALUES
                                               (@kanban_task_id + 0, 'todo'),
                                               (@kanban_task_id + 1, 'inprogress'),
-                                              (@kanban_task_id + 2, 'review'),
+                                              (@kanban_task_id + 2, 'todo'),
                                               (@kanban_task_id + 3, 'todo'),
                                               (@kanban_task_id + 4, 'done'),
                                               (11,'done'),

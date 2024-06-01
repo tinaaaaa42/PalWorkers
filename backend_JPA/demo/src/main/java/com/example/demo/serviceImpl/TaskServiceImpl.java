@@ -152,14 +152,33 @@ public class TaskServiceImpl implements TaskService {
         LocalDate today = LocalDate.now();
         LocalDate monty_ago = LocalDate.now().minusMonths(1);
         List<KanbanTask> kanbanTasks = taskRepository.findKanbanTaskByUserIdAndCreateDateBetween(userId,monty_ago,today);
+
+
         Map<String, Integer> statistics = new HashMap<>();
+        statistics.put("todo",0);
+        statistics.put("done",0);
+        statistics.put("inprogress",0);
+        statistics.put("review",0);
         for (KanbanTask kanbanTask : kanbanTasks) {
             String type = kanbanTask.getState();
             statistics.put(type,statistics.getOrDefault(type,0) + 1);
         }
         for (String type : statistics.keySet()) {
             MonthStatistics monthStatistic = new MonthStatistics();
-            monthStatistic.setType(type);
+            String set_type = null;
+            if (type.equals("todo")) {
+                set_type = "Todo";
+            }
+            else if (type.equals("done")) {
+                set_type = "Completed";
+            }
+            else if (type.equals("inprogress")) {
+                set_type = "In progress";
+            }
+            else if (type.equals("review")) {
+                set_type = "Review";
+            }
+            monthStatistic.setType(set_type);
             monthStatistic.setValue(statistics.get(type));
             monthlyStatistics.add(monthStatistic);
         }

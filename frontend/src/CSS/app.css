@@ -295,7 +295,7 @@ border-radius: 4px;
 .Taskcard .team{
     height: 29px;
     font-size: 22px;
-    color:rgba(0, 26, 255, 0.441);
+    color:rgba(92, 185, 243, 0.936);
     text-align: left;
     margin: 2px 0 2px ;
 }
@@ -503,7 +503,10 @@ border-radius: 4px;
     justify-content: center;
     font-size: 30px;
 }
-
+.Daycardtodo .daydelete{
+    color: #888;
+    text-decoration: line-through;
+}
 .Daycardtodo .todo-list {
     display: flex;
     flex-direction: column;

@@ -35,6 +35,10 @@ import Navbar from "../component/Navv";
         setCurrentDate(date);
         fetchDailyTasks(date.toISOString().split('T')[0]);
       }
+      const handleReset=()=>{
+        setCurrentDate(new Date);
+        fetchDailyTasks((new Date).toISOString().split('T')[0]);
+      }
    return (
      <div className="App">
        <div className="container">
@@ -43,7 +47,7 @@ import Navbar from "../component/Navv";
          <Navbar tasks={dailyTasks} title={"Day"}></Navbar>
          <div className="mainpart">
          <Header></Header>
-         <Control handleDaySearch={handleDaySearch}></Control>
+         <Control handleDaySearch={handleDaySearch} handleReset={handleReset}></Control>
          <div class="two-columns">
          <div><Daytodo tasks={dailyTasks}></Daytodo></div>
            <div> <Dayphoto></Dayphoto> </div>

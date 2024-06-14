@@ -941,3 +941,41 @@ textarea:focus {
 .Modal-button {
     font-size: 40px;
 }
+.selected {
+    text-decoration: underline;
+    color: blue;
+}
+.team-selector-container {
+    position: relative;
+}
+
+.team-selector {
+
+    background-color: white;
+    box-sizing: border-box; /* 确保宽度包括padding和border */
+    margin-top: 10px;
+    padding: 5px;
+    left: 0; /* 根据需要调整 */
+    width: 100%; /* 或者一个固定宽度，确保有足够的空间显示所有选项 */
+}
+.team-option {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* 一行显示多个元素 */
+.team-option {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+
+.team-selector-button {
+    cursor: pointer;
+}
+
+.team-selector-container button {
+    display: block;
+    text-align: left;
+    width: 200px;
+}

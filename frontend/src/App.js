@@ -7,6 +7,7 @@ import Seconddir from "./component/seconddir";
 import router from './Router';
 import {RouterProvider} from 'react-router-dom'
 import { ModalProvider } from './context/ModalContext';
+import { ProjectProvider } from './context/ProjectContext';
 function App() {
   return (
     <div className="App">
@@ -20,7 +21,9 @@ function App() {
         </div>
       </div> */}
       <ModalProvider>
+      <ProjectProvider>
       <RouterProvider router={router}></RouterProvider>
+      </ProjectProvider>
       </ModalProvider>
     </div>
   );

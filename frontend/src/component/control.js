@@ -4,7 +4,7 @@ import MonthPicker from "./MonthPicker";
 import { Tag } from "../Data/data";
 import { useLocation } from "react-router-dom";
 import { Button } from "antd";
-function Control({taskhandler,handleDaySearch,handleWeekSearch,handleKanbanSearch,handleReset}){
+function Control({taskhandler,handleDaySearch,handleWeekSearch,handleKanbanSearch,handleReset,projecthandler}){
     const location = useLocation();
     const renderPicker = () => {
         switch (location.pathname) {
@@ -25,7 +25,7 @@ function Control({taskhandler,handleDaySearch,handleWeekSearch,handleKanbanSearc
                 <Button type="primary" className="rounded-button taskbutton" onClick={taskhandler} style={{marginLeft:'250px'}}>
                     New Task
                 </Button>
-                <Button type="primary" className="rounded-button projectbutton">
+                <Button type="primary" className="rounded-button projectbutton" onClick={projecthandler}>
                     New Project
                 </Button></>);
             default:

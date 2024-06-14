@@ -4,11 +4,13 @@ import Header from "../component/header";
 import Control from "../component/control";
 import Kanban from "../component/Kanban";
 import ModalContext from '../context/ModalContext';
+import ProjectContext from '../context/ProjectContext';
 import React, { useContext ,useState,useEffect} from 'react';
 import {getKanbanTask, get_kanban_task} from "../service/kanban_task";
 import Navbar from "../component/Navv";
 function Kanbanpage(){
     const { openModal ,isModalOpen} = useContext(ModalContext);
+     const { openProject ,isProjectOpen} = useContext(ProjectContext);
     const [kanbantasks, setKanban_tasks] = useState([]);
     const [allTags, setAllTags] = useState(new Set()); 
     const [allTaskTitles, setAllTaskTitles] = useState([]);
@@ -35,12 +37,18 @@ function Kanbanpage(){
     };
     const handleClick = () => {
         openModal("kanban","","");
+
     };
+     const projectClick = () => {
+                openProject("new");
+
+            };
     const handleReset=()=>{
         setDates([new Date(Date.now() - 29 * 24 * 60 * 60 * 1000), new Date()]);
         const [start, end] = dates;
         fetchKanbanTasks(start.toISOString().split('T')[0], end.toISOString().split('T')[0]);
     }
+
     return (<>
     <div className="container">
         <Navleft></Navleft>
@@ -48,7 +56,7 @@ function Kanbanpage(){
         <Navbar tasks={kanbantasks} title={"Kanban"}></Navbar>
         <div className="mainpart">
         <Header></Header>
-        <Control taskhandler={handleClick} handleKanbanSearch={handleKanbanSearch} handleReset={handleReset}></Control>
+        <Control taskhandler={handleClick} handleKanbanSearch={handleKanbanSearch} handleReset={handleReset} projecthandler={projectClick}></Control>
         <Kanban kanban_tasks={kanbantasks}></Kanban>
         </div>
     </div>

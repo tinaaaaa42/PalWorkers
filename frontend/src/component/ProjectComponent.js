@@ -12,28 +12,11 @@ import {createKanbanTask} from "../service/kanbantask_write"
 import {changeWeeklyTask} from "../service/weekly_change"
 import {changeDailyTask} from "../service/daily_change"
 import {changeKanbanTask} from "../service/kanbantask_change"
-import TeamSelector from './teamSelector';
 const ModalComponent = () => {
   const { isModalOpen, closeModal ,type,message,task} = useContext(ModalContext);
-  //
- const handleTeamSelection = (selectedTeam) => {
-    console.log(`Team selected: ${selectedTeam}`);
-    // 这里可以执行其他逻辑，如更新状态或调用API
-  };  const [selectedTeam, setSelectedTeam] = useState(null);
-          const [assignees, setAssignees] = useState([]);
-const teamsWithAssignees = {
-  'Team A': ['Assignee 1', 'Assignee 2'],
-  'Team B': ['Assignee 3', 'Assignee 4'],
-  'Team C': ['Assignee 5', 'Assignee 6'],
-};
 
-  const handleTeamSelect = (team) => {
-      setSelectedTeam(team);
-      const newAssignees = teamsWithAssignees[team] || [];
-      setAssignees(newAssignees);
-    };
 
-  //
+
   const getCurrentDateTime = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -43,7 +26,6 @@ const teamsWithAssignees = {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
-
   const [state, setState] = React.useState({
       taskName: '',
       description: '',
@@ -60,8 +42,7 @@ const teamsWithAssignees = {
       teamTasksAnticipaters:[],
       teamTasksLeaders:[],
       important:true,
-      urgent:true,
-      teams:['team1','team2']
+      urgent:true
     });
 //传回日期格式
     function formatDate(date) {
@@ -258,12 +239,7 @@ console.log(state.tag)
       notes: value
     });
   };
- const handleTeamChange = (e) => {
-    setState({
-      ...state,
-      team: e.target.value,
-    });
-  };
+
   const handleFileChange = (event) => {
     setState({
       ...state,
@@ -389,10 +365,40 @@ React.useEffect(() => {
           dueTime: task.dueDate || '',
           description:task.description
         }));
-
+//        if(task.team!=null){
+//        setState(prevState => ({
+//              ...prevState,
+//              team: task.team.name,
+//              teamTasksAnticipaters:task.teamTasksAnticipaters,
+//              teamTasksLeaders:task.teamTasksLeaders
+//
+//
+//           }));}
       break;
       }
-
+//           let task;
+//          if(projectid){
+//          const project=Projects.find(project=>project.id==projectid)
+//           task=project?.Tasks.find(task=>task.id===key)||null
+//          }
+//         else {task = Tasks.find(task => task.id === key)||null;}
+//            if (task) {
+//             console.log("task")
+//              setState(prevState => ({
+//                ...prevState,
+//                taskName: task.title,
+//                tag:task.tag,
+//                 dueTime:task.date
+//
+//              }));
+//              if(task.note!=null){
+//              setState(prevState => ({
+//                    ...prevState,
+//                    note: task.note,
+//
+//                 }));}
+//            }break;
+//            }
     }
   },[])
  const handleFileUpload = (event) => {
@@ -465,16 +471,11 @@ React.useEffect(() => {
                   <div className="label">
                   <img className='pic' src={process.env.PUBLIC_URL + "/标签.png"}  alt="" ></img>
                     Team:
-
-                        <select
-                           className='taginfo'
-                           value={state.team}
-                           onChange={handleTeamChange}>
-                           <option value="">Select Team</option>
-                           {state.teams.map((team,index)=>(
-                            <option key={index} value={team}>{team}</option>
-                           ))}
-                           </select>
+                    <Input className='taginfo'
+                        type="text"
+                        name="taskName"
+                        value={state.team}
+                        onChange={handleInputtagChange}/>
                   </div>
                   <div className="label">
                   <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>
@@ -539,7 +540,6 @@ React.useEffect(() => {
 
 
                 <div className="notes-container" style={{ display: 'flex', flexDirection: 'column' }}>
-                <TeamSelector onTeamSelect={handleTeamSelection} />
                 <div style={{ flex: '0.8' }}>
                 {(type!=="new"&&state.note!=='')&&(
                     <div className="Compile-card" >

@@ -1,51 +1,45 @@
 import React, { createContext, useState } from 'react';
-import ModalComponent from "../component/ModalComponent"
-export const ModalContext = createContext({
-  isModalOpen: false,
-  openModal: () => {},
-  closeModal: () => {},
-  type: "day",
-  message: "new",
+import ProjectComponent from "../component/ProjectComponent"
+export const ProjectContext = createContext({
+  isProjectOpen: false,
+  openProject: () => {},
+  closeProject: () => {},
+  type: "new",
 });
 
-export const ModalProvider = ({ children }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export const ProjectProvider = ({ children }) => {
+  const [isProjectOpen, setIsProjectOpen] = useState(false);
   const [type,setType]=useState("day");
-  const [message,setMessage]=useState(1);
-  const [task, setTask] = useState()
-  const openModal = (theType,task,theMessage) => {
-    setIsModalOpen(true);
+  const openProject = (theType) => {
+    setIsProjectOpen(true);
     setType(theType);
-    setMessage(theMessage);
-    setTask(task)
+console.log("open project")
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeProject = () => {
+    setIsProjectOpen(false);
   };
 
   const contextValue = {
-    isModalOpen,
-    openModal,
-    closeModal,
-    type,
-    message,
-    task
+    isProjectOpen,
+    openProject,
+    closeProject,
+    type
   };
 
   return (
-    <ModalContext.Provider value={contextValue}>
+    <ProjectContext.Provider value={contextValue}>
       {children}
-      {isModalOpen && (
+      {isProjectOpen && (
       <div className="modal">
           console.log(theKey)
-            <ModalComponent>
-            </ModalComponent>
+            <ProjectComponent>
+            </ProjectComponent>
 
         </div>
      )}
-    </ModalContext.Provider>
+    </ProjectContext.Provider>
   );
 };
 
-export default ModalContext;
+export default ProjectContext;

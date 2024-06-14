@@ -1,39 +1,25 @@
 import React, { useContext,useState } from 'react';
-import ModalContext from '../context/ModalContext';
+import ProjectContext from '../context/ProjectContext';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Input } from 'antd';
-import { DayTasks,Tasks,WeekTasks,Projects} from "../Data/data";
-import {createWeeklyTask} from "../service/weekly_write"
-import {createDailyTask} from "../service/daily_write"
-import {createKanbanTask} from "../service/kanbantask_write"
-import {changeWeeklyTask} from "../service/weekly_change"
-import {changeDailyTask} from "../service/daily_change"
-import {changeKanbanTask} from "../service/kanbantask_change"
-const ModalComponent = () => {
-  const { isModalOpen, closeModal ,type,message,task} = useContext(ModalContext);
-
-
-
-  const getCurrentDateTime = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
-  };
+import TeamSelector from './teamSelector'
+const ProjectComponent = () => {
+  const { isProjectOpen, closeProject ,type} = useContext(ProjectContext);
+    const handleTeamSelection = (selectedTeam) => {
+      console.log(`Team selected: ${selectedTeam}`);
+      // 这里可以执行其他逻辑，如更新状态或调用API
+    };
   const [state, setState] = React.useState({
       taskName: '',
       description: '',
       type:type,
       startTime: new Date(),
       dueTime: new Date(),
-      tag:'',
       assigneeOptions:['User1','User2'],
+      tag:'',
       notes: '',
       files: [],
       note:[],
@@ -41,10 +27,7 @@ const ModalComponent = () => {
       team:'',
       teamTasksAnticipaters:[],
       teamTasksLeaders:[],
-      important:true,
-      urgent:true
     });
-//传回日期格式
     function formatDate(date) {
       const regex = /^\d{4}-\d{2}-\d{2}$/;
       if(regex.test(date))return date;
@@ -53,117 +36,94 @@ const ModalComponent = () => {
         const day = date.getDate().toString().padStart(2, '0');
         return `${year}-${month}-${day}`;
         }
-
-        const convertWeeklyStateToBackendFormat = () => {
-//        const tags = state.tag.length===[] ? [] : [state.tag];
-            // 构造新的 JSON 对象
-            let backendData = {
-
-              task_id:task.id||null,
-                title: state.taskName,
-                description: state.description,
-                createDate: formatDate(state.startTime),
-                dueDate: formatDate(state.dueTime),
-                type: state.type,
-               tags: [state.tag],
-              important: state.important,
-              urgent: state.urgent,
-              expired:false
-            };if(!state.tag)backendData.tags=[];
-
-
-            return backendData;
-          };
-           const convertDailyStateToBackendFormat = () => {
-console.log(state.tag)
-                       const backendData = {
-
-                        task_id:task.id||null,
-                          title: state.taskName,
-                          description: state.description,
-                          createDate:formatDate(state.startTime),
-                          dueDate: formatDate(state.dueTime),
-                          type: state.type,
-                          tags: [state.tag],
-                          expired:false
-                        };
-                        console.log(backendData)
-//                        if(task.id){
-//                        backendData.createDate=task.createDate;
-//                        backendData.dueDate=task.dueDate;
-//                        }
-//                        else{
-//                        backendData.createDate=formatDate(state.startTime);
-//                         backendData.dueDate=formatDate(state.dueTime);
-//                        }
-//                        console.log(backendData)
-                            if(!state.tag)backendData.tags=[];
-                                return backendData;
-                            };
-           const convertKanbanStateToBackendFormat = () => {
-
-                       let backendData = {
-
-                                     task_id:task.id||null,
-                                       title: state.taskName,
-                                       description: state.description,
-                                       createDate: formatDate(state.startTime),
-                                       dueDate:formatDate(state.dueTime),
-                                       type: state.type,
-                                       tags: [state.tag],
-                                     state:state.choosepro
-                                   };if(!state.tag)backendData.tags=[];
-                      return backendData;
-                    };
-//           const convertWeeklyStateToBackendFormat = () => {
+//
+//        const convertWeeklyStateToBackendFormat = () => {
+//
+//            let backendData = {
+//
+//              task_id:task.id||null,
+//                title: state.taskName,
+//                description: state.description,
+//                createDate: formatDate(state.startTime),
+//                dueDate: formatDate(state.dueTime),
+//                type: state.type,
+//               tags: [state.tag],
+//              important: state.important,
+//              urgent: state.urgent,
+//              expired:false
+//            };if(!state.tag)backendData.tags=[];
+//
+//
+//            return backendData;
+//          };
+//           const convertDailyStateToBackendFormat = () => {
+//
 //                       const backendData = {
 //
-//                        id:task.id||null,
+//                        task_id:task.id||null,
 //                          title: state.taskName,
 //                          description: state.description,
-//                          createDate: formatDate(state.startTime),
+//                          createDate:formatDate(state.startTime),
 //                          dueDate: formatDate(state.dueTime),
 //                          type: state.type,
-//                          tags: [],
+//                          tags: [state.tag],
+//                          expired:false
 //                        };
+//                        console.log(backendData)
+//
+//                            if(!state.tag)backendData.tags=[];
+//                                return backendData;
+//                            };
+//           const convertKanbanStateToBackendFormat = () => {
+//
+//                       let backendData = {
+//
+//                                     task_id:task.id||null,
+//                                       title: state.taskName,
+//                                       description: state.description,
+//                                       createDate: formatDate(state.startTime),
+//                                       dueDate:formatDate(state.dueTime),
+//                                       type: state.type,
+//                                       tags: [state.tag],
+//                                     state:state.choosepro
+//                                   };if(!state.tag)backendData.tags=[];
 //                      return backendData;
 //                    };
+//
 
-
-
-                const handleSave = async (e) => {
-
-                    let response;
-                      e.preventDefault();
-                    try {console.error('创建任务:', true);
-                    console.log(type)
-                    if(!task.id){
-                    switch(type){
-                    case "day":
-                      response = await createDailyTask(convertDailyStateToBackendFormat());break;
-                     case "week":
-                       response = await createWeeklyTask(convertWeeklyStateToBackendFormat());break;
-                      case "kanban":
-                        response = await createKanbanTask(convertKanbanStateToBackendFormat());break;
-                        }}
-
-                    else {
-                    switch(type){
-
-                    case "day":
-                      response = await changeDailyTask(convertDailyStateToBackendFormat());break;
-                     case "week":
-                       response = await changeWeeklyTask(convertWeeklyStateToBackendFormat());break;
-                      case "kanban":
-                        response = await changeKanbanTask(convertKanbanStateToBackendFormat());break;
-                        }
-                    }}
-                    catch (error) {
-                      console.error('创建任务失败:', error);
-                    }
-                         closeModal();
-
-                  };
+//                const handleSave = async (e) => {
+//
+//                    let response;
+//                      e.preventDefault();
+//                    try {console.error('创建任务:', true);
+//                    console.log(type)
+//                    if(!task.id){
+//                    switch(type){
+//                    case "day":
+//                      response = await createDailyTask(convertDailyStateToBackendFormat());break;
+//                     case "week":
+//                       response = await createWeeklyTask(convertWeeklyStateToBackendFormat());break;
+//                      case "kanban":
+//                        response = await createKanbanTask(convertKanbanStateToBackendFormat());break;
+//                        }}
+//
+//                    else {
+//                    switch(type){
+//
+//                    case "day":
+//                      response = await changeDailyTask(convertDailyStateToBackendFormat());break;
+//                     case "week":
+//                       response = await changeWeeklyTask(convertWeeklyStateToBackendFormat());break;
+//                      case "kanban":
+//                        response = await changeKanbanTask(convertKanbanStateToBackendFormat());break;
+//                        }
+//                    }}
+//                    catch (error) {
+//                      console.error('创建任务失败:', error);
+//                    }
+//                         closeProject();
+//
+//                  };
 
 
 
@@ -246,125 +206,55 @@ console.log(state.tag)
       files: event.target.files
     });
   };
-//  React.useEffect(() => {
-//      console.log(type);
-//    });
-React.useEffect(() => {
-          if(message==1)
-             setState(prevState => ({
-               ...prevState,
-               important: true,
-               urgent:true
-             }));
-          if(message==2)
-             setState(prevState => ({
-               ...prevState,
-               important: true,
-               urgent:false
-             }));
-          if(message==3)
-             setState(prevState => ({
-               ...prevState,
-               important: false,
-               urgent:true
-             }));
-          if(message==4)
-             setState(prevState => ({
-               ...prevState,
-               important: false,
-               urgent:false
-             }));
-    switch(type){
-
-      case "day":{
-
-      if(!task) {
-             setState(prevState => ({
-               ...prevState,
-               type:"daily",
-               taskName: '',
-             }));
-             break;
-             }
-
-
-        setState(prevState => ({
-          ...prevState,
-          choosepro:task.state,
-          taskName: task.title||'',
-          tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
-          startTime:task.createDate||'',
-          dueTime: task.dueDate || '',
-          description:task.description,
-          type:"daily"
-        }));
-        if(task.team!=null){
-        setState(prevState => ({
-              ...prevState,
-              team: task.team.name,
-              teamTasksAnticipaters:task.teamTasksAnticipaters,
-              teamTasksLeaders:task.teamTasksLeaders
-
-
-           }));}
-      break;
-      }
-      case "week":{
-       if(!task) {
-                   setState(prevState => ({
-                     ...prevState,
-                     taskName: '',
-                     type:"weekly"
-                     }));
-                   break;
-                   }
-
-
-
-              setState(prevState => ({
-                ...prevState,
-                type:"weekly",
-                choosepro:task.state,
-                taskName: task.title||'',
-                tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
-                startTime:task.createDate||'',
-                dueTime: task.dueDate || '',
-                description:task.description,
-                urgent:task.urgent,
-                important:task.important
-              }));
-              if(task.team!=null){
-              setState(prevState => ({
-                    ...prevState,
-                    team: task.team.name,
-                    teamTasksAnticipaters:task.teamTasksAnticipaters,
-                    teamTasksLeaders:task.teamTasksLeaders
-
-
-                 }));}
-            break;
-            }
-      case "kanban":{
-            if(!task) {
-             setState(prevState => ({
-               ...prevState,
-               type:"kanban",
-               taskName: '',
-             }));
-             break;
-             }
-
-
-        setState(prevState => ({
-          ...prevState,
-          type:"kanban",
-          choosepro:task.state,
-          taskName: task.title||'',
-          tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
-          startTime:task.createDate||'',
-          dueTime: task.dueDate || '',
-          description:task.description
-        }));
+//React.useEffect(() => {
+//          if(message==1)
+//             setState(prevState => ({
+//               ...prevState,
+//               important: true,
+//               urgent:true
+//             }));
+//          if(message==2)
+//             setState(prevState => ({
+//               ...prevState,
+//               important: true,
+//               urgent:false
+//             }));
+//          if(message==3)
+//             setState(prevState => ({
+//               ...prevState,
+//               important: false,
+//               urgent:true
+//             }));
+//          if(message==4)
+//             setState(prevState => ({
+//               ...prevState,
+//               important: false,
+//               urgent:false
+//             }));
+//    switch(type){
+//
+//      case "day":{
+//
+//      if(!task) {
+//             setState(prevState => ({
+//               ...prevState,
+//               type:"daily",
+//               taskName: '',
+//             }));
+//             break;
+//             }
+//
+//
+//        setState(prevState => ({
+//          ...prevState,
+//          choosepro:task.state,
+//          taskName: task.title||'',
+//          tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
+//          startTime:task.createDate||'',
+//          dueTime: task.dueDate || '',
+//          description:task.description,
+//          type:"daily"
+//        }));
 //        if(task.team!=null){
 //        setState(prevState => ({
 //              ...prevState,
@@ -374,52 +264,87 @@ React.useEffect(() => {
 //
 //
 //           }));}
-      break;
-      }
-//           let task;
-//          if(projectid){
-//          const project=Projects.find(project=>project.id==projectid)
-//           task=project?.Tasks.find(task=>task.id===key)||null
-//          }
-//         else {task = Tasks.find(task => task.id === key)||null;}
-//            if (task) {
-//             console.log("task")
+//      break;
+//      }
+//      case "week":{
+//       if(!task) {
+//                   setState(prevState => ({
+//                     ...prevState,
+//                     taskName: '',
+//                     type:"weekly"
+//                     }));
+//                   break;
+//                   }
+//
+//
+//
 //              setState(prevState => ({
 //                ...prevState,
-//                taskName: task.title,
-//                tag:task.tag,
-//                 dueTime:task.date
-//
+//                type:"weekly",
+//                choosepro:task.state,
+//                taskName: task.title||'',
+//                tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
+//                startTime:task.createDate||'',
+//                dueTime: task.dueDate || '',
+//                description:task.description,
+//                urgent:task.urgent,
+//                important:task.important
 //              }));
-//              if(task.note!=null){
+//              if(task.team!=null){
 //              setState(prevState => ({
 //                    ...prevState,
-//                    note: task.note,
+//                    team: task.team.name,
+//                    teamTasksAnticipaters:task.teamTasksAnticipaters,
+//                    teamTasksLeaders:task.teamTasksLeaders
+//
 //
 //                 }));}
-//            }break;
+//            break;
 //            }
-    }
-  },[])
+//      case "kanban":{
+//            if(!task) {
+//             setState(prevState => ({
+//               ...prevState,
+//               type:"kanban",
+//               taskName: '',
+//             }));
+//             break;
+//             }
+//
+//
+//        setState(prevState => ({
+//          ...prevState,
+//          type:"kanban",
+//          choosepro:task.state,
+//          taskName: task.title||'',
+//          tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
+//          startTime:task.createDate||'',
+//          dueTime: task.dueDate || '',
+//          description:task.description
+//        }));
+//
+//      break;
+//      }
+//
+//    }
+//  },[])
  const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      // 创建一个Object URL，用于在编辑器中引用文件
       const fileUrl = URL.createObjectURL(file);
 
-      // 插入链接到编辑器
       const quill = ReactQuill.getEditor();
       if (quill) {
         quill.focus();
-        quill.format('link', fileUrl); // 设置当前选中内容的链接格式
-        quill.insertText(`\n`); // 在链接后添加换行符，防止链接与其他文本合并
+        quill.format('link', fileUrl);
+        quill.insertText(`\n`);
       }
     }
   };
   return (
 
     <div className="modal-container">
-      {isModalOpen && (
+      {isProjectOpen && (
 
           <div className="modal-content">
             {/* 表单内容 */}
@@ -468,15 +393,13 @@ React.useEffect(() => {
                         value={state.tag}
                         onChange={handleInputtagChange}/>
                   </div>
-                  <div className="label">
-                  <img className='pic' src={process.env.PUBLIC_URL + "/标签.png"}  alt="" ></img>
-                    Team:
-                    <Input className='taginfo'
-                        type="text"
-                        name="taskName"
-                        value={state.team}
-                        onChange={handleInputtagChange}/>
-                  </div>
+
+
+
+
+
+
+
                   <div className="label">
                   <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>
                     <label className='Userlabel'>
@@ -531,8 +454,8 @@ React.useEffect(() => {
                       </div>
                   </div>
                   <div className="label">
-                    <button className="detail save" onClick={handleSave}>Save</button>
-                    <button className="detail cancle" onClick={closeModal}>Cancel</button>
+
+                    <button className="detail cancle" onClick={closeProject}>Cancel</button>
                   </div>
                   </div>
 
@@ -540,6 +463,7 @@ React.useEffect(() => {
 
 
                 <div className="notes-container" style={{ display: 'flex', flexDirection: 'column' }}>
+                   <TeamSelector className='taginfo' onTeamSelect={handleTeamSelection} />
                 <div style={{ flex: '0.8' }}>
                 {(type!=="new"&&state.note!=='')&&(
                     <div className="Compile-card" >
@@ -573,4 +497,4 @@ React.useEffect(() => {
   );
 };
 
-export default ModalComponent;
+export default ProjectComponent;

@@ -13,26 +13,9 @@ import {changeWeeklyTask} from "../service/weekly_change"
 import {changeDailyTask} from "../service/daily_change"
 import {changeKanbanTask} from "../service/kanbantask_change"
 import TeamSelector from './teamSelector';
+import {get_team}from "../service/team"
 const ModalComponent = () => {
   const { isModalOpen, closeModal ,type,message,task} = useContext(ModalContext);
-  //
- const handleTeamSelection = (selectedTeam) => {
-    console.log(`Team selected: ${selectedTeam}`);
-    // 这里可以执行其他逻辑，如更新状态或调用API
-  };  const [selectedTeam, setSelectedTeam] = useState(null);
-          const [assignees, setAssignees] = useState([]);
-const teamsWithAssignees = {
-  'Team A': ['Assignee 1', 'Assignee 2'],
-  'Team B': ['Assignee 3', 'Assignee 4'],
-  'Team C': ['Assignee 5', 'Assignee 6'],
-};
-
-  const handleTeamSelect = (team) => {
-      setSelectedTeam(team);
-      const newAssignees = teamsWithAssignees[team] || [];
-      setAssignees(newAssignees);
-    };
-
   //
   const getCurrentDateTime = () => {
     const now = new Date();
@@ -57,13 +40,51 @@ const teamsWithAssignees = {
       note:[],
       choosepro:'todo',
       team:'',
-      teamTasksAnticipaters:[],
-      teamTasksLeaders:[],
+      teamAnticipaters:[],//含id与name
+      teamAnticipater:'',
+      teamLeaders:[],
       important:true,
       urgent:true,
-      teams:['team1','team2']
+      teams:[],//含team id与name
+      teamData:[]//原数据
+
+
     });
-//传回日期格式
+          const fetchTeams = async () => {
+            try {
+              const Teams = await get_team();
+              const formattedTeams = Teams.map(team => ({
+                id: team.team.id,
+                name: team.team.name
+              }));
+
+              setState(prevState => ({
+                ...prevState,
+                teams: formattedTeams,
+                teamData: Teams
+              }));
+            } catch (error) {
+              console.error("Error fetching teams:", error);
+            }
+          };
+    function getTeamMember(name){
+        const team=state.teamData.find(teamObj=>teamObj.team.name==name);
+
+        if(team){
+            return team.team.teamMembers
+        }
+        return undefined
+    }
+    function getIdByName(name){
+
+            const team = state.teams.find(team => team.name === name);
+              return team ? team.id : null;
+    }
+     function getAntiIdByName(name){
+                const user = state.teamAnticipaters.find(team => team.name === name);
+                 console.log(user.id)
+                  return user ? user.id : null;
+        }
     function formatDate(date) {
       const regex = /^\d{4}-\d{2}-\d{2}$/;
       if(regex.test(date))return date;
@@ -75,6 +96,7 @@ const teamsWithAssignees = {
 
         const convertWeeklyStateToBackendFormat = () => {
 //        const tags = state.tag.length===[] ? [] : [state.tag];
+            const teamId = getIdByName(state.team);
             // 构造新的 JSON 对象
             let backendData = {
 
@@ -87,14 +109,15 @@ const teamsWithAssignees = {
                tags: [state.tag],
               important: state.important,
               urgent: state.urgent,
-              expired:false
+              expired:false,
+              teamIds: teamId ? [teamId] : []
             };if(!state.tag)backendData.tags=[];
-
+            if(!getIdByName(state.team))backendData.teamIds=[];
 
             return backendData;
           };
            const convertDailyStateToBackendFormat = () => {
-console.log(state.tag)
+           const teamId = getIdByName(state.team);
                        const backendData = {
 
                         task_id:task.id||null,
@@ -104,9 +127,11 @@ console.log(state.tag)
                           dueDate: formatDate(state.dueTime),
                           type: state.type,
                           tags: [state.tag],
-                          expired:false
+                          expired:false,
+                         teamIds: teamId ? [teamId] : []
+
                         };
-                        console.log(backendData)
+
 //                        if(task.id){
 //                        backendData.createDate=task.createDate;
 //                        backendData.dueDate=task.dueDate;
@@ -117,10 +142,11 @@ console.log(state.tag)
 //                        }
 //                        console.log(backendData)
                             if(!state.tag)backendData.tags=[];
+                            if(!getIdByName(state.team))backendData.teamIds=[];
                                 return backendData;
                             };
            const convertKanbanStateToBackendFormat = () => {
-
+const teamId = getIdByName(state.team);
                        let backendData = {
 
                                      task_id:task.id||null,
@@ -130,8 +156,12 @@ console.log(state.tag)
                                        dueDate:formatDate(state.dueTime),
                                        type: state.type,
                                        tags: [state.tag],
-                                     state:state.choosepro
+                                     state:state.choosepro,
+                                        userIds:[],
+                                       teamIds: teamId ? [teamId] : []
                                    };if(!state.tag)backendData.tags=[];
+                                   if(!getIdByName(state.team))backendData.teamIds=[];
+                                    console.log('Generated backend data:', backendData);
                       return backendData;
                     };
 //           const convertWeeklyStateToBackendFormat = () => {
@@ -155,7 +185,6 @@ console.log(state.tag)
                     let response;
                       e.preventDefault();
                     try {console.error('创建任务:', true);
-                    console.log(type)
                     if(!task.id){
                     switch(type){
                     case "day":
@@ -184,7 +213,13 @@ console.log(state.tag)
 
                   };
 
-
+const handleTry=()=>{
+//getIdByName(state.team)
+//getAntiIdByName(state.teamAnticipater)
+console.log(task)
+console.log(type)
+console.log(state)
+}
 
 
        const handleInputChange = (event) => {
@@ -258,12 +293,50 @@ console.log(state.tag)
       notes: value
     });
   };
- const handleTeamChange = (e) => {
-    setState({
-      ...state,
-      team: e.target.value,
-    });
+  const handleAnticipatersChange=(event)=>{
+     setState({
+                 ...state,
+                 teamAnticipater:event.target.value
+         });
+  }
+  const handleTeamChange = (e) => {
+    const selectedTeamName = e.target.value;
+
+    // 如果选择了 "Select Team" 或者没有选择具体的团队
+    if (selectedTeamName === "" || selectedTeamName === "Select Team") {
+      setState(prevState => ({
+        ...prevState,
+        teamAnticipaters: [],
+        teamLeaders: [],
+        team: ""  // 或者你可以设置为 'Select Team' 视情况而定
+      }));
+      return; // 直接返回，避免继续执行后续逻辑
+    }
+
+    // 获取选定团队的成员
+    const members = getTeamMember(selectedTeamName);
+    const member = members.map(team => ({
+      id: team.user.id,
+      name: team.user.username
+    }));
+
+    // 获取选定团队的领导
+    const leader = members
+      .filter(team => team.leader) // 筛选出team.leader为true的成员
+      .map(leader => ({
+        id: leader.user.id,
+        name: leader.user.username
+      }));
+
+    setState(prevState => ({
+      ...prevState,
+      teamAnticipaters: member,
+      teamLeaders: leader,
+      team: selectedTeamName
+    }));
   };
+
+
   const handleFileChange = (event) => {
     setState({
       ...state,
@@ -273,128 +346,121 @@ console.log(state.tag)
 //  React.useEffect(() => {
 //      console.log(type);
 //    });
-React.useEffect(() => {
-          if(message==1)
-             setState(prevState => ({
-               ...prevState,
-               important: true,
-               urgent:true
-             }));
-          if(message==2)
-             setState(prevState => ({
-               ...prevState,
-               important: true,
-               urgent:false
-             }));
-          if(message==3)
-             setState(prevState => ({
-               ...prevState,
-               important: false,
-               urgent:true
-             }));
-          if(message==4)
-             setState(prevState => ({
-               ...prevState,
-               important: false,
-               urgent:false
-             }));
-    switch(type){
+ React.useEffect(() => {
+    // 初始化逻辑封装在一个异步函数中
+    const initializeData = async () => {
+      try {
+        // 先等待 fetchTeams 完成
+        await fetchTeams();
 
-      case "day":{
-
-      if(!task) {
-             setState(prevState => ({
-               ...prevState,
-               type:"daily",
-               taskName: '',
-             }));
-             break;
-             }
-
-
-        setState(prevState => ({
-          ...prevState,
-          choosepro:task.state,
-          taskName: task.title||'',
-          tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
-          startTime:task.createDate||'',
-          dueTime: task.dueDate || '',
-          description:task.description,
-          type:"daily"
-        }));
-        if(task.team!=null){
-        setState(prevState => ({
+        // 根据 message 更新状态
+        switch (message) {
+          case 1:
+            setState(prevState => ({
               ...prevState,
-              team: task.team.name,
-              teamTasksAnticipaters:task.teamTasksAnticipaters,
-              teamTasksLeaders:task.teamTasksLeaders
+              important: true,
+              urgent: true
+            }));
+            break;
+          case 2:
+            setState(prevState => ({
+              ...prevState,
+              important: true,
+              urgent: false
+            }));
+            break;
+          case 3:
+            setState(prevState => ({
+              ...prevState,
+              important: false,
+              urgent: true
+            }));
+            break;
+          case 4:
+            setState(prevState => ({
+              ...prevState,
+              important: false,
+              urgent: false
+            }));
+            break;
+          default:
+            break;
+        }
 
-
-           }));}
-      break;
-      }
-      case "week":{
-       if(!task) {
-                   setState(prevState => ({
-                     ...prevState,
-                     taskName: '',
-                     type:"weekly"
-                     }));
-                   break;
-                   }
-
-
-
+        // 根据 task.type 更新状态
+        if (task) {
+          switch (type) {
+            case "day":
               setState(prevState => ({
                 ...prevState,
-                type:"weekly",
-                choosepro:task.state,
-                taskName: task.title||'',
-                tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
-                startTime:task.createDate||'',
+                type: "daily",
+                choosepro: task.state,
+                taskName: task.title || '',
+                tag: task.taskTags?.[0]?.tag?.name || '',
+                startTime: task.createDate || '',
                 dueTime: task.dueDate || '',
-                description:task.description,
-                urgent:task.urgent,
-                important:task.important
+                description: task.description
               }));
-              if(task.team!=null){
+              if (task.team) {
+                setState(prevState => ({
+                  ...prevState,
+                  team: task.team.name,
+                  teamAnticipaters: task.teamAnticipaters,
+                  teamLeaders: task.teamLeaders
+                }));
+              }
+              break;
+
+            case "week":
               setState(prevState => ({
-                    ...prevState,
-                    team: task.team.name,
-                    teamTasksAnticipaters:task.teamTasksAnticipaters,
-                    teamTasksLeaders:task.teamTasksLeaders
+                ...prevState,
+                type: "weekly",
+                choosepro: task.state,
+                taskName: task.title || '',
+                tag: task.taskTags?.[0]?.tag?.name || '',
+                startTime: task.createDate || '',
+                dueTime: task.dueDate || '',
+                description: task.description,
+                urgent: task.urgent,
+                important: task.important
+              }));
+              if (task.team) {
+                setState(prevState => ({
+                  ...prevState,
+                  team: task.team.name,
+                  teamAnticipaters: task.teamAnticipaters,
+                  teamLeaders: task.teamLeaders
+                }));
+              }
+              break;
 
+            case "kanban":
+              setState(prevState => ({
+                ...prevState,
+                type: "kanban",
+                choosepro: task.state,
+                taskName: task.title || '',
+                tag: task.taskTags?.[0]?.tag?.name || '',
+                startTime: task.createDate || '',
+                dueTime: task.dueDate || '',
+                description: task.description
+              }));
+              break;
 
-                 }));}
-            break;
-            }
-      case "kanban":{
-            if(!task) {
-             setState(prevState => ({
-               ...prevState,
-               type:"kanban",
-               taskName: '',
-             }));
-             break;
-             }
+            default:
+              break;
+          }
+        }
 
-
-        setState(prevState => ({
-          ...prevState,
-          type:"kanban",
-          choosepro:task.state,
-          taskName: task.title||'',
-          tag:task.taskTags && task.taskTags.length > 0 ? task.taskTags[0].tag.name : '',
-          startTime:task.createDate||'',
-          dueTime: task.dueDate || '',
-          description:task.description
-        }));
-
-      break;
+      } catch (error) {
+        console.error("Error initializing data:", error);
       }
+    };
 
-    }
-  },[])
+    // 调用初始化函数
+    initializeData();
+
+  }, []);
  const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -447,11 +513,13 @@ React.useEffect(() => {
                         onChange={handleFileChange}
                         multiple
                       />
-                      <ul>
-                        {Array.from(state.files).map((file, index) => (
-                          <li key={index}>{file.name}</li>
-                        ))}
-                      </ul>
+                      {
+//                      <ul>
+//                        {state.files && Array.from(state.files).map((file) => (
+//                          <li key={file.id}>{file.name}</li>
+//                        ))}
+//                      </ul>
+}
                   </div>
                   <div className="label">
                   <img className='pic' src={process.env.PUBLIC_URL + "/标签.png"}  alt="" ></img>
@@ -471,22 +539,63 @@ React.useEffect(() => {
                            value={state.team}
                            onChange={handleTeamChange}>
                            <option value="">Select Team</option>
-                           {state.teams.map((team,index)=>(
-                            <option key={index} value={team}>{team}</option>
+                           {state.teams.map((team)=>(
+                            <option key={team.id} value={team.name}>{team.name}</option>
                            ))}
                            </select>
                   </div>
-                  <div className="label">
-                  <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>
-                    <label className='Userlabel'>
-                      <div className='asstitle'>Assignee: </div>
-                      <select name=" assigneeOptions" className='Progressselect'  value={state.assignee} onChange={handleAssigneeChange}>
-                          {state.assigneeOptions.map((option) => (
-                             <option key={option} value={option}>{option}</option>
-                            ))}
-                      </select>
-                    </label>
-                  </div>
+                 {
+                   state.team ? (
+                     <>
+                       <div className="label">
+                         <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"} alt="" />
+                         TeamAnticipaters:
+                          <select
+                           className='taginfo'
+                           value={state.Anticipater}
+                           onChange={handleAnticipatersChange}>
+                           <option value="">Select Anticipaters</option>
+                           {state.teamAnticipaters.map((anticipater) => (
+                             <option key={anticipater.id} value={anticipater.name}>{anticipater.name}</option>
+                           ))}
+                         </select>
+                       </div>
+                      <div className="label">
+                        <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"} alt="" />
+                        <div>
+                          TeamLeader:
+                          {state.teamLeaders.length === 1 ? (
+                            <span className='taginfo'>{state.teamLeaders[0].name}</span>
+                          ) : state.teamLeaders.length > 1 ? (
+                            // 有多个领导者
+                            <select className='taginfo'>
+                              <option value="">Select Leader</option>
+                              {state.teamLeaders.map((leader) => (
+                                <option key={leader.id} value={leader.name}>{leader.name}</option>
+                              ))}
+                            </select>
+                          ) : (
+                            // 没有领导者
+                            <div>No Leader</div>
+                          )}
+                        </div>
+                      </div>
+                     </>
+                   ) : null
+                 }
+                 {
+//                  <div className="label">
+//                  <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>
+//                    <label className='Userlabel'>
+//                      <div className='asstitle'>Assignee: </div>
+//                      <select name=" assigneeOptions" className='Progressselect'  value={state.assignee} onChange={handleAssigneeChange}>
+//                          {state.assigneeOptions.map((option) => (
+//                             <option key={option} value={option}>{option}</option>
+//                            ))}
+//                      </select>
+//                    </label>
+//                  </div>
+}
 
                   {type=="kanban"&&(<div className="label">
                     <label>
@@ -539,7 +648,7 @@ React.useEffect(() => {
 
 
                 <div className="notes-container" style={{ display: 'flex', flexDirection: 'column' }}>
-                <TeamSelector onTeamSelect={handleTeamSelection} />
+
                 <div style={{ flex: '0.8' }}>
                 {(type!=="new"&&state.note!=='')&&(
                     <div className="Compile-card" >
@@ -565,6 +674,7 @@ React.useEffect(() => {
                 </div>
               </div>
             </div>
+            <button onClick={handleTry}>new</button>
             {/* ... 表单内容 */}
           </div>
 

@@ -32,6 +32,17 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private KanbanTaskRepository kanbanTaskRepository;
 
+    @Autowired
+    private TeamTasksLeaderRepository teamTasksLeaderRepository;
+
+    @Autowired
+    private TeamRepository teamRepository;
+
+    @Autowired
+    private TeamTasksAnticipaterRepository teamTasksAnticipaterRepository;
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public boolean advanceTask(User user, int taskId) {
         KanbanTask kanbanTask = taskRepository.findKanbanTaskById(taskId);
@@ -117,7 +128,20 @@ public class TaskServiceImpl implements TaskService {
         HttpSession session = SessionUtils.getSession();
         User user = (User) session.getAttribute("user");
 
-        task.setUser(user);
+        List<Team> teams = new ArrayList<>();
+        for (Integer teamId : taskDto.getTeamIds()) {
+            Team team = teamRepository.findTeamById(teamId);
+            if (team == null) {
+                throw new IllegalArgumentException("Team not found");
+            }
+            teams.add(team);
+            task.setTeam(team);
+        }
+
+        if (taskDto.getTeamIds() != null && taskDto.getTeamIds().size() == 0) {
+            task.setUser(user);
+        }
+
         task.setId(task_id);
         task.setTitle(title);
         task.setDescription(description);
@@ -128,20 +152,47 @@ public class TaskServiceImpl implements TaskService {
         task.setCompleted(false);
         taskRepository.save(task);
 
-        Set<TaskTag> tags = new LinkedHashSet<>();
-        for (String tagName : taskDto.getTags()) {
-            Tag tag = tagRepository.findByName(tagName);
-            if (tag == null) {
-                tag = new Tag();
-                tag.setName(tagName);
-                tagRepository.save(tag);
-            }
-            TaskTag taskTag = new TaskTag();
-            taskTag.setTag(tag);
-            taskTag.setTask(task);
-            tags.add(taskTag);
-            taskTagRepository.save(taskTag);
+        Set<TeamTasksLeader> teamTasksLeaders = new LinkedHashSet<>();
+        for (Team team : teams) {
+            TeamTasksLeader teamTasksLeader = new TeamTasksLeader();
+            teamTasksLeader.setTask(task);
+            teamTasksLeader.setLeader(user);
+            teamTasksLeaderRepository.save(teamTasksLeader);
+            teamTasksLeaders.add(teamTasksLeader);
         }
+        task.setTeamTasksLeaders(teamTasksLeaders);
+
+        Set<TeamTasksAnticipater> teamTasksAnticipaters = new LinkedHashSet<>();
+        for (int userId: taskDto.getUserIds()) {
+            User anticipater = userRepository.findUserById(userId);
+            if (anticipater == null) {
+                throw new IllegalArgumentException("User not found");
+            }
+            TeamTasksAnticipater teamTasksAnticipater = new TeamTasksAnticipater();
+            teamTasksAnticipater.setTask(task);
+            teamTasksAnticipater.setAnticipater(anticipater);
+            teamTasksAnticipaterRepository.save(teamTasksAnticipater);
+            teamTasksAnticipaters.add(teamTasksAnticipater);
+        }
+        task.setTeamTasksAnticipaters(teamTasksAnticipaters);
+
+        Set<TaskTag> tags = new LinkedHashSet<>();
+        if (taskDto.getTags() != null) {
+            for (String tagName : taskDto.getTags()) {
+                Tag tag = tagRepository.findByName(tagName);
+                if (tag == null) {
+                    tag = new Tag();
+                    tag.setName(tagName);
+                    tagRepository.save(tag);
+                }
+                TaskTag taskTag = new TaskTag();
+                taskTag.setTag(tag);
+                taskTag.setTask(task);
+                tags.add(taskTag);
+                taskTagRepository.save(taskTag);
+            }
+        }
+
         task.setTaskTags(tags);
 
         // double save to ensure taskTags are saved

@@ -82,7 +82,7 @@ const ModalComponent = () => {
     }
      function getAntiIdByName(name){
                 const user = state.teamAnticipaters.find(team => team.name === name);
-                 console.log(user.id)
+
                   return user ? user.id : null;
         }
     function formatDate(date) {
@@ -97,6 +97,7 @@ const ModalComponent = () => {
         const convertWeeklyStateToBackendFormat = () => {
 //        const tags = state.tag.length===[] ? [] : [state.tag];
             const teamId = getIdByName(state.team);
+            const userId=getAntiIdByName(state.teamAnticipater);
             // 构造新的 JSON 对象
             let backendData = {
 
@@ -105,19 +106,22 @@ const ModalComponent = () => {
                 description: state.description,
                 createDate: formatDate(state.startTime),
                 dueDate: formatDate(state.dueTime),
-                type: state.type,
+                type: "weekly",
                tags: [state.tag],
               important: state.important,
               urgent: state.urgent,
               expired:false,
-              teamIds: teamId ? [teamId] : []
+              teamIds: teamId ? [teamId] : [],
+              userIds:userId?[userId]:[]
             };if(!state.tag)backendData.tags=[];
-            if(!getIdByName(state.team))backendData.teamIds=[];
-
+            if(!teamId)backendData.teamIds=[];
+            if(!userId)backendData.userIds=[];
             return backendData;
           };
            const convertDailyStateToBackendFormat = () => {
            const teamId = getIdByName(state.team);
+           const userId=getAntiIdByName(state.teamAnticipater);
+
                        const backendData = {
 
                         task_id:task.id||null,
@@ -125,28 +129,21 @@ const ModalComponent = () => {
                           description: state.description,
                           createDate:formatDate(state.startTime),
                           dueDate: formatDate(state.dueTime),
-                          type: state.type,
+                          type: "daily",
                           tags: [state.tag],
                           expired:false,
-                         teamIds: teamId ? [teamId] : []
-
+                         teamIds: teamId ? [teamId] : [],
+                       userIds:userId?[userId]:[]
                         };
-
-//                        if(task.id){
-//                        backendData.createDate=task.createDate;
-//                        backendData.dueDate=task.dueDate;
-//                        }
-//                        else{
-//                        backendData.createDate=formatDate(state.startTime);
-//                         backendData.dueDate=formatDate(state.dueTime);
-//                        }
-//                        console.log(backendData)
+                        console.log(backendData)
                             if(!state.tag)backendData.tags=[];
-                            if(!getIdByName(state.team))backendData.teamIds=[];
+                            if(!teamId)backendData.teamIds=[];
+                                        if(!userId)backendData.userIds=[];
                                 return backendData;
                             };
            const convertKanbanStateToBackendFormat = () => {
-const teamId = getIdByName(state.team);
+        const teamId = getIdByName(state.team);
+        const userId=getAntiIdByName(state.teamAnticipater);
                        let backendData = {
 
                                      task_id:task.id||null,
@@ -157,10 +154,13 @@ const teamId = getIdByName(state.team);
                                        type: state.type,
                                        tags: [state.tag],
                                      state:state.choosepro,
-                                        userIds:[],
-                                       teamIds: teamId ? [teamId] : []
-                                   };if(!state.tag)backendData.tags=[];
-                                   if(!getIdByName(state.team))backendData.teamIds=[];
+                                       teamIds: teamId ? [teamId] : [],
+                                       userIds:userId?[userId]:[]
+                                   };
+                                     console.log(backendData)
+                                     if(!state.tag)backendData.tags=[];
+                                   if(!teamId)backendData.teamIds=[];
+                                               if(!userId)backendData.userIds=[];
                                     console.log('Generated backend data:', backendData);
                       return backendData;
                     };
@@ -214,8 +214,7 @@ const teamId = getIdByName(state.team);
                   };
 
 const handleTry=()=>{
-//getIdByName(state.team)
-//getAntiIdByName(state.teamAnticipater)
+
 console.log(task)
 console.log(type)
 console.log(state)

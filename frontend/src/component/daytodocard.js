@@ -6,8 +6,8 @@ import { CheckCircleOutlined, CheckOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { completeTask } from '../service/advance';
 const DayTodoCard = ({tasks}) => {
-//    const data=DayTasks
       const data=tasks;
+      console.log(data)
       const { openModal ,isModalOpen} = useContext(ModalContext);
       const handleFinish=async(id)=>{
           try{
@@ -22,7 +22,7 @@ const DayTodoCard = ({tasks}) => {
             <div className="content">
               <h1 className="title">Daily plan</h1>
               <ul className="todo-list">
-                {data.map((item, index) => (
+                {data && data.length > 0 ? (data.map((item, index) => (
                   <li key={index} className="todo-item">
                     <div className="task-box"  >
                       <div className={`daytitle ${item.completed==false?'':'daydelete'}`}>
@@ -43,7 +43,11 @@ const DayTodoCard = ({tasks}) => {
                       </div>
                     </div>
                   </li>
-                ))}
+                ))
+                ): (
+                            <p>No tasks available.</p>
+                          )}
+
                 <li className="todo-item" >
                   <div className="task-box">
                   <button className="new">

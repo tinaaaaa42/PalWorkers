@@ -10,7 +10,7 @@ const ProjectComponent = () => {
   const { isProjectOpen, closeProject ,type} = useContext(ProjectContext);
     const handleTeamSelection = (selectedTeam) => {
       console.log(`Team selected: ${selectedTeam}`);
-      // 这里可以执行其他逻辑，如更新状态或调用API
+      // API
     };
   const [state, setState] = React.useState({
       taskName: '',
@@ -27,6 +27,7 @@ const ProjectComponent = () => {
       team:'',
       teamTasksAnticipaters:[],
       teamTasksLeaders:[],
+      teams:['team1','team2']
     });
     function formatDate(date) {
       const regex = /^\d{4}-\d{2}-\d{2}$/;
@@ -199,7 +200,12 @@ const ProjectComponent = () => {
       notes: value
     });
   };
-
+const handleTeamChange = (e) => {
+    setState({
+      ...state,
+      team: e.target.value,
+    });
+  };
   const handleFileChange = (event) => {
     setState({
       ...state,
@@ -393,24 +399,73 @@ const ProjectComponent = () => {
                         value={state.tag}
                         onChange={handleInputtagChange}/>
                   </div>
+                   <div className="label">
+                   <img className='pic' src={process.env.PUBLIC_URL + "/标签.png"}  alt="" ></img>
+                     Team:
 
-
-
-
-
-
-
-                  <div className="label">
-                  <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>
-                    <label className='Userlabel'>
-                      <div className='asstitle'>Assignee: </div>
-                      <select name=" assigneeOptions" className='Progressselect'  value={state.assignee} onChange={handleAssigneeChange}>
-                          {state.assigneeOptions.map((option) => (
-                             <option key={option} value={option}>{option}</option>
+                         <select
+                            className='taginfo'
+                            value={state.team}
+                            onChange={handleTeamChange}>
+                            <option value="">Select Team</option>
+                            {state.teams.map((team,index)=>(
+                             <option key={index} value={team}>{team}</option>
                             ))}
-                      </select>
-                    </label>
-                  </div>
+                            </select>
+                   </div>
+{
+                   state.team ? (
+                     <>
+                       <div className="label">
+                         <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"} alt="" />
+                         TeamAnticipaters:
+                         {/* 注释掉的选择框 */}
+                         {/* <select
+                           className='taginfo'
+                           value={state.Anticipaters}
+                           onChange={handleAnticipatersChange}>
+                           <option value="">Select Anticipaters</option>
+                           {state.teamAnticipaters.map((anticipater, index) => (
+                             <option key={index} value={anticipater}>{anticipater}</option>
+                           ))}
+                         </select> */}
+                       </div>
+                       <div className="label">
+                         <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"} alt="" />
+                         TeamLeader:
+                         {/* 注释掉的选择框 */}
+                         {/* <select
+                           className='taginfo'
+                           value={state.Leader}
+                           onChange={handleLeaderChange}>
+                           <option value="">Select Leader</option>
+                           {state.teamLeaders.map((leader, index) => (
+                             <option key={index} value={leader}>{leader}</option>
+                           ))}
+                         </select> */}
+                       </div>
+                     </>
+                   ) : null
+                 }
+
+
+
+
+
+
+             {
+//              <div className="label">
+//                  <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>
+//                    <label className='Userlabel'>
+//                      <div className='asstitle'>Assignee: </div>
+//                      <select name=" assigneeOptions" className='Progressselect'  value={state.assignee} onChange={handleAssigneeChange}>
+//                          {state.assigneeOptions.map((option) => (
+//                             <option key={option} value={option}>{option}</option>
+//                            ))}
+//                      </select>
+//                    </label>
+//                  </div>
+                  }
 
                   {type=="kanban"&&(<div className="label">
                     <label>

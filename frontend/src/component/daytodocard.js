@@ -4,7 +4,7 @@ import { DayTasks} from "../Data/data";
 import ModalContext from '../context/ModalContext';
 import { CheckCircleOutlined, CheckOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import { completeTask } from '../service/advance';
+import { completeTask, deleteTask } from '../service/advance';
 const DayTodoCard = ({tasks,handleUpdate}) => {
       const data=tasks;
       console.log(data)
@@ -17,6 +17,13 @@ const DayTodoCard = ({tasks,handleUpdate}) => {
 
           }
       }
+      const handleDelete = async (id) => {
+        try {
+          const response = await deleteTask(id);
+          handleUpdate();
+        } catch {
+      }
+            }
       return (
         <div className="Daycardtodo">
           <div className="layout">
@@ -35,7 +42,7 @@ const DayTodoCard = ({tasks,handleUpdate}) => {
                       <button className="edit" onClick={()=>openModal("day",item,'',handleUpdate)} >
                       <i className="fa fa-pencil" ></i>
                       </button>
-                      <button className="delete-btn" aria-label="删除" onClick={() => console.log('Delete button clicked')}>
+                      <button className="delete-btn" aria-label="删除" onClick={() => handleDelete(item.id)}>
                         <i className="fa fa-trash-o"></i>
                       </button>
                       <button className="check">

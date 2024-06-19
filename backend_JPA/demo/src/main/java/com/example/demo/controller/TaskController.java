@@ -52,6 +52,11 @@ public class TaskController {
         return taskService.updateTask(kanbanTaskDto);
     }
 
+    @DeleteMapping(value = "/api/tasks/{id}")
+    public boolean deleteTask(@PathVariable int id) {
+        return taskService.deleteTask(id);
+    }
+
     @GetMapping(value = "api/tasks/weekly_statistics")
     public List<WeekStatistics> getWeeklyStatistics(HttpSession session) {
         User user = (User) session.getAttribute("user");

@@ -34,6 +34,19 @@ export async function post(url, data) {
     return res.json();
 }
 
+export async function del(url, data) {
+    let opts = {
+      method: "DELETE",
+      body: JSON.stringify(data),
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      credentials: "include"
+    };
+    let res = await fetch(url, opts);
+    return res;
+}
+
 export const DUMMY_RESPONSE = {
     ok: false,
     message: "Connection failure."

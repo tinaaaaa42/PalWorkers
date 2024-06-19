@@ -310,6 +310,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public boolean deleteTask(int taskId) {
+        Task task = taskRepository.findTaskById(taskId);
+        if (task == null) {
+            return false;
+        }
+
+        taskRepository.deleteById(taskId);
+        return true;
+    }
+
+    @Override
     public List<WeekStatistics> getWeeklyStatistics(int userId){
         List<WeekStatistics> weeklyStatistics = new ArrayList<>();
         LocalDate today = LocalDate.now();

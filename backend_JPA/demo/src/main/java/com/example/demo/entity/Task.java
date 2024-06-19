@@ -53,7 +53,7 @@ public class Task {
 //    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY, cascade = CascadeType.ALL , orphanRemoval = true)
 //    private Set<KanbanTask> kanbanTasks = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "task")
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("task")
     private Set<TaskTag> taskTags = new LinkedHashSet<>();
 
@@ -67,10 +67,10 @@ public class Task {
     private Team team;
 
 
-    @OneToMany(mappedBy = "task")
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
     private Set<TeamTasksAnticipater> teamTasksAnticipaters = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "task")
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
     private Set<TeamTasksLeader> teamTasksLeaders = new LinkedHashSet<>();
 
     @ColumnDefault("0")

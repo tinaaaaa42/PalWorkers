@@ -12,6 +12,7 @@ import java.util.List;
 public interface TaskService {
     Task createTask(TaskDto taskDto);
     Task updateTask(TaskDto taskDto);
+    boolean deleteTask(int taskId);
 
     List<WeekStatistics> getWeeklyStatistics(int userId);
 

@@ -1,4 +1,4 @@
-import {PREFIX, put} from "./common";
+import {PREFIX, put, del} from "./common";
 
 export async function advanceKanbanTask(taskId) {
     const url = `${PREFIX}/tasks/alterKanbanState?taskId=${taskId}`;//地址
@@ -19,6 +19,18 @@ export async function completeTask(taskId) {
         return response;
     } catch (error) {
         console.error('完成任务失败', error);
+        throw error;
+        return false;
+    }
+}
+
+export async function deleteTask(taskId) {
+    const url = `${PREFIX}/tasks/${taskId}`;//地址
+    try {
+        const response = await del(url);
+        return response;
+    } catch (error) {
+        console.error('删除任务失败', error);
         throw error;
         return false;
     }

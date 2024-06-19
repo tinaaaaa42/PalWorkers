@@ -207,4 +207,25 @@ public class projectServiceImpl implements ProjectService{
         projectRepository.save(project);
         return kanbanTask;
     }
+
+    @Override
+    public boolean deleteKanbanTask(int projectId, int taskId) {
+        Project project = projectRepository.findById(projectId);
+        if (project == null) {
+            return false;
+        }
+        KanbanTask kanbanTask = kanbanTaskRepository.findById(taskId).orElse(null);
+        if (kanbanTask == null) {
+            return false;
+        }
+        Set<ProjectTaskGroup> projectTaskGroups = project.getProjectTaskGroups();
+        ProjectTaskGroup projectTaskGroup = projectTaskGroupRepository.findByProjectAndTask(project, kanbanTask);
+        projectTaskGroups.remove(projectTaskGroup);
+        project.setProjectTaskGroups(projectTaskGroups);
+        project.setTotal(project.getTotal() - 1);
+        projectRepository.save(project);
+        projectTaskGroupRepository.delete(projectTaskGroup);
+        kanbanTaskRepository.delete(kanbanTask);
+        return true;
+    }
 }

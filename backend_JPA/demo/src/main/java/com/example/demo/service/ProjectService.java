@@ -21,5 +21,6 @@ public interface ProjectService {
     ProjectDto createProject(String title, User user, int teamId);
 
     KanbanTask addKanbanTask(int projectId, KanbanTaskDto kanbanTaskDto);
+    boolean deleteKanbanTask(int projectId, int taskId);
 
 }

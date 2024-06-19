@@ -70,4 +70,13 @@ public class projectController {
         }
         return projectService.addKanbanTask(projectId, kanbanTaskDto);
     }
+
+    @DeleteMapping(value = "api/project/task")
+    public boolean deleteKanbanTask(HttpSession session, @RequestParam int projectId, @RequestParam int taskId) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return projectService.deleteKanbanTask(projectId, taskId);
+    }
 }

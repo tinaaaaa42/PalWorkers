@@ -20,13 +20,13 @@ function Control({taskhandler,handleDaySearch,handleWeekSearch,handleKanbanSearc
     };
     const renderButton=()=>{
         if(location.pathname.includes('/project'))
-        return (<Button type="primary" className="rounded-button projectbutton" onClick={projecthandler} style={{marginLeft:'1000px'}}>
+        return (<Button type="primary" className="rounded-button projectbutton" onClick={projecthandler} style={{marginLeft:'1100px'}}>
             New Task
         </Button>);
         switch (location.pathname) {
             case '/kanban':
                 return (<>
-                <Button type="primary" className="rounded-button taskbutton" onClick={taskhandler} style={{marginLeft:'250px'}}>
+                <Button type="primary" className="rounded-button taskbutton" onClick={taskhandler} style={{marginLeft:'400px'}}>
                     New Task
                 </Button>
                 <Button type="primary" className="rounded-button projectbutton" onClick={projecthandler}>

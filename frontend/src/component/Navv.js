@@ -23,7 +23,7 @@ const Navbar = ({tasks,title,allteam,teamss}) => {
   });
   const uniqueTags = Array.from(taskTagsSet);
   const uniqueTeams= Array.from(teamSet);
-  const projects = ['Project', 'Project2', 'Project3'];
+  const projects = [];
   const teamsname=isProfilePage?teamss:uniqueTeams;
   const renderItems = (icon, label, children) => ({
     key: label.toLowerCase(),

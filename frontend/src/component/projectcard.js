@@ -42,9 +42,7 @@ function Projectcard({ project ,HandleUpdate}){
                 <ProgressBar percentage={(project.done
  / project.total) * 100}></ProgressBar>
                 <div className="detail">
-                    <div className="Date">
-                        {project.date}
-                    </div>
+                    <div style={{width:'127px'}}></div>
                     <div className="comment">
                         <div className="iconfont icon-pinglun"></div>
                         <div className="iconfont icon-lianjie"></div>

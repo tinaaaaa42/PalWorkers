@@ -38,6 +38,7 @@
     margin-left: 23.5px;
     z-index: 1;
     color: rgba(255, 255, 255, 0.363);
+    margin-bottom: 6px;
 }
 .Navleft a{
     text-decoration: none;
@@ -310,7 +311,7 @@ border-radius: 4px;
 
 }
 .Kanban .tags div,.Projectdetail .tags div{
-    width: 50px;
+    width: 80px;
     height: 27px;
     border-radius: 11px;
     background-color: rgba(255, 192, 203, 0.427);

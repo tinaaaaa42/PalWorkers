@@ -107,9 +107,9 @@ function UserProfile({team,week_data,kanban_data,remindtask,handleUpdate}) {
                 <Menu.Item key="activity" icon={<BarChartOutlined />} style={{ height: '60px', lineHeight: '60px' }}>活动</Menu.Item>
                 <Menu.Item key="intro" icon={<MailOutlined />} style={{ height: '60px', lineHeight: '60px' }}>个人资料</Menu.Item>
                 <Menu.Item key="team" icon={<TeamOutlined />} style={{ height: '60px', lineHeight: '60px' }}>我的团队</Menu.Item>
-                <Menu.Item key="3" icon={<SettingOutlined />} style={{ height: '60px', lineHeight: '60px' }}>设置</Menu.Item>
+                {/* <Menu.Item key="3" icon={<SettingOutlined />} style={{ height: '60px', lineHeight: '60px' }}>设置</Menu.Item> */}
                 <Menu.Item key="remind" icon={<NotificationOutlined />} style={{ height: '60px', lineHeight: '60px' }}>提醒</Menu.Item>
-                <Menu.Item key="4" icon={<LogoutOutlined />} style={{ height: '60px', lineHeight: '60px' }}>退出登录</Menu.Item>
+                {/* <Menu.Item key="4" icon={<LogoutOutlined />} style={{ height: '60px', lineHeight: '60px' }}>退出登录</Menu.Item> */}
               </Menu>
             </Card>
           </Col>

@@ -57,48 +57,48 @@ function Navleft() {
         <div></div>
       </div>
         <a href="" id="0">
-          <div className="planlogo logo iconfont icon-lifangtilitiduomiantifangkuai" style={{ fontSize: '25px' }}></div>
+          <div className="planlogo logo iconfont icon-lifangtilitiduomiantifangkuai" style={{ fontSize: '30px' }}></div>
         </a>
       
       <Tooltip title="Kanban">
         <a href="" id="1" onClick={(e) => handleClick("1", e)}>
-          <div className={`month ${activeId === '1' ? 'active' : ''} logo iconfont icon-rili`} style={{ fontSize: '25px' }}></div>
+          <div className={`month ${activeId === '1' ? 'active' : ''} logo iconfont icon-rili`} style={{ fontSize: '30px' }}></div>
         </a>
       </Tooltip>
       <Tooltip title="Day Plan">
         <a href="" id="2" onClick={(e) => handleClick("2", e)}>
-          <div className={`day ${activeId === '2' ? 'active' : ''} logo iconfont icon-jihua`} style={{ fontSize: '25px' }}></div>
+          <div className={`day ${activeId === '2' ? 'active' : ''} logo iconfont icon-jihua`} style={{ fontSize: '30px' }}></div>
         </a>
       </Tooltip>
       <Tooltip title="Weekly Plan">
         <a href="" id="3" onClick={(e) => handleClick("3", e)}>
-          <div className={`week ${activeId === '3' ? 'active' : ''} logo iconfont icon-sixiangxiankanban`} style={{ fontSize: '25px' }}></div>
+          <div className={`week ${activeId === '3' ? 'active' : ''} logo iconfont icon-sixiangxiankanban`} style={{ fontSize: '30px' }}></div>
         </a>
       </Tooltip>
-      <Tooltip title="Bar Chart">
+      {/* <Tooltip title="Bar Chart">
         <a href="" id="4" onClick={(e) => handleClick("4", e)}>
-          <div className={`zhongbao ${activeId === '4' ? 'active' : ''} logo iconfont icon-zhuzhuangtu`} style={{ fontSize: '25px' }}></div>
+          <div className={`zhongbao ${activeId === '4' ? 'active' : ''} logo iconfont icon-zhuzhuangtu`} style={{ fontSize: '30px' }}></div>
         </a>
-      </Tooltip>
+      </Tooltip> */}
       <Tooltip title="Profile">
         <a href="" id="5" onClick={(e) => handleClick("5", e)}>
-          <div className={`profile ${activeId === '5' ? 'active' : ''} logo iconfont icon-geren`} style={{ fontSize: '25px' }}></div>
+          <div className={`profile ${activeId === '5' ? 'active' : ''} logo iconfont icon-geren`} style={{ fontSize: '30px' }}></div>
         </a>
       </Tooltip>
-      <Tooltip title="Settings">
+      {/* <Tooltip title="Settings">
         <a href="" id="6" onClick={(e) => handleClick("6", e)}>
-          <div className={`set logo ${activeId === '6' ? 'active' : ''} iconfont icon-yanfaxiangmujiedianshenpiliucheng`} style={{ fontSize: '25px' }}></div>
+          <div className={`set logo ${activeId === '6' ? 'active' : ''} iconfont icon-yanfaxiangmujiedianshenpiliucheng`} style={{ fontSize: '30px' }}></div>
         </a>
-      </Tooltip>
+      </Tooltip> */}
       <Tooltip title="help">
         <QuestionCircleOutlined id="7" onClick={(e) => handleClick("7", e)} className={`logo ${activeId === '7' ? 'active' : ''}`} style={{fontSize:'27px',marginTop:'5px',cursor:'pointer'}}/>
       </Tooltip>
 
-      <Tooltip title="Exit">
+      {/* <Tooltip title="Exit">
         <a href="" id="7">
-          <div className="exit logo iconfont icon-tuichu" style={{ fontSize: '25px' }}></div>
+          <div className="exit logo iconfont icon-tuichu" style={{ fontSize: '30px' }}></div>
         </a>
-      </Tooltip>
+      </Tooltip> */}
     </div>
   );
 }

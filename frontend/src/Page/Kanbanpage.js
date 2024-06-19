@@ -113,7 +113,7 @@ function Kanbanpage(){
         <div className="mainpart">
         <Header></Header>
         <Control taskhandler={handleClick} handleKanbanSearch={handleKanbanSearch} handleReset={handleReset} projecthandler={projectClick}></Control>
-        <Kanban kanban_tasks={kanbantasks} HandleUpdate={HandleUpdate} kanban_project={projects}></Kanban>
+        <Kanban kanban_tasks={kanbantasks} HandleUpdate={HandleUpdate} kanban_project={projects} ></Kanban>
         </div>
         <Modal title="请批量创建" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <Input placeholder="1" value={userInput} onChange={handleInputChange} />

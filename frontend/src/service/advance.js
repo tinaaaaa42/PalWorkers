@@ -12,6 +12,18 @@ export async function advanceKanbanTask(taskId) {
     }
 }
 
+export async function advanceProject(projectId) {
+    const url = `${PREFIX}/tasks/alterProjectState?projectId=${projectId}`;//地址
+    try {
+        const response = await put(url);
+        return response;
+    } catch (error) {
+        console.error('推进项目失败', error);
+        throw error;
+        return false;
+    }
+}
+
 export async function completeTask(taskId) {
     const url = `${PREFIX}/tasks/complete?taskId=${taskId}`;//地址
     try {

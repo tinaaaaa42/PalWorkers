@@ -15,7 +15,7 @@ function Projectcard({ project }){
                     <a href=""><div className="delete iconfont icon-lajixiang"></div></a>
                 </div>
                 <div className="grouptag ">
-                {project.grouptag === "isgroup" ? `Group${project.groupid}` : "Myself"}
+                {project.teamProject === true ? `Team: ${project.teamName}` : "Myself"}
                 </div>
                 <div className="rate"><li>Progress</li><div className="ratenum">{project.done
 }/{project.total}</div></div>

@@ -13,6 +13,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
     List<Project> findAllByTeamId(int TeamId);
 
+//    List<Project
 
     Project findById(int Id);
 }

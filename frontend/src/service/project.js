@@ -12,3 +12,15 @@ export async function get_all_projects() {
     }
     return projects;
 }
+
+export async function get_project(projectId) {
+    const url = `${PREFIX}/tasks/project?projectId=${projectId}`;
+    let project;
+    try {
+        project = await getJson(url)
+    } catch (e) {
+        console.log(e);
+        project = null;
+    }
+    return project;
+}

@@ -26,8 +26,14 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
   console.log(kanban_project)
   // const ReviewTasks=kanban_tasks.filter(task => task.state === "review");
   // const DownTasks=kanban_tasks.filter(task => task.state === "down");
-  const todoProjects = Projects.filter((project) => project.state === "todo");
-  //   const todoProjects = kanban_project.filter((project) => project.state === "todo");
+  // const todoProjects = Projects.filter((project) => project.state === "todo");
+    const todoProjects = kanban_project.filter((project) => project.state === "todo");
+    const InprogressProjects = kanban_project.filter((project) => project.state === "inprogress");
+    const ReviewProjects = kanban_project.filter((project) => project.state === "review");
+    const DoneProjects = kanban_project.filter((project) => project.state === "done");
+
+
+
   // const InprogressProjects = Projects.filter((project) => project.state === "inprogress");
   return (
     <div className="Kanban">
@@ -49,9 +55,9 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
         ) : (
           <></>
         )}
-        {/* {InprogressProjects.map((project) => (
+         {InprogressProjects.map((project) => (
                 <Projectcard key={project.id} project={project} />
-            ))} */}
+            ))}
       </div>
       <div className="column">
         <h2>Review</h2>
@@ -60,6 +66,9 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
         ) : (
           <></>
         )}
+          {ReviewProjects.map((project) => (
+              <Projectcard key={project.id} project={project} />
+          ))}
       </div>
       <div className="column">
         <h2>Done</h2>
@@ -68,6 +77,9 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
         ) : (
           <></>
         )}
+          {DoneProjects.map((project) => (
+              <Projectcard key={project.id} project={project} />
+          ))}
         <a href="">
           <div className="card empty">
             <div className="add iconfont icon-jiahao"></div>

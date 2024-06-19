@@ -321,6 +321,31 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> createBatchDefaultKanbanTasks(int numTasks) {
+        HttpSession session = SessionUtils.getSession();
+        User user = (User) session.getAttribute("user");
+        int userId = user.getId();
+
+        List<Task> tasks = new ArrayList<>();
+        for (int i = 0; i < numTasks; i++) {
+            KanbanTask task = new KanbanTask();
+            task.setUser(userRepository.findUserById(userId));
+            task.setTitle("Task " + i);
+            task.setDescription("Description " + i);
+            task.setCreateDate(LocalDate.now());
+            task.setDueDate(LocalDate.now().plusDays(7));
+            task.setType("kanban");
+            task.setState("todo");
+            task.setExpired(false);
+            task.setCompleted(false);
+            taskRepository.save(task);
+            kanbanTaskRepository.save(task);
+            tasks.add(task);
+        }
+        return tasks;
+    }
+
+    @Override
     public List<WeekStatistics> getWeeklyStatistics(int userId){
         List<WeekStatistics> weeklyStatistics = new ArrayList<>();
         LocalDate today = LocalDate.now();

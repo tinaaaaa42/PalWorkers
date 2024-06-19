@@ -36,6 +36,11 @@ public class TaskController {
         return taskService.createTask(kanbanTaskDto);
     }
 
+    @PostMapping(value = "/api/tasks/kanban/{batch}")
+    public List<Task> createBatchDefaultKanbanTasks(@PathVariable int batch) {
+        return taskService.createBatchDefaultKanbanTasks(batch);
+    }
+
 
     @PutMapping(value = "/api/tasks/weekly")
     public Task updateTask(@RequestBody WeeklyTaskDto weeklyTaskDto) {

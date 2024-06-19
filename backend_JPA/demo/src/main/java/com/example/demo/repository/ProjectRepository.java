@@ -14,6 +14,8 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     List<Project> findAllByTeamId(int TeamId);
 
 //    List<Project
+    List<Project> findAllByUserIdAndCompleted(int UserId,boolean Completed);
 
+    List<Project> findAllByTeamIdAndCompleted(int TeamId,boolean Completed);
     Project findById(int Id);
 }

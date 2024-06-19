@@ -142,10 +142,10 @@ INSERT INTO team_tasks_anticipater (task_id, anticipater_id) VALUES
                                                                  (14, 3),
                                                                  (15, 1);
 
-INSERT INTO projects(title, total, done,state, user_id,team_id) VALUES
-                                                       ('project1',100, 60,'inprogress',1,null),
-                                                       ('project2',200,100,'todo',1,null),
-                                                       ('project3',50,20,'todo',null,1);
+INSERT INTO projects(title, total, done,state, user_id,team_id, completed) VALUES
+                                                       ('project1',100, 60,'inprogress',1,null,false),
+                                                       ('project2',200,100,'todo',1,null,false),
+                                                       ('project3',50,20,'todo',null,1,false);
 
 INSERT INTO project_task_group(task_id, project_id) VALUES
                                                         (6,1),

@@ -144,7 +144,7 @@ CREATE TABLE projects(
     done int,
     user_id int,
     team_id int,
-#     completed boolean,
+    completed boolean,
     foreign key (user_id) references users(user_id),
     foreign key (team_id) references teams(team_id)
 );

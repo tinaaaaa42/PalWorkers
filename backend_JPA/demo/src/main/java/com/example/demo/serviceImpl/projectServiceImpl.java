@@ -36,7 +36,7 @@ public class projectServiceImpl implements ProjectService{
     private TeamMemberRepository teamMemberRepository;
 
     public List<ProjectDto> findAllByUserId(int userId) {
-        List<Project> projects = projectRepository.findAllByUserId(userId);
+        List<Project> projects = projectRepository.findAllByUserIdAndCompleted(userId,false);
         List<ProjectDto> projectDtos = new ArrayList<>();
         for (Project project : projects) {
             ProjectDto projectDto = new ProjectDto();
@@ -94,7 +94,7 @@ public class projectServiceImpl implements ProjectService{
         List<Project> projects = new ArrayList<>();
         for (TeamMember teamMember : teamMembers) {
             int teamId = teamMember.getTeam().getId();
-            List<Project> tmp_projects = projectRepository.findAllByTeamId(teamId);
+            List<Project> tmp_projects = projectRepository.findAllByTeamIdAndCompleted(teamId,false);
             projects.addAll(tmp_projects);
         }
         for (Project project : projects) {
@@ -128,7 +128,7 @@ public class projectServiceImpl implements ProjectService{
         String next_state = alterState(state);
         project.setState(next_state);
         if (next_state.equals("totally completed")) {
-
+            project.setCompleted(true);
         }
         projectRepository.save(project);
         return false;

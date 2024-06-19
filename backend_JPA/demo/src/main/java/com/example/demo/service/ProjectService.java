@@ -14,4 +14,5 @@ public interface ProjectService {
     ProjectDto findByUserIdAndProjectId(int userId, int projectId);
 
     boolean advanceProject(int projectId);
+
 }

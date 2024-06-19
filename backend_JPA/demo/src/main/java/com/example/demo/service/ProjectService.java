@@ -12,4 +12,6 @@ public interface ProjectService {
     List<ProjectDto> findAllByTeamIdAndUserId(int userId);
 
     ProjectDto findByUserIdAndProjectId(int userId, int projectId);
+
+    boolean advanceProject(int projectId);
 }

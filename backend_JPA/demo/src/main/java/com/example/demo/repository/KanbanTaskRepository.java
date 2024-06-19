@@ -9,6 +9,7 @@ import java.util.List;
 public interface KanbanTaskRepository extends JpaRepository<KanbanTask, Integer> {
     List<KanbanTask> findAllByUserId(int userId);
 
+//    KanbanTask findKanbanTaskByTaskId(int taskId);
 
     List<KanbanTask> findByUserIdAndCreateDateBetween(int userId, LocalDate startDate, LocalDate endDate);
 //    KanbanTask findKanbanTaskByTaskId(int taskId);

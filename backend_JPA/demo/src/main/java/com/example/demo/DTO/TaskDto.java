@@ -21,7 +21,6 @@ public class TaskDto {
     String type;
     Boolean expired;
     List<String> tags;
-
     List<Integer> teamIds;
     List<Integer> userIds;
 }

@@ -51,9 +51,9 @@ public class TaskServiceImpl implements TaskService {
             return false;
         }
         User real_user = kanbanTask.getUser();
-        if (real_user.getId() != user.getId()) {
-            return false;
-        }
+//        if (real_user.getId() != user.getId()) {
+//            return false;
+//        }
         String state = kanbanTask.getState();
         String next_state = alterState(state);
         if (next_state.equals("totally completed")) {

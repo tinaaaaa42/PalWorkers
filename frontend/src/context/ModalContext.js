@@ -12,16 +12,19 @@ export const ModalProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [type,setType]=useState("day");
   const [message,setMessage]=useState(1);
-  const [task, setTask] = useState()
+  const [task, setTask] = useState();
+  const[refresh,setRefresh]=useState(false);
   const openModal = (theType,task,theMessage) => {
     setIsModalOpen(true);
     setType(theType);
     setMessage(theMessage);
-    setTask(task)
+    setTask(task);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setRefresh(true);
+window.location.reload();
   };
 
   const contextValue = {
@@ -30,7 +33,8 @@ export const ModalProvider = ({ children }) => {
     closeModal,
     type,
     message,
-    task
+    task,
+    refresh
   };
 
   return (

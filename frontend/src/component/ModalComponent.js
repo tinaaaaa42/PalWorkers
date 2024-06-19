@@ -164,22 +164,6 @@ const ModalComponent = () => {
                                     console.log('Generated backend data:', backendData);
                       return backendData;
                     };
-//           const convertWeeklyStateToBackendFormat = () => {
-//                       const backendData = {
-//
-//                        id:task.id||null,
-//                          title: state.taskName,
-//                          description: state.description,
-//                          createDate: formatDate(state.startTime),
-//                          dueDate: formatDate(state.dueTime),
-//                          type: state.type,
-//                          tags: [],
-//                        };
-//                      return backendData;
-//                    };
-
-
-
                 const handleSave = async (e) => {
 
                     let response;
@@ -215,8 +199,7 @@ const ModalComponent = () => {
 
 const handleTry=()=>{
 
-console.log(task)
-console.log(type)
+handleTeamFirst();
 console.log(state)
 }
 
@@ -300,7 +283,6 @@ console.log(state)
   }
   const handleTeamChange = (e) => {
     const selectedTeamName = e.target.value;
-
     // 如果选择了 "Select Team" 或者没有选择具体的团队
     if (selectedTeamName === "" || selectedTeamName === "Select Team") {
       setState(prevState => ({
@@ -334,7 +316,48 @@ console.log(state)
       team: selectedTeamName
     }));
   };
+const handleTeamFirst = () => {
+    console.log("Calling handleTeamFirst");
 
+    if (!task.team) {
+      console.log("No team found in task");
+      return;
+    }
+
+    // 调试 getTeamMember 函数的返回值
+    const members = getTeamMember(task.team.name);
+    console.log("Members fetched:", members);
+
+    if (!Array.isArray(members) || members.length === 0) {
+      console.log("No members found for the team");
+      return;
+    }
+
+    const member = members.map(team => ({
+      id: team.user.id,
+      name: team.user.username
+    }));
+
+    console.log("Mapped team members:", member);
+
+    const leader = members
+      .filter(team => team.leader) // 筛选出 team.leader 为 true 的成员
+      .map(leader => ({
+        id: leader.user.id,
+        name: leader.user.username
+      }));
+
+    console.log("Mapped team leaders:", leader);
+
+    setState(prevState => ({
+      ...prevState,
+      teamAnticipaters: member,
+      teamLeaders: leader,
+      team: task.team
+    }));
+
+    console.log("State after updating team:", state);
+  };
 
   const handleFileChange = (event) => {
     setState({
@@ -342,9 +365,6 @@ console.log(state)
       files: event.target.files
     });
   };
-//  React.useEffect(() => {
-//      console.log(type);
-//    });
  React.useEffect(() => {
     // 初始化逻辑封装在一个异步函数中
     const initializeData = async () => {
@@ -434,18 +454,20 @@ console.log(state)
               break;
 
             case "kanban":
-              setState(prevState => ({
-                ...prevState,
-                type: "kanban",
-                choosepro: task.state,
-                taskName: task.title || '',
-                tag: task.taskTags?.[0]?.tag?.name || '',
-                startTime: task.createDate || '',
-                dueTime: task.dueDate || '',
-                description: task.description
-              }));
-              break;
-
+                  setState(prevState => ({
+                         ...prevState,
+                         type: "kanban",
+                         choosepro: task.state,
+                         taskName: task.title || '',
+                         tag: task.taskTags?.[0]?.tag?.name || '',
+                         startTime: task.createDate || '',
+                         dueTime: task.dueDate || '',
+                         description: task.description,
+                         team: task.team?.name || '',
+                         teamAnticipater: task.teamTasksAnticipaters?.[0]?.anticipater?.username || '',
+                       }));
+                       handleTeamFirst();
+                       break;
             default:
               break;
           }

@@ -2,7 +2,7 @@ import "../iconfont1/iconfont.css";
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'antd';
-
+import { QuestionCircleOutlined } from "@ant-design/icons";
 function Navleft() {
   const location = useLocation();
   const [activeId, setActiveId] = useState(getActiveId(location.pathname));
@@ -20,6 +20,8 @@ function Navleft() {
         return '2';
       case '/profile':
         return '5';
+      case '/help':
+        return '7';  
       default:
         return '1'; // 默认激活第一个 id
     }
@@ -41,6 +43,9 @@ function Navleft() {
       case '5':
         navigate('/profile');
         break;
+      case '7':
+        navigate('/help');
+        break;  
     }
   };
 
@@ -85,6 +90,10 @@ function Navleft() {
           <div className={`set logo ${activeId === '6' ? 'active' : ''} iconfont icon-yanfaxiangmujiedianshenpiliucheng`} style={{ fontSize: '25px' }}></div>
         </a>
       </Tooltip>
+      <Tooltip title="help">
+        <QuestionCircleOutlined id="7" onClick={(e) => handleClick("7", e)} className={`logo ${activeId === '7' ? 'active' : ''}`} style={{fontSize:'27px',marginTop:'5px',cursor:'pointer'}}/>
+      </Tooltip>
+
       <Tooltip title="Exit">
         <a href="" id="7">
           <div className="exit logo iconfont icon-tuichu" style={{ fontSize: '25px' }}></div>

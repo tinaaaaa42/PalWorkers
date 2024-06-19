@@ -35,4 +35,11 @@ public class Project {
     @JsonIgnore
     private User user;
 
+    @Column(name = "done")
+    private Integer done;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
+
 }

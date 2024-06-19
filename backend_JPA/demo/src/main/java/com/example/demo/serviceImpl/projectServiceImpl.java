@@ -29,6 +29,7 @@ public class projectServiceImpl implements ProjectService{
             projectDto.setTitle(project.getTitle());
             projectDto.setTotal(project.getTotal());
             projectDto.setState(project.getState());
+            projectDto.setDone(project.getDone());
             Set<Task> tasks = new HashSet<>();
             Set<ProjectTaskGroup> projectTaskGroups = project.getProjectTaskGroups();
             for (ProjectTaskGroup projectTaskGroup : projectTaskGroups) {
@@ -52,6 +53,7 @@ public class projectServiceImpl implements ProjectService{
         projectDto.setTitle(project.getTitle());
         projectDto.setTotal(project.getTotal());
         projectDto.setState(project.getState());
+        projectDto.setDone(project.getDone());
         Set<Task> tasks = new HashSet<>();
         Set<ProjectTaskGroup> projectTaskGroups = project.getProjectTaskGroups();
         for (ProjectTaskGroup projectTaskGroup : projectTaskGroups) {

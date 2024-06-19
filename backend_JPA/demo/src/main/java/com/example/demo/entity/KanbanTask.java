@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
@@ -16,10 +17,6 @@ import lombok.Setter;
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Table(name = "kanban_tasks")
 public class KanbanTask extends Task{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "kanban_id", nullable = false)
-    private int id;
 
 //    @ManyToOne(fetch = FetchType.LAZY, optional = false)
 //    @JoinColumn(name = "task_id", nullable = false)
@@ -28,5 +25,10 @@ public class KanbanTask extends Task{
 
     @Column(name = "state", nullable = false)
     private String state;
+
+
+    @ColumnDefault("0")
+    @Column(name = "in_project", nullable = false)
+    private Boolean inProject = false;
 
 }

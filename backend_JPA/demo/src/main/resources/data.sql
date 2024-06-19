@@ -106,15 +106,15 @@ INSERT INTO weekly_tasks (task_id, urgent, important) VALUES
 -- 生成看板任务的task_id
 SET @kanban_task_id = 6;
 
-INSERT INTO kanban_tasks (task_id, state) VALUES
-                                              (@kanban_task_id + 0, 'todo'),
-                                              (@kanban_task_id + 1, 'inprogress'),
-                                              (@kanban_task_id + 2, 'todo'),
-                                              (@kanban_task_id + 3, 'todo'),
-                                              (@kanban_task_id + 4, 'done'),
-                                              (11,'done'),
-                                              (14, 'todo'),  -- 新增团队看板任务
-                                              (15, 'inprogress');  -- 新增团队看板任务
+INSERT INTO kanban_tasks (task_id, state, in_project) VALUES
+                                              (@kanban_task_id + 0, 'todo', true),
+                                              (@kanban_task_id + 1, 'inprogress', true),
+                                              (@kanban_task_id + 2, 'todo', true),
+                                              (@kanban_task_id + 3, 'todo', true),
+                                              (@kanban_task_id + 4, 'done', true),
+                                              (11,'done', false),
+                                              (14, 'todo', true),  -- 新增团队看板任务
+                                              (15, 'inprogress', true);  -- 新增团队看板任务
 
 -- 假设上面的插入生成了以下的 task_id：11, 12, 13, 14, 15
 

@@ -39,13 +39,14 @@ public class kanbanServiceImpl implements kanbanTaskService {
 
     public List<KanbanTask> findAll(int userId, LocalDate startDate, LocalDate endDate) {
         List<KanbanTask> kanbanTasks = kanbanTaskRepository.findByUserIdAndCreateDateBetween(userId,startDate,endDate);
-        List<KanbanTask> result = new ArrayList<>();
+        List<KanbanTask> toRemove = new ArrayList<>();
         for (KanbanTask kanbanTask : kanbanTasks) {
-            if (!kanbanTask.getInProject()) {
-                result.remove(kanbanTask);
+            if (kanbanTask.getInProject()) {
+                toRemove.add(kanbanTask);
             }
         }
-        return result;
+        kanbanTasks.removeAll(toRemove);
+        return kanbanTasks;
 //        return kanbanTaskRepository.findAllByUserId(userId);
     }
 

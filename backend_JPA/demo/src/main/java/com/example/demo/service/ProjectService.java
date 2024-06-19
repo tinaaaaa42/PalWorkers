@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.DTO.ProjectDto;
+import com.example.demo.entity.Team;
 import com.example.demo.entity.User;
 
 import java.util.List;
@@ -15,6 +16,6 @@ public interface ProjectService {
 
     boolean advanceProject(int projectId);
 
-
+    ProjectDto createProject(String title, User user, int teamId);
 
 }

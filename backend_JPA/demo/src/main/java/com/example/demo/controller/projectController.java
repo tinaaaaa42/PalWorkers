@@ -6,10 +6,7 @@ import com.example.demo.entity.User;
 import com.example.demo.service.ProjectService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,5 +48,15 @@ public class projectController {
             throw new RuntimeException("User not logged in");
         }
         return projectService.advanceProject(projectId);
+    }
+
+    @PostMapping(value = "api/project/create")
+    public ProjectDto createProject(HttpSession session, @RequestParam String title, @RequestParam int teamId) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return projectService.createProject(title, user, teamId);
     }
 }

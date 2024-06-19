@@ -71,23 +71,7 @@ const ProjectComponent = () => {
             const team = state.teams.find(team => team.name === name);
               return team ? team.id : null;
     }
-//     function getAntiIdByName(name){
-//                const user = state.teamAnticipaters.find(team => team.name === name);
-//
-//                  return user ? user.id : null;
-//        }
-//           const handleSave = async (e) => {
-//
-//                            let response;
-//                              e.preventDefault();
-//                            try {console.error('创建任务:', true);
-//                                }
-//                            catch (error) {
-//                              console.error('创建任务失败:', error);
-//                            }
-//                                 closeProject();
-//
-//                          };
+
        const handleInputChange = (event) => {
           const target = event.target;
           const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -216,10 +200,6 @@ React.useEffect(() => {
                  description: ""
                }));
 
-
-
-
-
        } catch (error) {
          console.error("Error initializing data:", error);
        }
@@ -229,6 +209,41 @@ React.useEffect(() => {
      initializeData();
 
    }, []);
+
+               const handleSave = async (e) => {
+                 e.preventDefault();
+
+                 const { taskName, team } = state;
+                 let teamId = getIdByName(team) || 0; // 如果没有找到teamId，设置默认值为0
+
+                 try {
+                   // 使用URLSearchParams来构建查询字符串
+                   const params = new URLSearchParams();
+                   params.append('title', taskName);
+                   params.append('teamId', teamId); // 确保teamId是字符串
+
+                   // 将查询参数附加到URL上
+                   const apiUrl = 'http://localhost:8088/api/project/create?' + params.toString();
+
+                   const response = await fetch(apiUrl, {
+                     method: 'POST',
+                     headers: {
+                      "Content-Type": "application/x-www-form-urlencoded"
+                     },
+                     credentials:"include"
+                   });
+
+                   if (!response.ok) {
+                     throw new Error(`Error! status: ${response.status}`);
+                   }
+
+                   const projectDto = await response.json();
+                   console.log('Project created successfully:', projectDto);
+                   closeProject();
+                 } catch (error) {
+                   console.error('Failed to create project:', error);
+                 }
+               };
  const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -371,7 +386,7 @@ React.useEffect(() => {
 
 
                   <div className="label">
-
+   <button className="detail save" onClick={handleSave}>Save</button>
                     <button className="detail cancle" onClick={closeProject}>Cancel</button>
                   </div>
                   </div>

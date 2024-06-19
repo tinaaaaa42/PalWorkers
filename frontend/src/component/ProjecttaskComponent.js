@@ -1,6 +1,6 @@
 
 import React, { useContext,useState } from 'react';
-import ModalContext from '../context/ModalContext';
+import ProjecttaskContext from '../context/ProjecttaskContext';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from 'react-quill';
@@ -10,9 +10,9 @@ import {createKanbanTask} from "../service/kanbantask_write"
 import {changeKanbanTask} from "../service/kanbantask_change"
 import TeamSelector from './teamSelector';
 import {get_team}from "../service/team"
-const ModalComponent = () => {
-  const { isModalOpen, closeModal ,message,task} = useContext(ModalContext);
-  //
+const ProjecttaskComponent = () => {
+  const { isModalOpen, closeModal ,message,task} = useContext(ProjecttaskContext);
+
   const getCurrentDateTime = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -26,7 +26,6 @@ const ModalComponent = () => {
   const [state, setState] = React.useState({
       taskName: '',
       description: '',
-      type:type,
       startTime: new Date(),
       dueTime: new Date(),
       tag:'',
@@ -186,7 +185,7 @@ const ModalComponent = () => {
 const handleTry=()=>{
 
 
-console.log(DayTasks)
+
 }
 
 
@@ -308,117 +307,83 @@ console.log(DayTasks)
       files: event.target.files
     });
   };
- React.useEffect(() => {
-    const initializeData = async () => {
-      try {
-        // 先等待 fetchTeams 完成
-        await fetchTeams();
-
-        // 根据 message 更新状态
-        switch (message) {
-          case 1:
-            setState(prevState => ({
-              ...prevState,
-              important: true,
-              urgent: true
-            }));
-            break;
-          case 2:
-            setState(prevState => ({
-              ...prevState,
-              important: true,
-              urgent: false
-            }));
-            break;
-          case 3:
-            setState(prevState => ({
-              ...prevState,
-              important: false,
-              urgent: true
-            }));
-            break;
-          case 4:
-            setState(prevState => ({
-              ...prevState,
-              important: false,
-              urgent: false
-            }));
-            break;
-          default:
-            break;
-        }
-
-        // 根据 task.type 更新状态
-        if (task) {
-          switch (type) {
-            case "day":
-              setState(prevState => ({
-                ...prevState,
-                type: "daily",
-                choosepro: task.state,
-                taskName: task.title || '',
-                tag: task.taskTags?.[0]?.tag?.name || '',
-                startTime: task.createDate || '',
-                dueTime: task.dueDate || '',
-                description: task.description
-              }));
-
-              break;
-
-            case "week":
-              setState(prevState => ({
-                ...prevState,
-                type: "weekly",
-                choosepro: task.state,
-                taskName: task.title || '',
-                tag: task.taskTags?.[0]?.tag?.name || '',
-                startTime: task.createDate || '',
-                dueTime: task.dueDate || '',
-                description: task.description,
-                urgent: task.urgent,
-                important: task.important
-              }));
-
-              break;
-
-            case "kanban":
-            let isnew=false;
-            let istor=false;
-            if(task.teamTasksAnticipaters&&task.teamTasksAnticipaters[0]&&task.teamTasksAnticipaters[0].anticipater&&task.teamTasksAnticipaters[0].anticipater.username)
-            {isnew=true;
-            }
-            if(!state.title){istor=true
-            }
-                  setState(prevState => ({
-                         ...prevState,
-                         type: "kanban",
-                         choosepro: task.state,
-                         taskName: task.title || '',
-                         tag: task.taskTags?.[0]?.tag?.name || '',
-                         startTime: task.createDate || '',
-                         dueTime: task.dueDate || '',
-                         description: task.description,
-                         team: task.team?.name || '',
-                         teamAnticipater: task.teamTasksAnticipaters?.[0]?.anticipater?.username || '',
-                         or:isnew,
-                         tor:istor
-                       }));
-
-                       break;
-            default:
-              break;
-          }
-        }
-
-      } catch (error) {
-        console.error("Error initializing data:", error);
-      }
-    };
-
-    // 调用初始化函数
-    initializeData();
-
-  }, [message,task,type]);
+// React.useEffect(() => {
+//    const initializeData = async () => {
+//      try {
+//        // 先等待 fetchTeams 完成
+//        await fetchTeams();
+//
+//        // 根据 message 更新状态
+//        switch (message) {
+//          case 1:
+//            setState(prevState => ({
+//              ...prevState,
+//              important: true,
+//              urgent: true
+//            }));
+//            break;
+//          case 2:
+//            setState(prevState => ({
+//              ...prevState,
+//              important: true,
+//              urgent: false
+//            }));
+//            break;
+//          case 3:
+//            setState(prevState => ({
+//              ...prevState,
+//              important: false,
+//              urgent: true
+//            }));
+//            break;
+//          case 4:
+//            setState(prevState => ({
+//              ...prevState,
+//              important: false,
+//              urgent: false
+//            }));
+//            break;
+//          default:
+//            break;
+//        }
+//
+//        // 根据 task.type 更新状态
+//        if (task) {
+//
+//            let isnew=false;
+//            let istor=false;
+//            if(task.teamTasksAnticipaters&&task.teamTasksAnticipaters[0]&&task.teamTasksAnticipaters[0].anticipater&&task.teamTasksAnticipaters[0].anticipater.username)
+//            {isnew=true;
+//            }
+//            if(!state.title){istor=true
+//            }
+//                  setState(prevState => ({
+//                         ...prevState,
+//                         type: "kanban",
+//                         choosepro: task.state,
+//                         taskName: task.title || '',
+//                         tag: task.taskTags?.[0]?.tag?.name || '',
+//                         startTime: task.createDate || '',
+//                         dueTime: task.dueDate || '',
+//                         description: task.description,
+//                         team: task.team?.name || '',
+//                         teamAnticipater: task.teamTasksAnticipaters?.[0]?.anticipater?.username || '',
+//                         or:isnew,
+//                         tor:istor
+//                       }));
+//
+//          }
+//        }
+//
+//      } catch (error) {
+//        console.error("Error initializing data:", error);
+//      }
+//    };
+//
+//    // 调用初始化函数
+//    initializeData();
+//
+//  }, [message,task]);
  const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -565,7 +530,7 @@ console.log(DayTasks)
                  }
 
 
-                  {type=="kanban"&&(<div className="label">
+                  {(<div className="label">
                     <label>
                     <img className='pic' src={process.env.PUBLIC_URL + "/进度.png"}  alt="" ></img>
                       progress:
@@ -607,7 +572,7 @@ console.log(DayTasks)
                       </div>
                   </div>
                   <div className="label">
-                    <button className="detail save" onClick={handleSave}>Save</button>
+                {/*    <button className="detail save" onClick={handleSave}>Save</button>*/}
                     <button className="detail cancle" onClick={closeModal}>Cancel</button>
                   </div>
                   </div>
@@ -617,7 +582,7 @@ console.log(DayTasks)
 
                 <div className="notes-container" style={{ display: 'flex', flexDirection: 'column' }}>
 
-                <div style={{ flex: '0.8' }}>
+             {/*   <div style={{ flex: '0.8' }}>
                 {(type!=="new"&&state.note!=='')&&(
                     <div className="Compile-card" >
                        <div className="compile-title"> Compile</div>
@@ -625,7 +590,7 @@ console.log(DayTasks)
                        <div className="compile-time"> 5.1</div>
                         </div>
                        ) }
-                       </div>
+                       </div>*/}
 
                  <div className="label" style={{ flex: '1', marginTop: '10px' }}>
                        <label>
@@ -651,4 +616,4 @@ console.log(DayTasks)
   );
 };
 
-export default ModalComponent;
+export default ProjecttaskComponent;

@@ -8,6 +8,7 @@ import router from './Router';
 import {RouterProvider} from 'react-router-dom'
 import { ModalProvider } from './context/ModalContext';
 import { ProjectProvider } from './context/ProjectContext';
+import { ProjecttaskProvider } from './context/ProjecttaskContext';
 function App() {
   return (
     <div className="App">
@@ -22,7 +23,9 @@ function App() {
       </div> */}
       <ModalProvider>
       <ProjectProvider>
+      <ProjecttaskProvider>
       <RouterProvider router={router}></RouterProvider>
+      </ProjecttaskProvider>
       </ProjectProvider>
       </ModalProvider>
     </div>

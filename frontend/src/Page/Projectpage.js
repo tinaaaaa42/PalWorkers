@@ -9,7 +9,10 @@ import {useEffect, useState} from "react";
 import {get_project} from "../service/project";
 function Projectpage(){
     const { projectid } = useParams();
-
+    const [update,Setupdate]=useState(0);
+    const HandleUpdate=()=>{
+        Setupdate(update+1);
+    }
     const [project, setProject] = useState(null);
 
     const fetchProject = async() => {
@@ -18,7 +21,7 @@ function Projectpage(){
     }
     useEffect(() => {
         fetchProject()
-    }, []);
+    }, [update]);
 
     return (
         project && <>
@@ -28,7 +31,7 @@ function Projectpage(){
                 <div className="mainpart">
                     <Header></Header>
                     <Control></Control>
-                    <Projtectdetail project={project}></Projtectdetail>
+                    <Projtectdetail project={project} HandleUpdate={HandleUpdate}></Projtectdetail>
                 </div>
             </div>
         </>

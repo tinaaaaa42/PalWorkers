@@ -45,7 +45,7 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
           <></>
         )}
         {todoProjects.map((project) => (
-                <Projectcard key={project.id} project={project} />
+                <Projectcard key={project.id} project={project} HandleUpdate={HandleUpdate} />
             ))}
       </div>
       <div className="column">
@@ -56,7 +56,7 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
           <></>
         )}
          {InprogressProjects.map((project) => (
-                <Projectcard key={project.id} project={project} />
+                <Projectcard key={project.id} project={project} HandleUpdate={HandleUpdate} />
             ))}
       </div>
       <div className="column">
@@ -67,7 +67,7 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
           <></>
         )}
           {ReviewProjects.map((project) => (
-              <Projectcard key={project.id} project={project} />
+              <Projectcard key={project.id} project={project} HandleUpdate={HandleUpdate} />
           ))}
       </div>
       <div className="column">
@@ -78,7 +78,7 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
           <></>
         )}
           {DoneProjects.map((project) => (
-              <Projectcard key={project.id} project={project} />
+              <Projectcard key={project.id} project={project} HandleUpdate={HandleUpdate} />
           ))}
         <a href="">
           <div className="card empty">

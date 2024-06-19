@@ -1,7 +1,7 @@
 import "../iconfont3/iconfont.css"
 import Taskcard from "./taskcard";
 import {Projects} from "../Data/data";
-function Projtectdetail({project}){
+function Projtectdetail({project,HandleUpdate}){
     // const {id}=props;
     // const projectid=+id;
     // const project = Projects.find((project) => project.id === projectid);
@@ -54,25 +54,25 @@ function Projtectdetail({project}){
         <div class="column">
             <h2>To Do</h2>
             {updatedTodoTasks.map((task) => (
-                <Taskcard key={task.id} task={task}/>
+                <Taskcard key={task.id} task={task} HandleUpdate={HandleUpdate}/>
             ))}
         </div>
         <div class="column">
             <h2>In Progress</h2>
              {updatedInProgressTasks.map((task) => (
-                <Taskcard key={task.id} task={task}/>
+                <Taskcard key={task.id} task={task} HandleUpdate={HandleUpdate}/>
             ))}
         </div>
             <div class="column">
             <h2>Review</h2>
             {updatedReviewTasks.map((task) => (
-                <Taskcard key={task.id} task={task}/>
+                <Taskcard key={task.id} task={task} HandleUpdate={HandleUpdate}/>
             ))}
         </div>
         <div class="column">
             <h2>Done</h2>
              {updatedDoneTasks.map((task) => (
-                <Taskcard key={task.id} task={task}/>
+                <Taskcard key={task.id} task={task} HandleUpdate={HandleUpdate}/>
             ))}
             <a href=""><div class="card empty"><div className="add iconfont icon-jiahao"></div></div></a>
         </div>

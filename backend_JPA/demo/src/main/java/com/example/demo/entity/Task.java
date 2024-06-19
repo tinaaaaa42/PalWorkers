@@ -84,6 +84,9 @@ public class Task {
     @Column(name = "due_time")
     private LocalTime dueTime;
 
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
+    private Set<Note> notes = new LinkedHashSet<>();
+
     public Task(Task task) {
         this.id = task.getId();
         this.title = task.getTitle();

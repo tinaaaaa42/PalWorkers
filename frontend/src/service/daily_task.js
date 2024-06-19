@@ -1,4 +1,4 @@
-import {getJson, PREFIX} from "./common";
+import {getJson, PREFIX, del} from "./common";
 
 export async function get_daily_task () {
     const url = `${PREFIX}/tasks/daily`;
@@ -28,4 +28,14 @@ export async function getDailyTask (date) {
         };
     }
     return daily_tasks;
+}
+
+export async function deleteDailyTaskWithDate (date) {
+    const url = `${PREFIX}/tasks/daily/date=${date}`;
+    try {
+        await del(url);
+    } catch (e) {
+        console.log(e);
+        // throw e;
+    }
 }

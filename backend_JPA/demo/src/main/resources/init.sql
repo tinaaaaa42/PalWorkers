@@ -75,6 +75,14 @@ CREATE TABLE tasks (
     foreign key (team_id) references teams(team_id)
 );
 
+create table notes (
+    note_id int auto_increment primary key ,
+    task_id int not null ,
+    note TEXT not null ,
+    create_date DATE not null ,
+    foreign key (task_id) references tasks(task_id)
+);
+
 create table team_tasks_anticipater(
   id int auto_increment primary key ,
   task_id int not null ,

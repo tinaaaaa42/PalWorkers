@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Space, message } from 'antd';
 import { CheckSquareOutlined, DeleteOutlined } from '@ant-design/icons';
-import { completeTask } from '../service/advance';
+import { completeTask, deleteTask } from '../service/advance';
 
 const Remind = (remindtask) => {
   const [expiredTasks, setExpiredTasks] = useState([
@@ -35,9 +35,11 @@ const Remind = (remindtask) => {
 
   const handleDelete = (id, type) => {
     if (type === 'expired') {
+      deleteTask(id);
       setExpiredTasks(expiredTasks.filter(task => task.id !== id));
       message.success('任务已删除');
     } else if (type === 'urgent') {
+      deleteTask(id);
       setUrgentTasks(urgentTasks.filter(task => task.id !== id));
       message.success('任务已删除');
     }

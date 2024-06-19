@@ -137,4 +137,36 @@ public class dailyTaskImpl implements dailyTaskService {
         }
         return dailyTasks;
     }
+
+    @Override
+    public boolean removeAll(int userId, LocalDate date) {
+        List<DailyTask> dailyTasks = dailyTaskRepository.findByUserIdAndCreateDateEquals(userId,date);
+        for (DailyTask dailyTask : dailyTasks) {
+            dailyTaskRepository.deleteById(dailyTask.getId());
+        }
+        return true;
+    }
+
+    @Override
+    public boolean removeTeamTasksByUser(User user, LocalDate date) {
+        List<TeamTasksLeader> leader_tasks = teamTasksLeaderRepository.findTasksByLeader(user);
+        List<TeamTasksAnticipater> anticipaters_tasks = teamTasksAnticipaterRepository.findTasksByAnticipater(user);
+        for (TeamTasksLeader leader_task : leader_tasks) {
+            String type = leader_task.getTask().getType();
+            LocalDate createDate = leader_task.getTask().getCreateDate();
+            if (type.equals("daily") && createDate.equals(date)) {
+                int task_id = leader_task.getTask().getId();
+                taskRepository.deleteById(task_id);
+            }
+        }
+        for (TeamTasksAnticipater anticipater_task : anticipaters_tasks) {
+            String type = anticipater_task.getTask().getType();
+            LocalDate createDate = anticipater_task.getTask().getCreateDate();
+            if (type.equals("daily") && createDate.equals(date)) {
+                int task_id = anticipater_task.getTask().getId();
+                taskRepository.deleteById(task_id);
+            }
+        }
+        return true;
+    }
 }

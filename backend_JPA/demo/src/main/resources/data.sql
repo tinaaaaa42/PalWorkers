@@ -46,6 +46,16 @@ INSERT INTO tasks (task_id,title, description, create_date, due_date,type,user_i
                                                                                 (9, '产品摄影', '拍摄新产品照片用于营销。', '2024-05-28', NULL,'kanban',1, '20:00:00'),
                                                                                 (10, '团队会议', '安排团队会议以讨论项目进展。', '2024-05-30', '2023-05-12','kanban',1, '21:00:00');
 
+INSERT INTO notes (note_id, task_id, note, create_date) VALUES (1, 1, '<p>Remember to update the product description.</p>', '2024-06-01'),
+                                                               (2, 2, '<p>Check the latest market trends.</p>', '2024-06-01'),
+                                                               (3, 3, '<p>Prepare training materials for the new product.</p>', '2024-05-26'),
+                                                               (4, 4, '<p>Analyze the sales data for the past month.</p>', '2024-05-27'),
+                                                               (5, 5, '<p>Follow up with customer complaints.</p>', '2023-05-28'),
+                                                               (6, 6, '<p>Review the financial report for accuracy.</p>', '2024-05-29'),
+                                                               (7, 7, '<p>Schedule server maintenance for next week.</p>', '2024-05-28'),
+                                                               (8, 8, '<p>Finalize the marketing campaign details.</p>', '2024-05-31'),
+                                                               (9, 9, '<p>Coordinate with the photographer for the product shoot.</p>', '2024-05-28'),
+                                                               (10, 10, '<p>Prepare the agenda for the team meeting.</p>', '2024-05-30');
 
 INSERT INTO tags (tag_id, name) VALUES
                                     (1, '个人'),

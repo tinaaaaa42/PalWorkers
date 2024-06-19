@@ -80,7 +80,7 @@ function UserProfile({team,week_data,kanban_data,remindtask,handleUpdate}) {
     }else if(selectedMenu=='intro'){
       return <ProfileInfo></ProfileInfo>
     }else if(selectedMenu=='remind'){
-      return <Remind remindtask={remindtask}handleUpdate={handleUpdate}></Remind>
+      return <Remind remindtask={remindtask} handleUpdate={handleUpdate}></Remind>
     }
     return null;
   };

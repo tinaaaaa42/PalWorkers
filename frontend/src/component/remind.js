@@ -3,7 +3,7 @@ import { Table, Button, Space, message } from 'antd';
 import { CheckSquareOutlined, DeleteOutlined } from '@ant-design/icons';
 import { completeTask, deleteTask } from '../service/advance';
 
-const Remind = (remindtask,HandleUpdate) => {
+const Remind = (remindtask,handleUpdate) => {
   const [expiredTasks, setExpiredTasks] = useState([
     // { id: '1', name: 'Expired Task 1', ddl: '2024-05-01' },
     // { id: '2', name: 'Expired Task 2', ddl: '2024-05-02' },
@@ -13,21 +13,24 @@ const Remind = (remindtask,HandleUpdate) => {
     // { id: '1', name: 'Urgent Task 1', ddl: '2024-06-01' },
     // { id: '2', name: 'Urgent Task 2', ddl: '2024-06-02' },
   ]);
+  const [update,setUpdate]=useState(0);
   useEffect( () => {
     setExpiredTasks(remindtask.remindtask.expired);
     setUrgentTasks(remindtask.remindtask.urgent);
-    }, []);
+    }, [update]);
   const handleComplete = async(id, type) => {
     try{
       if (type === 'expired') {
         // setExpiredTasks(expiredTasks.filter(task => task.id !== id));
         const response=await completeTask(id);
-        HandleUpdate();
+        handleUpdate();
+        setUpdate(update+1);
         message.success('任务已完成');
       } else if (type === 'urgent') {
         const response=await completeTask(id);
-        HandleUpdate();
+        handleUpdate();
         message.success('任务已完成');
+        setUpdate(update+1);
       }
     }catch{
 
@@ -35,16 +38,16 @@ const Remind = (remindtask,HandleUpdate) => {
     
   };
 
-  const handleDelete = (id, type) => {
+  const handleDelete = async(id, type) => {
     if (type === 'expired') {
-      deleteTask(id);
+      const response=await deleteTask(id);
       setExpiredTasks(expiredTasks.filter(task => task.id !== id));
-      HandleUpdate();
+      handleUpdate();
       message.success('任务已删除');
     } else if (type === 'urgent') {
-      deleteTask(id);
+      const response=await deleteTask(id);
       setUrgentTasks(urgentTasks.filter(task => task.id !== id));
-      HandleUpdate();
+      handleUpdate();
       message.success('任务已删除');
     }
   };

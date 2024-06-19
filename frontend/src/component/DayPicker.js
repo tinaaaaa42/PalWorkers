@@ -22,6 +22,7 @@ const DayPicker = ({handleDaySearch,handleReset}) => {
           <DatePicker
             mode="date"
             allowClear
+            value={singleDate}
             onChange={onSingleDateChange}
             placeholder="选择日期"style={{height:'45px',width:'300px'}}
             size="large" 

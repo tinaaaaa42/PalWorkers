@@ -26,8 +26,8 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
   console.log(kanban_project)
   // const ReviewTasks=kanban_tasks.filter(task => task.state === "review");
   // const DownTasks=kanban_tasks.filter(task => task.state === "down");
-  // const todoProjects = Projects.filter((project) => project.state === "todo");
-    const todoProjects = kanban_project.filter((project) => project.state === "todo");
+  const todoProjects = Projects.filter((project) => project.state === "todo");
+  //   const todoProjects = kanban_project.filter((project) => project.state === "todo");
   // const InprogressProjects = Projects.filter((project) => project.state === "inprogress");
   return (
     <div className="Kanban">

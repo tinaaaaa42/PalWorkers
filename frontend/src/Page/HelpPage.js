@@ -15,6 +15,8 @@ const HelpPage = () => {
         { key: '2', src: '/kanban.png', title: <h3>每月页面</h3> },
         { key: '5', src: '/week.png', title: <h3>每周页面</h3> },
         { key: '2', src: '/day.png', title: <h3>每日页面</h3> },
+        { key: '2', src: '/day.png', title: <h3>每日页面</h3> },
+
     ];
     const items3 = [
         { key: '3', src: '/ctrla.png', title: <h3>Ctrl+A</h3> },

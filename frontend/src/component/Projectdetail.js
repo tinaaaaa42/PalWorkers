@@ -74,7 +74,6 @@ function Projtectdetail({project,HandleUpdate}){
              {updatedDoneTasks.map((task) => (
                 <Taskcard key={task.id} task={task} HandleUpdate={HandleUpdate}/>
             ))}
-            <a href=""><div class="card empty"><div className="add iconfont icon-jiahao"></div></div></a>
         </div>
     </div>);
 }

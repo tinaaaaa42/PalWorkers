@@ -37,6 +37,7 @@ const TeamTable = ({team,handleUpdate}) => {
   const [invitationCode, setInvitationCode] = useState('');
   const [form] = Form.useForm();
   const [addForm] = Form.useForm();
+  let currentUser ;
   const transformData = (rawData) => {
     const teams = rawData.reduce((acc, team) => {
       const transformedTeam = {
@@ -44,6 +45,7 @@ const TeamTable = ({team,handleUpdate}) => {
         name: team.team.name,
         participant: [],
         leader: [],
+        invitationCode:team.team.invitationCode
       };
 
       console.log(transformedTeam)
@@ -68,14 +70,13 @@ const TeamTable = ({team,handleUpdate}) => {
           });
         }
       });
-  
+      currentUser=team.user
       acc.push(transformedTeam);
       return acc;
     }, []);
 
     // Add current user information if provided
-    // const currentUser = team.team.teamMembers.find((member) => member.user.username === team.user.username);
-    const currentUser = team[0].user;
+    // const currentUser = team[0].user;
     console.log(currentUser)
     // if (currentUser) {
     //   teams[0].participant.push({
@@ -147,6 +148,7 @@ const TeamTable = ({team,handleUpdate}) => {
 
     return (
       <>
+        <p>邀请码：{team.invitationCode}</p>
         <p>
           <strong>Participants:</strong>
         </p>

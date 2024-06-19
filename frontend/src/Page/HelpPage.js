@@ -9,22 +9,23 @@ const HelpPage = () => {
 
     const items1 = [
         { key: '1', src: '/kanbancreate.png', title: <h3>创建任务</h3> },
-        { key: '4', src: '/kanbancreate2.png', title: <h3>创建任务1</h3> },
+        { key: '2', src: '/kanbancreate2.png', title: <h3>创建任务1</h3> },
     ];
     const items2 = [
-        { key: '2', src: '/kanban.png', title: <h3>每月页面</h3> },
-        { key: '5', src: '/week.png', title: <h3>每周页面</h3> },
-        { key: '2', src: '/day.png', title: <h3>每日页面</h3> },
-        { key: '2', src: '/day.png', title: <h3>每日页面</h3> },
+        { key: '3', src: '/kanban.png', title: <h3>每月页面</h3> },
+        { key: '4', src: '/week.png', title: <h3>每周页面</h3> },
+        { key: '5', src: '/day.png', title: <h3>每日页面</h3> },
+        { key: '6', src: '/profile.png', title: <h3>个人主页</h3> },
+        { key: '7', src: '/remind.png', title: <h3>提醒</h3> },
 
     ];
     const items3 = [
-        { key: '3', src: '/ctrla.png', title: <h3>Ctrl+A</h3> },
-        { key: '3', src: '/ctrlc.png', title: <h3>Ctrl+C</h3> },
+        { key: '8', src: '/ctrla.png', title: <h3>Ctrl+A</h3> },
+        { key: '9', src: '/ctrlc.png', title: <h3>Ctrl+C</h3> },
     ];
     const items4 = [
-        { key: '3', src: '/ctrla.png', title: <h3>Ctrl+A</h3> },
-        { key: '3', src: '/ctrlc.png', title: <h3>Ctrl+C</h3> },
+        { key: '10', src: '/team.png', title: <h3>团队页面</h3> },
+        { key: '11', src: '/teamcreate.png', title: <h3>创建团队</h3> },
     ];
     const renderCarousel = () => {
         switch (selectedKey) {
@@ -36,6 +37,8 @@ const HelpPage = () => {
                 return <Carousel effect="fade" dots dotPosition='bottom'>{renderCarouselItems(items3)}</Carousel>;
             case '4':
                 return <Carousel effect="fade" dots dotPosition='bottom'>{renderCarouselItems(items4)}</Carousel>;
+            case '5':
+            return <div>咨询电话：123456</div>;
             default:
                 return null;
         }
@@ -61,6 +64,7 @@ const HelpPage = () => {
                         <Menu.Item key="2">界面描述</Menu.Item>
                         <Menu.Item key="3">快捷键</Menu.Item>
                         <Menu.Item key="4">创建团队</Menu.Item>
+                        <Menu.Item key="5">联系我们</Menu.Item>
                     </Menu>
                 </Header>
                 <Content style={{ margin: '24px 40px' }}>

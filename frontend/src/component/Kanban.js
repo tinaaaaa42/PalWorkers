@@ -80,11 +80,7 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
           {DoneProjects.map((project) => (
               <Projectcard key={project.id} project={project} HandleUpdate={HandleUpdate} />
           ))}
-        <a href="">
-          <div className="card empty">
-            <div className="add iconfont icon-jiahao"></div>
-          </div>
-        </a>
+        
       </div>
     </div>
   );

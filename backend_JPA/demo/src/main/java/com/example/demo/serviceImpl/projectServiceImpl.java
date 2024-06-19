@@ -2,10 +2,11 @@ package com.example.demo.serviceImpl;
 
 
 import com.example.demo.DTO.ProjectDto;
-import com.example.demo.entity.Project;
-import com.example.demo.entity.ProjectTaskGroup;
-import com.example.demo.entity.Task;
+import com.example.demo.entity.*;
 import com.example.demo.repository.ProjectRepository;
+import com.example.demo.repository.TeamMemberRepository;
+import com.example.demo.repository.TeamTasksAnticipaterRepository;
+import com.example.demo.repository.TeamTasksLeaderRepository;
 import com.example.demo.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,15 @@ public class projectServiceImpl implements ProjectService{
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private TeamTasksAnticipaterRepository teamTasksAnticipaterRepository;
+
+    @Autowired
+    private TeamTasksLeaderRepository teamTasksLeaderRepository;
+
+    @Autowired
+    private TeamMemberRepository teamMemberRepository;
+
     public List<ProjectDto> findAllByUserId(int userId) {
         List<Project> projects = projectRepository.findAllByUserId(userId);
         List<ProjectDto> projectDtos = new ArrayList<>();
@@ -29,6 +39,7 @@ public class projectServiceImpl implements ProjectService{
             projectDto.setTitle(project.getTitle());
             projectDto.setTotal(project.getTotal());
             projectDto.setState(project.getState());
+            projectDto.setDone(project.getDone());
             Set<Task> tasks = new HashSet<>();
             Set<ProjectTaskGroup> projectTaskGroups = project.getProjectTaskGroups();
             for (ProjectTaskGroup projectTaskGroup : projectTaskGroups) {
@@ -52,6 +63,7 @@ public class projectServiceImpl implements ProjectService{
         projectDto.setTitle(project.getTitle());
         projectDto.setTotal(project.getTotal());
         projectDto.setState(project.getState());
+        projectDto.setDone(project.getDone());
         Set<Task> tasks = new HashSet<>();
         Set<ProjectTaskGroup> projectTaskGroups = project.getProjectTaskGroups();
         for (ProjectTaskGroup projectTaskGroup : projectTaskGroups) {
@@ -60,5 +72,17 @@ public class projectServiceImpl implements ProjectService{
         }
         projectDto.setTasks(tasks);
         return projectDto;
+    }
+
+    @Override
+    public List<ProjectDto> findAllByTeamIdAndUserId(int userId) {
+        List<TeamMember> teamMembers = teamMemberRepository.findTeamsByUserId(userId);
+        List<ProjectDto> projectDtos = new ArrayList<>();
+        for (TeamMember teamMember : teamMembers) {
+            System.out.println(teamMember.getTeam().getName());
+            int teamId = teamMember.getTeam().getId();
+
+        }
+        return null;
     }
 }

@@ -17,8 +17,10 @@ function Projectcard({ project }){
                 <div className="grouptag ">
                 {project.grouptag === "isgroup" ? `Group${project.groupid}` : "Myself"}
                 </div>
-                <div className="rate"><li>Progress</li><div className="ratenum">{project.down}/{project.total}</div></div>
-                <ProgressBar percentage={(project.down / project.total) * 100}></ProgressBar>
+                <div className="rate"><li>Progress</li><div className="ratenum">{project.done
+}/{project.total}</div></div>
+                <ProgressBar percentage={(project.done
+ / project.total) * 100}></ProgressBar>
                 <div className="detail">
                     <div className="Date">
                         {project.date}

@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS task_tags;
 DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS team_tasks_anticipater;
 DROP TABLE IF EXISTS team_tasks_leader;
+DROP TABLE IF EXISTS project_task_group;
+DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS tasks;
 DROP TABLE IF EXISTS user_auth;
 DROP TABLE IF EXISTS team_member;
@@ -122,4 +124,25 @@ CREATE TABLE daily_tasks (
                               daily_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
                               task_id int,
                               FOREIGN KEY (task_id) REFERENCES tasks(task_id)
+);
+
+
+CREATE TABLE projects(
+    project_id int not null primary key auto_increment,
+    title varchar(100),
+    total int,
+    state varchar(100),
+    done int,
+    user_id int,
+    team_id int,
+    foreign key (user_id) references users(user_id),
+    foreign key (team_id) references teams(team_id)
+);
+
+CREATE TABLE project_task_group(
+    project_task_group_id int not null primary key auto_increment,
+    task_id int,
+    project_id int,
+    foreign key (task_id) references tasks(task_id),
+    foreign key (project_id) references projects(project_id)
 )

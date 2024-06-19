@@ -7,6 +7,7 @@ import ModalContext from '../context/ModalContext';
 import ProjectContext from '../context/ProjectContext';
 import React, { useContext ,useState,useEffect} from 'react';
 import {getKanbanTask, get_kanban_task} from "../service/kanban_task";
+import {createBatchKanbanTask} from "../service/kanbantask_write";
 import Navbar from "../component/Navv";
 import {Modal,Input} from "antd";
 function Kanbanpage(){
@@ -32,12 +33,13 @@ function Kanbanpage(){
     const HandleUpdate=()=>{
         setUpdate(update+1);
     }
-    const handleOk = () => {
+    const handleOk = async () => {
         const num = parseInt(userInput, 10);
         if (!isNaN(num) && num > 0) {
-          handleAdd(num); // 调用处理函数
+          await handleAdd(num); // 调用处理函数
           setIsModalVisible(false);
           setUserInput('');
+          HandleUpdate();
         } else {
           alert('请输入一个有效的数！');
           setUserInput('');
@@ -53,9 +55,10 @@ function Kanbanpage(){
     setUserInput(e.target.value);
     };
 
-    const handleAdd = (num) => {
-    console.log(`处理的数字是: ${num}`);
+    const handleAdd = async (num) => {
+      await createBatchKanbanTask(num);
     };
+
     const [dates, setDates] = useState([new Date(Date.now() - 29 * 24 * 60 * 60 * 1000), new Date()]);
     const fetchKanbanTasks = async (start, end) => {
         const Kanban_tasks = await getKanbanTask(start,end);

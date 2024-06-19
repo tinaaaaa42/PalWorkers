@@ -9,8 +9,10 @@ import java.util.List;
 
 public interface dailyTaskService {
     List<DailyTask> findAll(int userId, LocalDate date);
+    boolean removeAll(int userId, LocalDate date);
 
     List<DailyTask> findteamtasksByUser(User user, LocalDate date);
+    boolean removeTeamTasksByUser(User user, LocalDate date);
 
 //    DailyTask addDailyTask(DailyTaskDto dailyTaskDto, User user);
 //

@@ -48,6 +48,19 @@ public class dailyTaskController {
         return dailyTasks;
     }
 
+    @DeleteMapping(value = "/api/tasks/daily/date={date}")
+    public boolean removeDailyTasks(HttpSession session, @PathVariable String date) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        LocalDate currentDate = LocalDate.parse(date);
+        boolean status = dailyTaskService.removeAll(userId,currentDate);
+        status = status && dailyTaskService.removeTeamTasksByUser(user,currentDate);
+        return status;
+    }
+
 //    @PostMapping(value = "/api/tasks/daily")
 //    public DailyTask createDailyTask(@RequestBody DailyTaskDto dailyTaskDto, HttpSession session) {
 //        User user = (User) session.getAttribute("user");

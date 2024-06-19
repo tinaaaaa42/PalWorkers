@@ -7,7 +7,7 @@
  import Seconddir from "../component/seconddir";
  import {useEffect, useState} from "react";
  import {get_weekly_task} from "../service/weekly_task";
- import {getDailyTask, get_daily_task} from "../service/daily_task";
+ import {getDailyTask, get_daily_task, deleteDailyTaskWithDate} from "../service/daily_task";
 import Navbar from "../component/Navv";
 import { message } from "antd";
 
@@ -35,6 +35,8 @@ import { message } from "antd";
           if (event.ctrlKey && event.key.toLowerCase() === 'c') {
             event.preventDefault(); 
             message.info('您按下了 Ctrl+C'); 
+            deleteDailyTaskWithDate(currentDate.toISOString().split('T')[0]);
+            Setupdate(update+1);
           }
         };
         window.addEventListener('keydown', handleKeyDown);

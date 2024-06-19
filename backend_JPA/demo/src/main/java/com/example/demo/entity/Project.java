@@ -29,7 +29,7 @@ public class Project {
     @Column(name = "state", length = 100)
     private String state;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectTaskGroup> projectTaskGroups = new LinkedHashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

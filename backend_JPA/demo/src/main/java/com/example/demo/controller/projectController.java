@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.DTO.KanbanTaskDto;
 import com.example.demo.DTO.ProjectDto;
+import com.example.demo.entity.KanbanTask;
 import com.example.demo.entity.User;
 import com.example.demo.service.ProjectService;
 import jakarta.servlet.http.HttpSession;
@@ -58,5 +60,14 @@ public class projectController {
             throw new RuntimeException("User not logged in");
         }
         return projectService.createProject(title, user, teamId);
+    }
+
+    @PostMapping(value = "api/project/task")
+    public KanbanTask addKanbanTask(HttpSession session, @RequestParam int projectId, @RequestBody KanbanTaskDto kanbanTaskDto) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return projectService.addKanbanTask(projectId, kanbanTaskDto);
     }
 }

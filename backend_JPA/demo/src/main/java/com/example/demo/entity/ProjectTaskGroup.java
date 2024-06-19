@@ -12,6 +12,7 @@ import lombok.Setter;
 public class ProjectTaskGroup {
     @Id
     @Column(name = "project_task_group_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)

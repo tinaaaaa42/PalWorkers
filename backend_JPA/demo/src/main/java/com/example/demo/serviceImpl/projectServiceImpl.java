@@ -1,6 +1,7 @@
 package com.example.demo.serviceImpl;
 
 
+import com.example.demo.DTO.KanbanTaskDto;
 import com.example.demo.DTO.ProjectDto;
 import com.example.demo.DTO.ProjectTaskDto;
 import com.example.demo.entity.*;
@@ -9,6 +10,7 @@ import com.example.demo.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +21,9 @@ public class projectServiceImpl implements ProjectService{
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private ProjectTaskGroupRepository projectTaskGroupRepository;
 
     @Autowired
     private TeamTasksAnticipaterRepository teamTasksAnticipaterRepository;
@@ -171,5 +176,35 @@ public class projectServiceImpl implements ProjectService{
         projectDto.setTeamProject(team != null);
         projectDto.setTeamName(team != null ? project.getTeam().getName() : null);
         return projectDto;
+    }
+
+    @Override
+    public KanbanTask addKanbanTask(int projectId, KanbanTaskDto kanbanTaskDto) {
+        Project project = projectRepository.findById(projectId);
+        if (project == null) {
+            return null;
+        }
+        KanbanTask kanbanTask = new KanbanTask();
+        kanbanTask.setTitle(kanbanTaskDto.getTitle());
+        kanbanTask.setDescription(kanbanTaskDto.getDescription());
+        kanbanTask.setDueDate(LocalDate.parse(kanbanTaskDto.getDueDate()));
+        kanbanTask.setCreateDate(LocalDate.parse(kanbanTaskDto.getCreateDate()));
+        kanbanTask.setType(kanbanTaskDto.getType());
+        kanbanTask.setExpired(kanbanTaskDto.getExpired() == null ? false : kanbanTaskDto.getExpired());
+        kanbanTask.setState(kanbanTaskDto.getState());
+        kanbanTask.setCompleted(false);
+        kanbanTaskRepository.save(kanbanTask);
+
+        Set<ProjectTaskGroup> projectTaskGroups = project.getProjectTaskGroups();
+        ProjectTaskGroup projectTaskGroup = new ProjectTaskGroup();
+        projectTaskGroup.setProject(project);
+        projectTaskGroup.setTask(kanbanTask);
+
+        projectTaskGroupRepository.save(projectTaskGroup);
+        projectTaskGroups.add(projectTaskGroup);
+        project.setProjectTaskGroups(projectTaskGroups);
+        project.setTotal(project.getTotal() + 1);
+        projectRepository.save(project);
+        return kanbanTask;
     }
 }

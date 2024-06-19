@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 
+import com.example.demo.DTO.KanbanTaskDto;
 import com.example.demo.DTO.ProjectDto;
+import com.example.demo.entity.KanbanTask;
 import com.example.demo.entity.Team;
 import com.example.demo.entity.User;
 
@@ -17,5 +19,7 @@ public interface ProjectService {
     boolean advanceProject(int projectId);
 
     ProjectDto createProject(String title, User user, int teamId);
+
+    KanbanTask addKanbanTask(int projectId, KanbanTaskDto kanbanTaskDto);
 
 }

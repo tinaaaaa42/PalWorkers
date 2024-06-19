@@ -30,6 +30,9 @@ public class projectServiceImpl implements ProjectService{
     private TaskRepository taskRepository;
 
     @Autowired
+    private TeamRepository teamRepository;
+
+    @Autowired
     private KanbanTaskRepository kanbanTaskRepository;
 
     @Autowired
@@ -145,5 +148,28 @@ public class projectServiceImpl implements ProjectService{
             return "done";
         }
         return "totally completed";
+    }
+
+    @Override
+    public ProjectDto createProject(String title, User user, int teamId) {
+        Team team = teamRepository.findById(teamId).orElse(null);
+        Project project = new Project();
+        project.setTitle(title);
+        project.setUser(user);
+        project.setTeam(team);
+        project.setState("todo");
+        project.setTotal(0);
+        project.setDone(0);
+        project.setCompleted(false);
+        projectRepository.save(project);
+        ProjectDto projectDto = new ProjectDto();
+        projectDto.setId(project.getId());
+        projectDto.setTitle(project.getTitle());
+        projectDto.setTotal(project.getTotal());
+        projectDto.setState(project.getState());
+        projectDto.setDone(project.getDone());
+        projectDto.setTeamProject(team != null);
+        projectDto.setTeamName(team != null ? project.getTeam().getName() : null);
+        return projectDto;
     }
 }

@@ -31,7 +31,7 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
     const InprogressProjects = kanban_project.filter((project) => project.state === "inprogress");
     const ReviewProjects = kanban_project.filter((project) => project.state === "review");
     const DoneProjects = kanban_project.filter((project) => project.state === "done");
-
+    
 
 
   // const InprogressProjects = Projects.filter((project) => project.state === "inprogress");
@@ -40,7 +40,7 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
       <div className="column">
         <h2>To Do</h2>
         {TodoTasks != null ? (
-          TodoTasks.map((task) => <Taskcard key={task.id} task={task} HandleUpdate={HandleUpdate}/>)
+          TodoTasks.map((task) => <Taskcard key={task.id} task={task} HandleUpdate={HandleUpdate} taskColor={'pink'}/>)
         ) : (
           <></>
         )}
@@ -51,7 +51,7 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
       <div className="column">
         <h2>In Progress</h2>
         {InprogressTasks != null ? (
-          InprogressTasks.map((task) => <Taskcard task={task} key={task.id} HandleUpdate={HandleUpdate}/>)
+          InprogressTasks.map((task) => <Taskcard task={task} key={task.id} HandleUpdate={HandleUpdate} taskColor={'rgba(0, 255, 47, 0.776);'}/>)
         ) : (
           <></>
         )}
@@ -62,7 +62,7 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
       <div className="column">
         <h2>Review</h2>
         {ReviewTasks != null ? (
-          ReviewTasks.map((task) => <Taskcard key={task.id} task={task} HandleUpdate={HandleUpdate}/>)
+          ReviewTasks.map((task) => <Taskcard key={task.id} task={task} HandleUpdate={HandleUpdate} taskColor={'rgba(238, 255, 0, 0.776)'}/>)
         ) : (
           <></>
         )}
@@ -73,7 +73,7 @@ function Kanban({ kanban_tasks, kanban_project ,HandleUpdate}) {
       <div className="column">
         <h2>Done</h2>
         {DownTasks != null ? (
-          DownTasks.map((task) => <Taskcard key={task.id} task={task} HandleUpdate={HandleUpdate}/>)
+          DownTasks.map((task) => <Taskcard key={task.id} task={task} HandleUpdate={HandleUpdate}taskColor={'red'}/>)
         ) : (
           <></>
         )}

@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
 import { RightSquareOutlined } from '@ant-design/icons';
 import { advanceKanbanTask, deleteTask } from '../service/advance';
-function Taskcard({task,id,HandleUpdate}){
+function Taskcard({task,id,HandleUpdate,taskColor}){
     // const { id,task} = props;
     const { openModal ,isModalOpen} = useContext(ModalContext);
     const location = useLocation();
@@ -29,8 +29,8 @@ function Taskcard({task,id,HandleUpdate}){
     return (
     <div className="Taskcard" onClick={()=>openModal("kanban",task,'')}>
         <div class="card" >
-            <div className="colorbar" style={{color:`blue`}}></div>
-            <div>
+            <div className="colorbar"style={{width:'20px',backgroundColor:taskColor}} ></div>
+            <div >
                 <div className="title">
                     <div className='titlename'>{task.title.length<=4?task.title:`${task.title.substring(0,4)}...`}</div>
                     <Button onClick={(event)=>HandleFinish(event,task.id)} icon={<RightSquareOutlined style={{fontSize:'21px',color:'gray'}}/>}style={{position:'absolute',right:'32px',border:'none'}}></Button>

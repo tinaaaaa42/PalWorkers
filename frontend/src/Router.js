@@ -10,6 +10,7 @@ import Navbar from './component/Navv';
 import Remind from './component/remind';
 import TeamTable from './component/Team';
 import Profileinfo from './component/Profileinfo';
+import HelpPage from './Page/HelpPage';
 const router=createBrowserRouter([
     {
         path:'/',
@@ -33,8 +34,8 @@ const router=createBrowserRouter([
         path:'/login',
         element:<Loginpage></Loginpage>
     },{
-        path:'/test',
-        element:<Remind></Remind>
+        path:'/help',
+        element:<HelpPage></HelpPage>
     },{
         path:'test2',
         element:<TeamTable></TeamTable>

@@ -118,6 +118,7 @@ CREATE TABLE kanban_tasks (
     kanban_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
                               task_id int NOT NULL ,
                               state VARCHAR(255) NOT NULL,
+                                in_project BOOLEAN NOT NULL DEFAULT FALSE,
                               FOREIGN KEY (task_id) REFERENCES tasks(task_id)
 );
 

@@ -38,7 +38,14 @@ public class kanbanServiceImpl implements kanbanTaskService {
     TeamTasksAnticipaterRepository teamTasksAnticipaterRepository;
 
     public List<KanbanTask> findAll(int userId, LocalDate startDate, LocalDate endDate) {
-        return kanbanTaskRepository.findByUserIdAndCreateDateBetween(userId,startDate,endDate);
+        List<KanbanTask> kanbanTasks = kanbanTaskRepository.findByUserIdAndCreateDateBetween(userId,startDate,endDate);
+        List<KanbanTask> result = new ArrayList<>();
+        for (KanbanTask kanbanTask : kanbanTasks) {
+            if (!kanbanTask.getInProject()) {
+                result.remove(kanbanTask);
+            }
+        }
+        return result;
 //        return kanbanTaskRepository.findAllByUserId(userId);
     }
 
@@ -90,7 +97,10 @@ public class kanbanServiceImpl implements kanbanTaskService {
             LocalDate createDate = leader_task.getTask().getCreateDate();
             if (type.equals("kanban") && createDate.isBefore(end) && createDate.isAfter(start)) {
                 int task_id = leader_task.getTask().getId();
-                kanbanTasks.add(taskRepository.findKanbanTaskById(task_id));
+                KanbanTask task = taskRepository.findKanbanTaskById(task_id);
+                if (task != null && !(task.getInProject())) {
+                    kanbanTasks.add(task);
+                }
             }
         }
         for (TeamTasksAnticipater anticipater_task : anticipaters_tasks) {
@@ -98,7 +108,10 @@ public class kanbanServiceImpl implements kanbanTaskService {
             LocalDate createDate = anticipater_task.getTask().getCreateDate();
             if (type.equals("kanban") && createDate.isBefore(end) && createDate.isAfter(start)) {
                 int task_id = anticipater_task.getTask().getId();
-                kanbanTasks.add(taskRepository.findKanbanTaskById(task_id));
+                KanbanTask task = taskRepository.findKanbanTaskById(task_id);
+                if (task != null && !task.getInProject()) {
+                    kanbanTasks.add(task);
+                }
             }
         }
         return kanbanTasks;

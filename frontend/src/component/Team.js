@@ -193,11 +193,19 @@ const TeamTable = ({team,handleUpdate}) => {
 
   const handleAddTeam = async(invitationCode) => {
     try{
-        const team=await join_team(invitationCode);  
-        console.log('Adding team with code:', invitationCode);
-        message.success(`Joined team with invitation code: ${invitationCode}`);
-        setIsAddModalVisible(false);
-        addForm.resetFields();
+        const team=await join_team(invitationCode);
+        if(team==null){
+          message.error('Failed to add team. Please try again.');
+          setIsAddModalVisible(false);
+          addForm.resetFields();
+        }else{
+          console.log('Adding team with code:', invitationCode);
+          message.success(`Joined team with invitation code: ${invitationCode}`);
+          setIsAddModalVisible(false);
+          addForm.resetFields();
+        }  
+        handleUpdate();
+        
     }catch (error){
       message.error('Failed to add team. Please try again.');
     }

@@ -53,7 +53,7 @@ const DayTodoCard = ({tasks,handleUpdate}) => {
                   </li>
                 ))
                 ): (
-                            <p>No tasks available.</p>
+                            null
                           )}
 
                 <li className="todo-item" >

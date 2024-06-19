@@ -34,7 +34,7 @@ import { message } from "antd";
         const handleKeyDown = (event) => {
           if (event.ctrlKey && event.key.toLowerCase() === 'c') {
             event.preventDefault(); 
-            message.info('您按下了 Ctrl+C'); 
+            message.info('清空每日任务'); 
             deleteDailyTaskWithDate(currentDate.toISOString().split('T')[0]);
             Setupdate(update+1);
           }

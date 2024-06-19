@@ -7,7 +7,7 @@ import TeamTable from './Team';  // 请确保导入了 TeamTable 组件
 import ProfileInfo from './Profileinfo';
 import Remind from './remind';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 const { Title } = Typography;
 
 function UserProfile({team,week_data,kanban_data,remindtask,handleUpdate}) {
@@ -80,7 +80,7 @@ function UserProfile({team,week_data,kanban_data,remindtask,handleUpdate}) {
     }else if(selectedMenu=='intro'){
       return <ProfileInfo></ProfileInfo>
     }else if(selectedMenu=='remind'){
-      return <Remind remindtask={remindtask}></Remind>
+      return <Remind remindtask={remindtask}handleUpdate={handleUpdate}></Remind>
     }
     return null;
   };
@@ -118,7 +118,7 @@ function UserProfile({team,week_data,kanban_data,remindtask,handleUpdate}) {
           </Col>
         </Row>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>todo design</Footer>
+      
     </Layout>
   );
 }

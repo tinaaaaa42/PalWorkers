@@ -1,3 +1,4 @@
+
 import React, { useContext,useState } from 'react';
 import ModalContext from '../context/ModalContext';
 import DatePicker from 'react-datepicker';
@@ -5,17 +6,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Input } from 'antd';
-import { DayTasks,Tasks,WeekTasks,Projects} from "../Data/data";
-import {createWeeklyTask} from "../service/weekly_write"
-import {createDailyTask} from "../service/daily_write"
 import {createKanbanTask} from "../service/kanbantask_write"
-import {changeWeeklyTask} from "../service/weekly_change"
-import {changeDailyTask} from "../service/daily_change"
 import {changeKanbanTask} from "../service/kanbantask_change"
 import TeamSelector from './teamSelector';
 import {get_team}from "../service/team"
 const ModalComponent = () => {
-  const { isModalOpen, closeModal ,type,message,task} = useContext(ModalContext);
+  const { isModalOpen, closeModal ,message,task} = useContext(ModalContext);
   //
   const getCurrentDateTime = () => {
     const now = new Date();
@@ -94,14 +90,6 @@ const ModalComponent = () => {
         const day = date.getDate().toString().padStart(2, '0');
         return `${year}-${month}-${day}`;
         }
-        function getNote(notedetail){
-
-          let notes={
-                task_id:task.id,
-                note:notedetail
-          }
-          return notes
-        }
 
         const convertWeeklyStateToBackendFormat = () => {
 //        const tags = state.tag.length===[] ? [] : [state.tag];
@@ -121,8 +109,7 @@ const ModalComponent = () => {
               urgent: state.urgent,
               expired:false,
               teamIds: teamId ? [teamId] : [],
-              userIds:userId?[userId]:[],
-              note:getNote(state.notes)
+              userIds:userId?[userId]:[]
             };if(!state.tag)backendData.tags=[];
             if(!teamId)backendData.teamIds=[];
             if(!userId)backendData.userIds=[];
@@ -143,8 +130,7 @@ const ModalComponent = () => {
                           tags: [state.tag],
                           expired:false,
                          teamIds: teamId ? [teamId] : [],
-                       userIds:userId?[userId]:[],
-                       note:getNote(state.notes)
+                       userIds:userId?[userId]:[]
                         };
                         console.log(backendData)
                             if(!state.tag)backendData.tags=[];
@@ -166,8 +152,7 @@ const ModalComponent = () => {
                                        tags: [state.tag],
                                      state:state.choosepro,
                                        teamIds: teamId ? [teamId] : [],
-                                       userIds:userId?[userId]:[],
-                                       note:getNote(state.notes)
+                                       userIds:userId?[userId]:[]
                                    };
                                      console.log(backendData)
                                      if(!state.tag)backendData.tags=[];
@@ -176,38 +161,27 @@ const ModalComponent = () => {
                                     console.log('Generated backend data:', backendData);
                       return backendData;
                     };
-                const handleSave = async (e) => {
-
-                    let response;
-                      e.preventDefault();
-                    try {console.error('创建任务:', true);
-                    if(!task.id){
-                    switch(type){
-                    case "day":
-                      response = await createDailyTask(convertDailyStateToBackendFormat());break;
-                     case "week":
-                       response = await createWeeklyTask(convertWeeklyStateToBackendFormat());break;
-                      case "kanban":
-                        response = await createKanbanTask(convertKanbanStateToBackendFormat());break;
-                        }}
-
-                    else {
-                    switch(type){
-
-                    case "day":
-                      response = await changeDailyTask(convertDailyStateToBackendFormat());break;
-                     case "week":
-                       response = await changeWeeklyTask(convertWeeklyStateToBackendFormat());break;
-                      case "kanban":
-                        response = await changeKanbanTask(convertKanbanStateToBackendFormat());break;
-                        }
-                    }}
-                    catch (error) {
-                      console.error('创建任务失败:', error);
-                    }
-                         closeModal();
-
-                  };
+//                const handleSave = async (e) => {
+//
+//                    let response;
+//                      e.preventDefault();
+//                    try {console.error('创建任务:', true);
+//                    if(!task.id){
+//
+//                        response = await createKanbanTask(convertKanbanStateToBackendFormat());break;
+//                        }}
+//
+//                    else {
+//
+//                        response = await changeKanbanTask(convertKanbanStateToBackendFormat());break;
+//                        }
+//                    }}
+//                    catch (error) {
+//                      console.error('创建任务失败:', error);
+//                    }
+//                         closeModal();
+//
+//                  };
 
 const handleTry=()=>{
 
@@ -295,14 +269,15 @@ console.log(DayTasks)
   }
   const handleTeamChange = (e) => {
     const selectedTeamName = e.target.value;
+    // 如果选择了 "Select Team" 或者没有选择具体的团队
     if (selectedTeamName === "" || selectedTeamName === "Select Team") {
       setState(prevState => ({
         ...prevState,
         teamAnticipaters: [],
         teamLeaders: [],
-        team: ""
+        team: ""  // 或者你可以设置为 'Select Team' 视情况而定
       }));
-      return;
+      return; // 直接返回，避免继续执行后续逻辑
     }
 
     // 获取选定团队的成员
@@ -372,6 +347,7 @@ console.log(DayTasks)
           default:
             break;
         }
+
         // 根据 task.type 更新状态
         if (task) {
           switch (type) {
@@ -384,8 +360,7 @@ console.log(DayTasks)
                 tag: task.taskTags?.[0]?.tag?.name || '',
                 startTime: task.createDate || '',
                 dueTime: task.dueDate || '',
-                description: task.description,
-                notes:task.note
+                description: task.description
               }));
 
               break;
@@ -401,8 +376,7 @@ console.log(DayTasks)
                 dueTime: task.dueDate || '',
                 description: task.description,
                 urgent: task.urgent,
-                important: task.important,
-                notes:task.note
+                important: task.important
               }));
 
               break;
@@ -427,8 +401,7 @@ console.log(DayTasks)
                          team: task.team?.name || '',
                          teamAnticipater: task.teamTasksAnticipaters?.[0]?.anticipater?.username || '',
                          or:isnew,
-                         tor:istor,
-                         notes:task.note
+                         tor:istor
                        }));
 
                        break;

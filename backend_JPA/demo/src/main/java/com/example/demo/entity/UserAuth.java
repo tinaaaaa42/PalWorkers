@@ -17,7 +17,7 @@ public class UserAuth {
     private Integer id;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
 //    @JsonIgnoreProperties({"userAuth", "hibernateLazyInitializer", "handler"}) // 忽略 userAuth 属性和 Hibernate 代理属性
     private User user;
 

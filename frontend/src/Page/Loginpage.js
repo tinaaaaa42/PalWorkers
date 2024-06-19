@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 import "../CSS/login.css"
 import { useNavigate } from 'react-router-dom';
 import {login} from "../service/login";
+import async from "async";
+import {register} from "../service/register";
 
 function Loginpage(){
     const navigate = useNavigate();
     const [isPanelActive, setIsPanelActive] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const [registerUser, setRegisterUser] = useState()
+    const [registerEmail, setRegisterEmail] = useState()
+    const [registerPassword, setRegisterPassword] = useState()
     const handlePanelToggle = () => {
         setIsPanelActive(prevState => !prevState);
     };
@@ -21,16 +27,26 @@ function Loginpage(){
           setPassword('');
         }
     };
+    const handleRegister = async() => {
+        let res = await register(registerUser,registerEmail,registerPassword);
+        if (res) {
+            alert("success")
+        }
+        else {
+            alert("failed")
+        }
+    }
+
     return (
         <div className="login">
             <div className={`container ${isPanelActive ? ' panel-active' : ''}`}>
                 <div className="container-form container-signup">
                     <form action="#" className="form" id="form1">
                         <h2 className="form-title">注册账号</h2>
-                        <input type="text" placeholder="User"className="input"></input>
-                        <input type="email"placeholder="Email" className="input"></input>
-                        <input type="password" placeholder="password" className="input"></input>
-                        <button type="button" className="btn">点击注册</button>
+                        <input type="text" placeholder="User"className="input" value={registerUser} onChange={(e) => setRegisterUser(e.target.value)}></input>
+                        <input type="email"placeholder="Email" className="input" value={registerEmail} onChange={(e) => setRegisterEmail(e.target.value)}></input>
+                        <input type="password" placeholder="password" className="input" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)}></input>
+                        <button type="button" className="btn" onClick={handleRegister}>点击注册</button>
                     </form>
                 </div>
                 <div className="container-form container-signin">

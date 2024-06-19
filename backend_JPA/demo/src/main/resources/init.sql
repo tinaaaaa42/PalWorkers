@@ -31,8 +31,8 @@ create table users
         primary key ,
     username varchar(30) not null ,
     email_addr varchar(30) not null ,
-    avatar varchar(60) not null ,
-    notes varchar(255) not null
+    avatar varchar(60),
+    notes varchar(255)
 );
 
 # create table leader(

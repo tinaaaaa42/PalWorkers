@@ -26,17 +26,17 @@ public class User {
     @Column(name = "email_addr", nullable = false, length = 30)
     private String emailAddr;
 
-    @Column(name = "avatar", nullable = false, length = 60)
+    @Column(name = "avatar", length = 60)
     private String avatar;
 
-    @Column(name = "notes", nullable = false)
+    @Column(name = "notes")
     private String notes;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore // 忽略 tasks 属性，避免循环调用
     private Set<Task> tasks = new LinkedHashSet<>();
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    @JsonIgnoreProperties({"user", "hibernateLazyInitializer", "handler"}) // 忽略 user 属性和 Hibernate 代理属性
     @JsonIgnore
     private UserAuth userAuth;

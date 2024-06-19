@@ -19,7 +19,7 @@ public class SessionConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login/*")
                 .excludePathPatterns("/api/login")
-                .excludePathPatterns("*");
+                .excludePathPatterns("/api/user/register");
     }
     @Override
     public void addCorsMappings(CorsRegistry registry) {

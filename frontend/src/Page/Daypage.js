@@ -9,6 +9,7 @@
  import {get_weekly_task} from "../service/weekly_task";
  import {getDailyTask, get_daily_task} from "../service/daily_task";
 import Navbar from "../component/Navv";
+import { message } from "antd";
 
  function App() {
       const [dailyTasks, setDailyTasks] = useState([])
@@ -30,6 +31,16 @@ import Navbar from "../component/Navv";
       // }
       useEffect(() => {
         fetchDailyTasks();
+        const handleKeyDown = (event) => {
+          if (event.ctrlKey && event.key.toLowerCase() === 'c') {
+            event.preventDefault(); 
+            message.info('您按下了 Ctrl+C'); 
+          }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+          window.removeEventListener('keydown', handleKeyDown);
+        };
       }, [currentDate,update]);
       const handleUpdate=()=>{
         Setupdate(update+1);

@@ -30,7 +30,7 @@ const Teams = [
 
 const currentUser = { id: 1, username: 'user1' };
 
-const TeamTable = ({team}) => {
+const TeamTable = ({team,handleUpdate}) => {
   console.log(team)
   const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -181,6 +181,7 @@ const TeamTable = ({team}) => {
       console.log(newInvitationCode);
       setInvitationCode(newInvitationCode);
       // 显示成功消息
+      handleUpdate();
       message.success(`Team created! Invitation code: ${newInvitationCode}`);
     } catch (error) {
       // 打印验证失败的信息

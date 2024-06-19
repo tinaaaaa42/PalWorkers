@@ -25,6 +25,7 @@ public class projectController {
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
+        projectService.findAllByTeamIdAndUserId(userId);
         return projectService.findAllByUserId(userId);
     }
 
@@ -35,6 +36,7 @@ public class projectController {
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
+        projectService.findAllByTeamIdAndUserId(userId);
         return projectService.findByUserIdAndProjectId(userId,projectId);
     }
 }

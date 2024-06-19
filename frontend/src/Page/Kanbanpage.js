@@ -14,6 +14,7 @@ function Kanbanpage(){
     const [kanbantasks, setKanban_tasks] = useState([]);
     const [allTags, setAllTags] = useState(new Set()); 
     const [allTaskTitles, setAllTaskTitles] = useState([]);
+    const [update,setUpdate]=useState(0);
     // useEffect( () => {
     //     init_kanban_tasks();
     // }, []);
@@ -22,6 +23,9 @@ function Kanbanpage(){
     //     console.log(kanban_tasks);
     //     setKanban_tasks(kanban_tasks);
     // }
+    const HandleUpdate=()=>{
+        setUpdate(update+1);
+    }
     const [dates, setDates] = useState([new Date(Date.now() - 29 * 24 * 60 * 60 * 1000), new Date()]);
     const fetchKanbanTasks = async (start, end) => {
         const Kanban_tasks = await getKanbanTask(start,end);
@@ -30,7 +34,7 @@ function Kanbanpage(){
     useEffect(() => {
         const [start, end] = dates;
         fetchKanbanTasks(start.toISOString().split('T')[0], end.toISOString().split('T')[0]);
-    }, [dates]);
+    }, [dates,update]);
     const handleKanbanSearch = (start, end) => {
         setDates([start, end]);
         fetchKanbanTasks(start.toISOString().split('T')[0], end.toISOString().split('T')[0]);
@@ -57,7 +61,7 @@ function Kanbanpage(){
         <div className="mainpart">
         <Header></Header>
         <Control taskhandler={handleClick} handleKanbanSearch={handleKanbanSearch} handleReset={handleReset} projecthandler={projectClick}></Control>
-        <Kanban kanban_tasks={kanbantasks}></Kanban>
+        <Kanban kanban_tasks={kanbantasks} HandleUpdate={HandleUpdate}></Kanban>
         </div>
     </div>
     </>);

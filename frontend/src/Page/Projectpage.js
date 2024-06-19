@@ -4,12 +4,13 @@ import Seconddir from "../component/seconddir";
 import Header from "../component/header";
 import Control from "../component/control";
 import Navleft from "../component/navleft";
+import Navbar from "../component/Navv";
 function Projectpage(){
     const { projectid } = useParams();
     return (<>
     <div className="container">
         <Navleft></Navleft>
-        <Seconddir></Seconddir>
+        <Navbar tasks={[]} title={"project"}></Navbar>
         <div className="mainpart">
         <Header></Header>
         <Control></Control>

@@ -13,6 +13,7 @@ import Navbar from "../component/Navv";
  function App() {
       const [dailyTasks, setDailyTasks] = useState([])
       const [currentDate, setCurrentDate] = useState(new Date()); 
+      const [update,Setupdate]=useState(0);
       const fetchDailyTasks = async (date) => {
         if(date==null){
           const dailyTasks = await getDailyTask(currentDate.toISOString().split('T')[0]);
@@ -29,7 +30,10 @@ import Navbar from "../component/Navv";
       // }
       useEffect(() => {
         fetchDailyTasks();
-      }, [currentDate]);
+      }, [currentDate,update]);
+      const handleUpdate=()=>{
+        Setupdate(update+1);
+      }
       const handleDaySearch=(date)=>{
         console.log(date)
         setCurrentDate(date);
@@ -49,7 +53,7 @@ import Navbar from "../component/Navv";
          <Header></Header>
          <Control handleDaySearch={handleDaySearch} handleReset={handleReset}></Control>
          <div class="two-columns">
-         <div><Daytodo tasks={dailyTasks}></Daytodo></div>
+         <div><Daytodo tasks={dailyTasks} handleUpdate={handleUpdate}></Daytodo></div>
            <div> <Dayphoto></Dayphoto> </div>
             </div>
          </div>

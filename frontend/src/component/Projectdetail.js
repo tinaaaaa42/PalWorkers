@@ -6,35 +6,36 @@ function Projtectdetail(props){
     const projectid=+id;
     const project = Projects.find((project) => project.id === projectid);
     const Tasks=project.Tasks;
-    const TodoTasks = Tasks.filter(task => task.state === "todo"); 
-    const InprogressTasks=Tasks.filter(task => task.state === "inprogress");
-    const ReviewTasks=Tasks.filter(task => task.state === "review");
-    const DownTasks=Tasks.filter(task => task.state === "down");
+    const TodoTasks = []; 
+    // const TodoTasks = Tasks.filter(task => task.state === "todo"); 
+    // const InprogressTasks=Tasks.filter(task => task.state === "inprogress");
+    // const ReviewTasks=Tasks.filter(task => task.state === "review");
+    // const DownTasks=Tasks.filter(task => task.state === "down");
     return (
     <div className="Projectdetail">
         <div class="column">
             <h2>To Do</h2>
             {TodoTasks.map((task) => (
-                <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id} projectid={projectid}/>
+                <Taskcard key={task.id} task={[]}/>
             ))}
         </div>
         <div class="column">
             <h2>In Progress</h2>
-            {InprogressTasks.map((task) => (
-                <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id} projectid={projectid}/>
-            ))}
+            {/* {InprogressTasks.map((task) => (
+                <Taskcard key={task.id} task={task}/>
+            ))} */}
         </div>
             <div class="column">
             <h2>Review</h2>
-            {ReviewTasks.map((task) => (
-                <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} id={task.id} projectid={projectid}/>
-            ))}
+            {/* {ReviewTasks.map((task) => (
+                <Taskcard key={task.id} task={task}/>
+            ))} */}
         </div>
         <div class="column">
             <h2>Done</h2>
-            {DownTasks.map((task) => (
-                <Taskcard key={task.id} title={task.title} tag={task.tag} date={task.date} projectid={projectid}/>
-            ))}
+            {/* {DownTasks.map((task) => (
+                <Taskcard key={task.id} task={task}/>
+            ))} */}
             <a href=""><div class="card empty"><div className="add iconfont icon-jiahao"></div></div></a>
         </div>
     </div>);

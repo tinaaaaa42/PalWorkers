@@ -5,14 +5,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
 import { RightSquareOutlined } from '@ant-design/icons';
 import { advanceKanbanTask } from '../service/advance';
-function Taskcard(props){
-    const { id,task} = props;
+function Taskcard({task,id,HandleUpdate}){
+    // const { id,task} = props;
     const { openModal ,isModalOpen} = useContext(ModalContext);
     const location = useLocation();
     const HandleFinish=async(event,id)=>{
         event.stopPropagation();
         try{
             const response=await advanceKanbanTask(id);
+            HandleUpdate();
         }catch{
 
         }

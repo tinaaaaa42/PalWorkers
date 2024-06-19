@@ -5,13 +5,14 @@ import ModalContext from '../context/ModalContext';
 import { CheckCircleOutlined, CheckOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { completeTask } from '../service/advance';
-const DayTodoCard = ({tasks}) => {
+const DayTodoCard = ({tasks,handleUpdate}) => {
       const data=tasks;
       console.log(data)
       const { openModal ,isModalOpen} = useContext(ModalContext);
       const handleFinish=async(id)=>{
           try{
             const response=await completeTask(id);
+            handleUpdate();
           }catch{
 
           }
@@ -31,7 +32,7 @@ const DayTodoCard = ({tasks}) => {
                       
                       <div className="image">
                       <Button shape="circle" onClick={()=>handleFinish(item.id)} style={{border:'none',marginTop:'5px',marginRight:'11px'}}icon={<CheckCircleOutlined  style={{fontSize:'34px',color:'#b9b6b6'}}/>}/>
-                      <button className="edit" onClick={()=>openModal("day",item,'')} >
+                      <button className="edit" onClick={()=>openModal("day",item,'',handleUpdate)} >
                       <i className="fa fa-pencil" ></i>
                       </button>
                       <button className="delete-btn" aria-label="删除" onClick={() => console.log('Delete button clicked')}>

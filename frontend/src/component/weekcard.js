@@ -3,7 +3,7 @@ import ModalContext from '../context/ModalContext';
 import {useContext } from 'react';
 import { Button } from 'antd';
 import { CheckSquareOutlined } from '@ant-design/icons';
-import { completeTask } from '../service/advance';
+import { completeTask, deleteTask } from '../service/advance';
 function Weekcard(props){
     const {id,task}=props;
     const [isDel, setIsDel] = useState(false);
@@ -23,6 +23,13 @@ function Weekcard(props){
         }
         
     }
+    const handleDelete=async(event,id)=>{
+      event.stopPropagation();
+      try{
+          const response=await deleteTask(id);
+      }catch{
+      }
+    }
     return (<div className="Weekcard card" onClick={()=>openModal("week",task,'')}>
         <div className="colorandcontent">
             <div className="colorbar" style={{color:`blue`}}></div>
@@ -30,7 +37,7 @@ function Weekcard(props){
                 <div className="line">
                     <div className="title">{task.title.length<=4?task.title:`${task.title.substring(0,4)}...`}</div>
                     <Button onClick={(event) => handleFinish(event, task.id)} icon={<CheckSquareOutlined style={{fontSize:'20px',color:'gray'}}/>}style={{position:'absolute',right:'20px',border:'none'}}></Button>
-                    <div className="delete iconfont icon-lajixiang" onClick={handleClick}></div>
+                    <div className="delete iconfont icon-lajixiang" onClick={(event) => handleDelete(event, task.id)}></div>
                 </div>
                 <div className='team'>{task.team==null?<></>:task.team.name}</div>
                 <div className='tags'>{task.taskTags.map(tag => (<div className="tag">{tag.tag.name}</div>))}</div>

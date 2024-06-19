@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS team_tasks_anticipater;
 DROP TABLE IF EXISTS team_tasks_leader;
 DROP TABLE IF EXISTS project_task_group;
 DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS notes;
 DROP TABLE IF EXISTS tasks;
 DROP TABLE IF EXISTS user_auth;
 DROP TABLE IF EXISTS team_member;
@@ -117,6 +118,7 @@ CREATE TABLE kanban_tasks (
     kanban_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
                               task_id int NOT NULL ,
                               state VARCHAR(255) NOT NULL,
+                                in_project BOOLEAN NOT NULL DEFAULT FALSE,
                               FOREIGN KEY (task_id) REFERENCES tasks(task_id)
 );
 
@@ -143,6 +145,7 @@ CREATE TABLE projects(
     done int,
     user_id int,
     team_id int,
+    completed boolean,
     foreign key (user_id) references users(user_id),
     foreign key (team_id) references teams(team_id)
 );

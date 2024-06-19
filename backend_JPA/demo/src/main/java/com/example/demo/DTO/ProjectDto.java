@@ -16,5 +16,7 @@ public class ProjectDto {
     int done;
     boolean isTeamProject;
     String state;
+    String teamName;
     Set<Task> Tasks;
+    Set<ProjectTaskDto> ProjectsTasks;
 }

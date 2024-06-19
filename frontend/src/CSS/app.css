@@ -271,22 +271,23 @@ border-radius: 4px;
     width: 12px;
     background-color: pink;
     border-radius: 4px;
-    margin-right: 10px;
+    margin-right: 7px;
+    color: rgba(238, 255, 0, 0.776);
 }
 .Kanban .title,.Projectdetail .title{
     display: flex;
     /* justify-content: space-between; */
     position: relative;
-    width: 230px;
+    width: 222px;
 }
-.Kanban .title .titlename{
+.Kanban .title .titlename,.Projectdetail .title .titlename{
     width: 210px;
     text-align: left;
 }
 .Taskcard .cardcontent,.Projectcard .cardcontent{
     width: 212px;
 }
-.Taskcard .card .delete,.Projectcard .card .delete{
+.Taskcard .card .delete,.Projectcard .card .delete,.Projectdetail .card .delete{
     position: absolute;
     right: 5px;
     font-size: 22px;

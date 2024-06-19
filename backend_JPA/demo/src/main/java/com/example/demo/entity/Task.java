@@ -87,6 +87,10 @@ public class Task {
     @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
     private Set<Note> notes = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "task",cascade = CascadeType.REMOVE)
+    @JsonBackReference
+    private Set<ProjectTaskGroup> projectTaskGroups = new LinkedHashSet<>();
+
     public Task(Task task) {
         this.id = task.getId();
         this.title = task.getTitle();

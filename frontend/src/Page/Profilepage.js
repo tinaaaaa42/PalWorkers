@@ -14,6 +14,10 @@ function Profilepage(){
     const [week_data, setWeek_data] = useState([])
     const [kanban_data, setKanban_data] = useState([])
     const [remind_task,setRemind_task] =useState([])
+    const [update,setupdate]=useState(0);
+    const handleUpdate=()=>{
+        setupdate(update+1);
+    }
     const init_team = async () => {
         let team = await get_team();
         console.log(team)
@@ -35,7 +39,7 @@ function Profilepage(){
         init_team();
         init_gram();
         getRemind();
-    }, []);
+    }, [update]);
     const teamNames=[];
     team.forEach(teamData => {
         const teamName = teamData.team.name;
@@ -50,7 +54,7 @@ function Profilepage(){
         <Navbar tasks={[]} title={"Profile"} allteam={allteam} teamss={teamNames}></Navbar>
         <div className="mainpart">
         <Header></Header>
-        <UserProfile team={team} week_data={week_data} kanban_data={kanban_data} remindtask={remind_task}></UserProfile>
+        <UserProfile team={team} week_data={week_data} kanban_data={kanban_data} remindtask={remind_task} handleUpdate={handleUpdate}></UserProfile>
         </div>
     </div>
     </>);

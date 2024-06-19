@@ -43,7 +43,7 @@ INSERT INTO tasks (task_id,title, description, create_date, due_date,type,user_i
                                                                                 (6, '财务报告', '准备月度财务报告。', '2024-05-29', '2023-05-10','kanban',1, '17:00:00'),
                                                                                 (7, '系统维护', '进行服务器维护和软件更新。', '2024-05-28', NULL,'kanban',2, '18:00:00'),
                                                                                 (8, '市场活动', '规划即将到来的营销活动。', '2024-05-31', '2023-05-20','kanban',1, '19:00:00'),
-                                                                                (9, '产品摄影', '拍摄新产品照片用于营销。', '2024-05-28', NULL,'kanban',2, '20:00:00'),
+                                                                                (9, '产品摄影', '拍摄新产品照片用于营销。', '2024-05-28', NULL,'kanban',1, '20:00:00'),
                                                                                 (10, '团队会议', '安排团队会议以讨论项目进展。', '2024-05-30', '2023-05-12','kanban',1, '21:00:00');
 
 INSERT INTO notes (note_id, task_id, note, create_date) VALUES (1, 1, '<p>Remember to update the product description.</p>', '2024-06-01'),
@@ -113,15 +113,15 @@ INSERT INTO weekly_tasks (task_id, urgent, important) VALUES
 -- 生成看板任务的task_id
 SET @kanban_task_id = 6;
 
-INSERT INTO kanban_tasks (task_id, state) VALUES
-                                              (@kanban_task_id + 0, 'todo'),
-                                              (@kanban_task_id + 1, 'inprogress'),
-                                              (@kanban_task_id + 2, 'todo'),
-                                              (@kanban_task_id + 3, 'todo'),
-                                              (@kanban_task_id + 4, 'done'),
-                                              (11,'done'),
-                                              (14, 'todo'),  -- 新增团队看板任务
-                                              (15, 'inprogress');  -- 新增团队看板任务
+INSERT INTO kanban_tasks (task_id, state, in_project) VALUES
+                                              (@kanban_task_id + 0, 'todo', true),
+                                              (@kanban_task_id + 1, 'inprogress', true),
+                                              (@kanban_task_id + 2, 'todo', true),
+                                              (@kanban_task_id + 3, 'todo', true),
+                                              (@kanban_task_id + 4, 'done', true),
+                                              (11,'done', false),
+                                              (14, 'todo', true),  -- 新增团队看板任务
+                                              (15, 'inprogress', true);  -- 新增团队看板任务
 
 -- 假设上面的插入生成了以下的 task_id：11, 12, 13, 14, 15
 
@@ -142,17 +142,19 @@ INSERT INTO team_tasks_anticipater (task_id, anticipater_id) VALUES
                                                                  (14, 3),
                                                                  (15, 1);
 
-INSERT INTO projects(title, total, done,state, user_id,team_id) VALUES
-                                                       ('project1',100, 60,'in progress',1,null),
-                                                       ('project2',200,100,'todo',1,null),
-                                                       ('project3',50,20,'todo',null,1);
+INSERT INTO projects(title, total, done,state, user_id,team_id, completed) VALUES
+                                                       ('project1',100, 60,'inprogress',1,null,false),
+                                                       ('project2',200,100,'todo',1,null,false),
+                                                       ('project3',50,20,'todo',null,1,false);
 
 INSERT INTO project_task_group(task_id, project_id) VALUES
-                                                        (3,1),
-                                                        (2,1),
-                                                        (4,2),
-                                                        (5,2),
-                                                        (6,2);
+                                                        (6,1),
+                                                        (7,1),
+                                                        (8,2),
+                                                        (9,2),
+                                                        (10,2),
+                                                        (14,3),
+                                                        (15,3);
 
 
 

@@ -2,11 +2,9 @@ package com.example.demo.serviceImpl;
 
 
 import com.example.demo.DTO.ProjectDto;
+import com.example.demo.DTO.ProjectTaskDto;
 import com.example.demo.entity.*;
-import com.example.demo.repository.ProjectRepository;
-import com.example.demo.repository.TeamMemberRepository;
-import com.example.demo.repository.TeamTasksAnticipaterRepository;
-import com.example.demo.repository.TeamTasksLeaderRepository;
+import com.example.demo.repository.*;
 import com.example.demo.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,7 @@ import java.util.Set;
 
 @Service
 public class projectServiceImpl implements ProjectService{
+
     @Autowired
     private ProjectRepository projectRepository;
 
@@ -28,10 +27,16 @@ public class projectServiceImpl implements ProjectService{
     private TeamTasksLeaderRepository teamTasksLeaderRepository;
 
     @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
+    private KanbanTaskRepository kanbanTaskRepository;
+
+    @Autowired
     private TeamMemberRepository teamMemberRepository;
 
     public List<ProjectDto> findAllByUserId(int userId) {
-        List<Project> projects = projectRepository.findAllByUserId(userId);
+        List<Project> projects = projectRepository.findAllByUserIdAndCompleted(userId,false);
         List<ProjectDto> projectDtos = new ArrayList<>();
         for (Project project : projects) {
             ProjectDto projectDto = new ProjectDto();
@@ -40,6 +45,7 @@ public class projectServiceImpl implements ProjectService{
             projectDto.setTotal(project.getTotal());
             projectDto.setState(project.getState());
             projectDto.setDone(project.getDone());
+            projectDto.setTeamProject(false);
             Set<Task> tasks = new HashSet<>();
             Set<ProjectTaskGroup> projectTaskGroups = project.getProjectTaskGroups();
             for (ProjectTaskGroup projectTaskGroup : projectTaskGroups) {
@@ -54,7 +60,8 @@ public class projectServiceImpl implements ProjectService{
 
     @Override
     public ProjectDto findByUserIdAndProjectId(int userId, int projectId) {
-        Project project = projectRepository.findByUserIdAndId(userId, projectId);
+//        Project project = projectRepository.findByUserIdAndId(userId, projectId);
+        Project project = projectRepository.findById(projectId);
         if (project == null) {
             return null;
         }
@@ -64,13 +71,19 @@ public class projectServiceImpl implements ProjectService{
         projectDto.setTotal(project.getTotal());
         projectDto.setState(project.getState());
         projectDto.setDone(project.getDone());
-        Set<Task> tasks = new HashSet<>();
+        Set<ProjectTaskDto> projectTaskDtos = new HashSet<>();
         Set<ProjectTaskGroup> projectTaskGroups = project.getProjectTaskGroups();
         for (ProjectTaskGroup projectTaskGroup : projectTaskGroups) {
             Task task = projectTaskGroup.getTask();
-            tasks.add(task);
+            int taskId = task.getId();
+            KanbanTask kanbanTask = taskRepository.findKanbanTaskById(taskId);
+            String state = kanbanTask.getState();
+            ProjectTaskDto projectTaskDto = new ProjectTaskDto();
+            projectTaskDto.setTask(task);
+            projectTaskDto.setState(state);
+            projectTaskDtos.add(projectTaskDto);
         }
-        projectDto.setTasks(tasks);
+        projectDto.setProjectsTasks(projectTaskDtos);
         return projectDto;
     }
 
@@ -78,11 +91,59 @@ public class projectServiceImpl implements ProjectService{
     public List<ProjectDto> findAllByTeamIdAndUserId(int userId) {
         List<TeamMember> teamMembers = teamMemberRepository.findTeamsByUserId(userId);
         List<ProjectDto> projectDtos = new ArrayList<>();
+        List<Project> projects = new ArrayList<>();
         for (TeamMember teamMember : teamMembers) {
-            System.out.println(teamMember.getTeam().getName());
             int teamId = teamMember.getTeam().getId();
-
+            List<Project> tmp_projects = projectRepository.findAllByTeamIdAndCompleted(teamId,false);
+            projects.addAll(tmp_projects);
         }
-        return null;
+        for (Project project : projects) {
+            ProjectDto projectDto = new ProjectDto();
+            projectDto.setId(project.getId());
+            projectDto.setTitle(project.getTitle());
+            projectDto.setTotal(project.getTotal());
+            projectDto.setState(project.getState());
+            projectDto.setDone(project.getDone());
+            projectDto.setTeamName(project.getTeam().getName());
+            projectDto.setTeamProject(true);
+            Set<Task> tasks = new HashSet<>();
+            Set<ProjectTaskGroup> projectTaskGroups = project.getProjectTaskGroups();
+            for (ProjectTaskGroup projectTaskGroup : projectTaskGroups) {
+                Task task = projectTaskGroup.getTask();
+                tasks.add(task);
+            }
+            projectDto.setTasks(tasks);
+            projectDtos.add(projectDto);
+        }
+        return projectDtos;
+    }
+
+    @Override
+    public boolean advanceProject(int projectId) {
+        Project project = projectRepository.findById(projectId);
+        if (project == null) {
+            return false;
+        }
+        String state = project.getState();
+        String next_state = alterState(state);
+        project.setState(next_state);
+        if (next_state.equals("totally completed")) {
+            project.setCompleted(true);
+        }
+        projectRepository.save(project);
+        return false;
+    }
+
+    private String alterState(String state) {
+        if (state.equals("todo")) {
+            return "inprogress";
+        }
+        else if (state.equals("inprogress")) {
+            return "review";
+        }
+        else if (state.equals("review")) {
+            return "done";
+        }
+        return "totally completed";
     }
 }

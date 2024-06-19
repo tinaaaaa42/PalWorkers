@@ -10,6 +10,7 @@ import {getKanbanTask, get_kanban_task} from "../service/kanban_task";
 import {createBatchKanbanTask} from "../service/kanbantask_write";
 import Navbar from "../component/Navv";
 import {Modal,Input} from "antd";
+import {get_all_projects} from "../service/project";
 function Kanbanpage(){
     const { openModal ,isModalOpen} = useContext(ModalContext);
     const { openProject ,isProjectOpen} = useContext(ProjectContext);
@@ -17,6 +18,7 @@ function Kanbanpage(){
     const [allTags, setAllTags] = useState(new Set()); 
     const [allTaskTitles, setAllTaskTitles] = useState([]);
     const [update,setUpdate]=useState(0);
+    const [projects, setProjects] = useState([])
     // useEffect( () => {
     //     init_kanban_tasks();
     // }, []);
@@ -64,9 +66,14 @@ function Kanbanpage(){
         const Kanban_tasks = await getKanbanTask(start,end);
         setKanban_tasks(Kanban_tasks);
     };
+    const fetchProjects = async ()=> {
+        const projects = await get_all_projects();
+        setProjects(projects);
+    }
     useEffect(() => {
         const [start, end] = dates;
         fetchKanbanTasks(start.toISOString().split('T')[0], end.toISOString().split('T')[0]);
+        fetchProjects();
         const handleKeyDown = (event) => {
             if (event.ctrlKey && event.key.toLowerCase() === 'a') {
               event.preventDefault(); // 阻止默认行为
@@ -106,7 +113,7 @@ function Kanbanpage(){
         <div className="mainpart">
         <Header></Header>
         <Control taskhandler={handleClick} handleKanbanSearch={handleKanbanSearch} handleReset={handleReset} projecthandler={projectClick}></Control>
-        <Kanban kanban_tasks={kanbantasks} HandleUpdate={HandleUpdate}></Kanban>
+        <Kanban kanban_tasks={kanbantasks} HandleUpdate={HandleUpdate} kanban_project={projects}></Kanban>
         </div>
         <Modal title="请批量创建" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <Input placeholder="1" value={userInput} onChange={handleInputChange} />

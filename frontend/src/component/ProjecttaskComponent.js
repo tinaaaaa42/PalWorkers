@@ -10,7 +10,7 @@ import {createProjectTask} from "../service/project_task"
 import TeamSelector from './teamSelector';
 import {get_team}from "../service/team"
 const ProjecttaskComponent = () => {
-  const { isProjecttaskOpen, closeProjecttask ,projectId,task} = useContext(ProjecttaskContext);
+  const { isProjecttaskOpen, closeProjecttask ,projectId,task,refresh} = useContext(ProjecttaskContext);
 
   const getCurrentDateTime = () => {
     const now = new Date();
@@ -41,8 +41,7 @@ const ProjecttaskComponent = () => {
       urgent:true,
       teams:[],//含team id与name
       teamData:[],//原数据
-      or:false,
-      tor:false
+     self:true
 
 
     });
@@ -219,43 +218,11 @@ const handleTry=()=>{
                  teamAnticipater:event.target.value
          });
   }
-  const handleTeamChange = (e) => {
-    const selectedTeamName = e.target.value;
-    // 如果选择了 "Select Team" 或者没有选择具体的团队
-    if (selectedTeamName === "" || selectedTeamName === "Select Team") {
-      setState(prevState => ({
-        ...prevState,
-        teamAnticipaters: [],
-        teamLeaders: [],
-        team: ""  // 或者你可以设置为 'Select Team' 视情况而定
-      }));
-      return; // 直接返回，避免继续执行后续逻辑
-    }
 
-    // 获取选定团队的成员
-const members = getTeamMember(selectedTeamName);
-    const member = members
-      .filter(team => !team.leader) // 过滤掉 team.leader 为 true 的成员
-      .map(team => ({
-        id: team.user.id,
-        name: team.user.username
-      }));
 
-    // 获取选定团队的领导
-    const leader = members
-      .filter(team => team.leader) // 筛选出team.leader为true的成员
-      .map(leader => ({
-        id: leader.user.id,
-        name: leader.user.username
-      }));
 
-    setState(prevState => ({
-      ...prevState,
-      teamAnticipaters: member,
-      teamLeaders: leader,
-      team: selectedTeamName
-    }));
-  };
+
+
   const handleFileChange = (event) => {
     setState({
       ...state,
@@ -267,33 +234,38 @@ const members = getTeamMember(selectedTeamName);
       try {
         // 先等待 fetchTeams 完成
         await fetchTeams();
-
+console.log(state.teamData)
         // 根据 task.type 更新状态
-        if (task) {
+        if (refresh) {
+        console.log(state.teamData)
+         const members = getTeamMember(refresh);
+                      const member = members
+                        .filter(team => !team.leader)
+                        .map(team => ({
+                          id: team.user.id,
+                          name: team.user.username
+                        }));
 
-            let isnew=false;
-            let istor=false;
-            if(task.teamTasksAnticipaters&&task.teamTasksAnticipaters[0]&&task.teamTasksAnticipaters[0].anticipater&&task.teamTasksAnticipaters[0].anticipater.username)
-            {isnew=true;
-            }
-            if(!state.title){istor=true
-            }
+                   const leader = members
+                       .filter(team => team.leader) // 筛选出team.leader为true的成员
+                                  .map(leader => ({
+                                    id: leader.user.id,
+                                    name: leader.user.username
+                                  }));
+
                   setState(prevState => ({
                          ...prevState,
-                         type: "kanban",
-                         choosepro: task.state,
-                         taskName: task.title || '',
-                         tag: task.taskTags?.[0]?.tag?.name || '',
-                         startTime: task.createDate || '',
-                         dueTime: task.dueDate || '',
-                         description: task.description,
-                         team: task.team?.name || '',
-                         teamAnticipater: task.teamTasksAnticipaters?.[0]?.anticipater?.username || '',
-                         or:isnew,
-                         tor:istor
+                         team:refresh,
+                         self:false,
+                         teamAnticipaters: member,
+                         teamLeaders: leader
                        }));
 
           }
+
+              // 获取选定团队的领导
+
+
 
 
       } catch (error) {
@@ -304,7 +276,7 @@ const members = getTeamMember(selectedTeamName);
     // 调用初始化函数
     initializeData();
 
-  }, [task]);
+  }, [state.teamData]);
  const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -371,18 +343,13 @@ const members = getTeamMember(selectedTeamName);
                   !state.tor?(
                   <>
                   <div className="label">
-                  <img className='pic' src={process.env.PUBLIC_URL + "/标签.png"}  alt="" ></img>
+                  <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>
                     Team:
 
-                        <select
-                           className='taginfo'
-                           value={state.team}
-                           onChange={handleTeamChange}>
-                           <option value="">Select Team</option>
-                           {state.teams.map((team)=>(
-                            <option key={team.id} value={team.name}>{team.name}</option>
-                           ))}
-                           </select>
+                      <div className='taginfo'> {state.team}</div>
+
+
+
                   </div>
                  {
                    state.team? (

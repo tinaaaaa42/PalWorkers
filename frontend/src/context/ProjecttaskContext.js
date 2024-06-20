@@ -5,17 +5,19 @@ export const ProjecttaskContext = createContext({
   openProjecttask: () => {},
   closeProjecttask: () => {},
   message: "new",
+  refresh:'nwe'
 });
 
 export const ProjecttaskProvider = ({ children }) => {
   const [isProjecttaskOpen, setIsProjecttaskOpen] = useState(false);
   const [projectId,setProjectId]=useState(1);
   const [task, setTask] = useState();
-  const[refresh,setRefresh]=useState(false);
-  const openProjecttask = (theprojectId,task) => {
+  const[refresh,setRefresh]=useState();
+  const openProjecttask = (theprojectId,task,therefresh) => {
     setIsProjecttaskOpen(true);
     setProjectId(theprojectId);
     setTask(task);
+    setRefresh(therefresh);
   };
 
   const closeProjecttask = () => {

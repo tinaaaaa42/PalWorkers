@@ -2,33 +2,34 @@ import React, { createContext, useState } from 'react';
 import ProjecttaskComponent from "../component/ProjecttaskComponent"
 export const ProjecttaskContext = createContext({
   isModalOpen: false,
-  openModal: () => {},
-  closeModal: () => {},
+  openProjecttask: () => {},
+  closeProjecttask: () => {},
   message: "new",
 });
 
 export const ProjecttaskProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [message,setMessage]=useState(1);
+  const [projectId,setProjectId]=useState(1);
   const [task, setTask] = useState();
   const[refresh,setRefresh]=useState(false);
-  const openModal = (theType,task,theMessage) => {
+  const openProjecttask = (theprojectId,task) => {
     setIsModalOpen(true);
-    setMessage(theMessage);
+    setProjectId(theprojectId);
     setTask(task);
   };
 
-  const closeModal = () => {
+  const closeProjecttask = () => {
+//  window.location.reload();
     setIsModalOpen(false);
     setRefresh(true);
-window.location.reload();
+
   };
 
   const contextValue = {
     isModalOpen,
-    openModal,
-    closeModal,
-    message,
+    closeProjecttask,
+    openProjecttask,
+    projectId,
     task,
     refresh
   };

@@ -22,9 +22,10 @@ export const ModalProvider = ({ children }) => {
   };
 
   const closeModal = () => {
+  window.location.reload();
     setIsModalOpen(false);
     setRefresh(true);
-window.location.reload();
+
   };
 
   const contextValue = {

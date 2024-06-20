@@ -5,10 +5,11 @@ import Header from "../component/header";
 import Control from "../component/control";
 import Navleft from "../component/navleft";
 import Navbar from "../component/Navv";
-import {useEffect, useState} from "react";
+import {useEffect, useState ,useContext} from "react";
 import {get_project} from "../service/project";
 import ProjecttaskContext from '../context/ProjecttaskContext';
 function Projectpage(){
+    const { openProjecttask ,isModalOpen} = useContext(ProjecttaskContext);
     const { projectid } = useParams();
     const [update,Setupdate]=useState(0);
     const HandleUpdate=()=>{
@@ -23,7 +24,10 @@ function Projectpage(){
     useEffect(() => {
         fetchProject()
     }, [update]);
+  const handleClick = () => {
+        openProjecttask(projectid,"");
 
+    };
     return (
         project && <>
             <div className="container">
@@ -31,7 +35,7 @@ function Projectpage(){
                 <Navbar tasks={[]} title={"project"}></Navbar>
                 <div className="mainpart">
                     <Header></Header>
-                    <Control></Control>
+                    <Control projecthandler={handleClick}></Control>
                     <Projtectdetail project={project} HandleUpdate={HandleUpdate}></Projtectdetail>
                 </div>
             </div>

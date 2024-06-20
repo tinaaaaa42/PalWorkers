@@ -1,4 +1,3 @@
-
 import React, { useContext,useState } from 'react';
 import ProjecttaskContext from '../context/ProjecttaskContext';
 import DatePicker from 'react-datepicker';
@@ -6,12 +5,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Input } from 'antd';
-import {createKanbanTask} from "../service/kanbantask_write"
-import {changeKanbanTask} from "../service/kanbantask_change"
+//import {createKanbanTask} from "../service/kanbantask_write"
+import {createProjectTask} from "../service/project_task"
 import TeamSelector from './teamSelector';
 import {get_team}from "../service/team"
 const ProjecttaskComponent = () => {
-  const { isModalOpen, closeModal ,message,task} = useContext(ProjecttaskContext);
+  const { isModalOpen, closeProjecttask ,projectId,task} = useContext(ProjecttaskContext);
 
   const getCurrentDateTime = () => {
     const now = new Date();
@@ -90,53 +89,6 @@ const ProjecttaskComponent = () => {
         return `${year}-${month}-${day}`;
         }
 
-        const convertWeeklyStateToBackendFormat = () => {
-//        const tags = state.tag.length===[] ? [] : [state.tag];
-            const teamId = getIdByName(state.team);
-            const userId=getAntiIdByName(state.teamAnticipater);
-            // 构造新的 JSON 对象
-            let backendData = {
-
-              task_id:task.id||null,
-                title: state.taskName,
-                description: state.description,
-                createDate: formatDate(state.startTime),
-                dueDate: formatDate(state.dueTime),
-                type: "weekly",
-               tags: [state.tag],
-              important: state.important,
-              urgent: state.urgent,
-              expired:false,
-              teamIds: teamId ? [teamId] : [],
-              userIds:userId?[userId]:[]
-            };if(!state.tag)backendData.tags=[];
-            if(!teamId)backendData.teamIds=[];
-            if(!userId)backendData.userIds=[];
-            return backendData;
-          };
-           const convertDailyStateToBackendFormat = () => {
-           const teamId = getIdByName(state.team);
-           const userId=getAntiIdByName(state.teamAnticipater);
-
-                       const backendData = {
-
-                        task_id:task.id||null,
-                          title: state.taskName,
-                          description: state.description,
-                          createDate:formatDate(state.startTime),
-                          dueDate: formatDate(state.dueTime),
-                          type: "daily",
-                          tags: [state.tag],
-                          expired:false,
-                         teamIds: teamId ? [teamId] : [],
-                       userIds:userId?[userId]:[]
-                        };
-                        console.log(backendData)
-                            if(!state.tag)backendData.tags=[];
-                            if(!teamId)backendData.teamIds=[];
-                                        if(!userId)backendData.userIds=[];
-                                return backendData;
-                            };
            const convertKanbanStateToBackendFormat = () => {
         const teamId = getIdByName(state.team);
         const userId=getAntiIdByName(state.teamAnticipater);
@@ -151,7 +103,8 @@ const ProjecttaskComponent = () => {
                                        tags: [state.tag],
                                      state:state.choosepro,
                                        teamIds: teamId ? [teamId] : [],
-                                       userIds:userId?[userId]:[]
+                                       userIds:userId?[userId]:[],
+                                       projectId:projectId
                                    };
                                      console.log(backendData)
                                      if(!state.tag)backendData.tags=[];
@@ -160,27 +113,27 @@ const ProjecttaskComponent = () => {
                                     console.log('Generated backend data:', backendData);
                       return backendData;
                     };
-//                const handleSave = async (e) => {
-//
-//                    let response;
-//                      e.preventDefault();
-//                    try {console.error('创建任务:', true);
-//                    if(!task.id){
-//
-//                        response = await createKanbanTask(convertKanbanStateToBackendFormat());break;
-//                        }}
-//
-//                    else {
-//
-//                        response = await changeKanbanTask(convertKanbanStateToBackendFormat());break;
-//                        }
-//                    }}
-//                    catch (error) {
-//                      console.error('创建任务失败:', error);
-//                    }
-//                         closeModal();
-//
-//                  };
+                const handleSave = async (e) => {
+
+                    let response;
+                      e.preventDefault();
+                    try {console.error('创建任务:', true);
+                    if(!task.id){
+
+                        response = await createProjectTask(convertKanbanStateToBackendFormat(),projectId);
+                        }
+
+                    else {
+
+//                        response = await changeKanbanTask(convertKanbanStateToBackendFormat());
+                        }
+                    }
+                    catch (error) {
+                      console.error('创建任务失败:', error);
+                    }
+                         closeProjecttask();
+
+                  };
 
 const handleTry=()=>{
 
@@ -307,83 +260,49 @@ const handleTry=()=>{
       files: event.target.files
     });
   };
-// React.useEffect(() => {
-//    const initializeData = async () => {
-//      try {
-//        // 先等待 fetchTeams 完成
-//        await fetchTeams();
-//
-//        // 根据 message 更新状态
-//        switch (message) {
-//          case 1:
-//            setState(prevState => ({
-//              ...prevState,
-//              important: true,
-//              urgent: true
-//            }));
-//            break;
-//          case 2:
-//            setState(prevState => ({
-//              ...prevState,
-//              important: true,
-//              urgent: false
-//            }));
-//            break;
-//          case 3:
-//            setState(prevState => ({
-//              ...prevState,
-//              important: false,
-//              urgent: true
-//            }));
-//            break;
-//          case 4:
-//            setState(prevState => ({
-//              ...prevState,
-//              important: false,
-//              urgent: false
-//            }));
-//            break;
-//          default:
-//            break;
-//        }
-//
-//        // 根据 task.type 更新状态
-//        if (task) {
-//
-//            let isnew=false;
-//            let istor=false;
-//            if(task.teamTasksAnticipaters&&task.teamTasksAnticipaters[0]&&task.teamTasksAnticipaters[0].anticipater&&task.teamTasksAnticipaters[0].anticipater.username)
-//            {isnew=true;
-//            }
-//            if(!state.title){istor=true
-//            }
-//                  setState(prevState => ({
-//                         ...prevState,
-//                         type: "kanban",
-//                         choosepro: task.state,
-//                         taskName: task.title || '',
-//                         tag: task.taskTags?.[0]?.tag?.name || '',
-//                         startTime: task.createDate || '',
-//                         dueTime: task.dueDate || '',
-//                         description: task.description,
-//                         team: task.team?.name || '',
-//                         teamAnticipater: task.teamTasksAnticipaters?.[0]?.anticipater?.username || '',
-//                         or:isnew,
-//                         tor:istor
-//                       }));
-//
-//          }
-//        }
-//
-//      } catch (error) {
-//        console.error("Error initializing data:", error);
-//      }
-//    };
-//
-//    // 调用初始化函数
-//    initializeData();
-//
-//  }, [message,task]);
+ React.useEffect(() => {
+    const initializeData = async () => {
+      try {
+        // 先等待 fetchTeams 完成
+        await fetchTeams();
+
+        // 根据 task.type 更新状态
+        if (task) {
+
+            let isnew=false;
+            let istor=false;
+            if(task.teamTasksAnticipaters&&task.teamTasksAnticipaters[0]&&task.teamTasksAnticipaters[0].anticipater&&task.teamTasksAnticipaters[0].anticipater.username)
+            {isnew=true;
+            }
+            if(!state.title){istor=true
+            }
+                  setState(prevState => ({
+                         ...prevState,
+                         type: "kanban",
+                         choosepro: task.state,
+                         taskName: task.title || '',
+                         tag: task.taskTags?.[0]?.tag?.name || '',
+                         startTime: task.createDate || '',
+                         dueTime: task.dueDate || '',
+                         description: task.description,
+                         team: task.team?.name || '',
+                         teamAnticipater: task.teamTasksAnticipaters?.[0]?.anticipater?.username || '',
+                         or:isnew,
+                         tor:istor
+                       }));
+
+          }
+
+
+      } catch (error) {
+        console.error("Error initializing data:", error);
+      }
+    };
+
+    // 调用初始化函数
+    initializeData();
+
+  }, [task]);
  const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -572,8 +491,8 @@ const handleTry=()=>{
                       </div>
                   </div>
                   <div className="label">
-                {/*    <button className="detail save" onClick={handleSave}>Save</button>*/}
-                    <button className="detail cancle" onClick={closeModal}>Cancel</button>
+                {    <button className="detail save" onClick={handleSave}>Save</button>}
+                    <button className="detail cancle" onClick={closeProjecttask}>Cancel</button>
                   </div>
                   </div>
 

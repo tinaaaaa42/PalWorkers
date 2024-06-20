@@ -4,28 +4,27 @@ use palworkers;
 -- 初始化数据
 
 INSERT INTO teams (name,invitation_code) VALUES
-                                      ('技术部门','happpy'),
-                                      ( '市场部','looppy'),
-                                      ( '人力资源部','gaming'),
-                                      ('销售部','cookie');
+                                      ('后端团队','happpy'),
+                                      ( '前端团队','looppy'),
+                                      ( 'ICS Group','gaming'),
+                                      ('WEB Group','cookie');
 
 
 
 
 -- 测试数据 for users 表
 INSERT INTO users (username, email_addr, avatar, notes) VALUES
-                                                                                             ('root', 'admin', 'bg.jpg', 'Too lazy to type..'),
-                                                                                             ('test', 'user1@example.com', 'avatar1.jpg', 'Note for user1'),
-('user', 'user1@example.com', 'avatar1.jpg', 'Note for user1');
-
+                                                                                             ('yly', 'yly', 'bg.jpg', 'Too lazy to type..'),
+                                                                                             ('ytw', 'ytw', 'avatar1.jpg', 'Just do it'),
+                                                                                             ('wjy', 'wjy', 'avatar3.jpg', 'we can do it'),
+                                                                                             ('ljt', 'ljt', 'avatar2.jpg', 'One more try');
 
 INSERT INTO team_member (team_id, user_id, leader) VALUES
                                                        ( 1, 1, 1), -- 假设用户ID为1的是团队领导者
-                                                       ( 1, 2, 0),-- 用户ID为2的是团队普通成员
-    (1,3,0),
-    (2,1,0),
-    (3,1,1),
-    (2,2,1);
+                                                       ( 1, 4, 0),-- 用户ID为2的是团队普通成员
+                                                       (2, 2, 1),
+                                                       (2,3,0);
+
 
 -- 测试数据 for user_auth 表
 INSERT INTO user_auth (user_id, password_hash) VALUES

@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Input } from 'antd';
-//import {createKanbanTask} from "../service/kanbantask_write"
+import {changeProjectTask} from "../service/project_taskchange"
 import {createProjectTask} from "../service/project_task"
 import TeamSelector from './teamSelector';
 import {get_team}from "../service/team"
@@ -124,8 +124,8 @@ const ProjecttaskComponent = () => {
                         }
 
                     else {
-
-//                        response = await changeKanbanTask(convertKanbanStateToBackendFormat());
+                            console.log(convertKanbanStateToBackendFormat());
+                       response = await changeProjectTask(convertKanbanStateToBackendFormat(),projectId);
                         }
                     }
                     catch (error) {

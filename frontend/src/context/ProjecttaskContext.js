@@ -19,10 +19,10 @@ export const ProjecttaskProvider = ({ children }) => {
   };
 
   const closeProjecttask = () => {
-//  window.location.reload();
+
     setIsModalOpen(false);
     setRefresh(true);
-
+ window.location.reload();
   };
 
   const contextValue = {

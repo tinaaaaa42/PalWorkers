@@ -18,6 +18,7 @@ console.log("open project")
 
   const closeProject = () => {
     setIsProjectOpen(false);
+     window.location.reload();
   };
 
   const contextValue = {

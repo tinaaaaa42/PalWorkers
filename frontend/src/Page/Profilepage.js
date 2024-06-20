@@ -5,7 +5,7 @@ import Control from "../component/control";
 import React, { useState,useEffect} from 'react';
 import UserProfile from "../component/Profile";
 import Navbar from "../component/Navv";
-import {get_team} from "../service/team";
+import {get_all_team, get_team} from "../service/team";
 import {get_kanban_statistics, get_week_statistics} from "../service/profile";
 import {get_kanban_task} from "../service/kanban_task";
 import { get_notify } from "../service/notify";
@@ -19,7 +19,7 @@ function Profilepage(){
         setupdate(update+1);
     }
     const init_team = async () => {
-        let team = await get_team();
+        let team = await get_all_team();
         console.log(team)
         setTeam(team);
     }

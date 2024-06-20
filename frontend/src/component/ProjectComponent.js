@@ -395,7 +395,7 @@ React.useEffect(() => {
 
 
                 <div className="notes-container" style={{ display: 'flex', flexDirection: 'column' }}>
-                   <TeamSelector className='taginfo' onTeamSelect={handleTeamSelection} />
+
                 <div style={{ flex: '0.8' }}>
                 {(type!=="new"&&state.note!=='')&&(
                     <div className="Compile-card" >

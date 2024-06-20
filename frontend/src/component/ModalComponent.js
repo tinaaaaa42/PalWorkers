@@ -671,7 +671,7 @@ console.log(DayTasks)
                 </div>
               </div>
             </div>
-            <button onClick={handleTry}>new</button>
+
             {/* ... 表单内容 */}
           </div>
 

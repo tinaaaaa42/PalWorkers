@@ -22,7 +22,7 @@ export const ProjecttaskProvider = ({ children }) => {
     window.location.reload();
     setIsModalOpen(false);
     setRefresh(true);
-    
+
   };
 
   const contextValue = {

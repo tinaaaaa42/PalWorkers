@@ -4,7 +4,7 @@ import ModalContext from '../context/ModalContext';
 import {useContext, useEffect, useState} from 'react';
 import "../iconfont3/iconfont.css"
 import {get_weekly_task} from "../service/weekly_task";
-function Quadrant({ quadrant ,Week_tasks}){
+function Quadrant({ quadrant ,Week_tasks,HandleUpdate}){
     let color = '';
     let content = '';
     const { openModal ,isModalOpen} = useContext(ModalContext);
@@ -55,7 +55,7 @@ function Quadrant({ quadrant ,Week_tasks}){
             <div className="colorbar" style={colorStyle}><div>{content}</div><div className="iconfont icon-jiahao" onClick={()=>openModal("week",'',quadrant)}></div></div>
             <div className="week-container">
                 {tasks!=null?tasks.map(task => (
-                <Weekcard key={task.id} task={task}/>
+                <Weekcard key={task.id} task={task} HandleUpdate={HandleUpdate}/>
                 )):<></>}
             </div>
             

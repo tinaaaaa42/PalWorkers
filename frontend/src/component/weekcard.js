@@ -4,20 +4,21 @@ import {useContext } from 'react';
 import { Button } from 'antd';
 import { CheckSquareOutlined } from '@ant-design/icons';
 import { completeTask, deleteTask } from '../service/advance';
-function Weekcard(props){
-    const {id,task}=props;
+function Weekcard({id,task,HandleUpdate}){
     const [isDel, setIsDel] = useState(false);
     const { openModal ,isModalOpen} = useContext(ModalContext);
     const handleClick = (event) => {
         event.stopPropagation(); 
         let myseitch=1-isDel;
         setIsDel(myseitch);
+        HandleUpdate();
     };
     const handleFinish=async(event,id)=>{
         event.stopPropagation();
         console.log(id);
         try{
             const response=await completeTask(id);
+            HandleUpdate();
         }catch{
             
         }
@@ -27,6 +28,7 @@ function Weekcard(props){
       event.stopPropagation();
       try{
           const response=await deleteTask(id);
+          HandleUpdate();
       }catch{
       }
     }

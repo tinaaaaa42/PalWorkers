@@ -71,6 +71,15 @@ public class projectController {
         return projectService.addKanbanTask(projectId, kanbanTaskDto);
     }
 
+    @PutMapping(value = "api/project/task")
+    public KanbanTask updateKanbanTask(HttpSession session, @RequestParam int projectId, @RequestBody KanbanTaskDto kanbanTaskDto) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return projectService.updateKanbanTask(projectId, kanbanTaskDto);
+    }
+
     @DeleteMapping(value = "api/project/task")
     public boolean deleteKanbanTask(HttpSession session, @RequestParam int projectId, @RequestParam int taskId) {
         User user = (User) session.getAttribute("user");

@@ -43,6 +43,12 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ProjectTaskGroupRepository projectTaskGroupRepository;
+
+    @Autowired
+    private ProjectRepository projectRepository;
+
     @Override
     public boolean advanceTask(User user, int taskId) {
         KanbanTask kanbanTask = taskRepository.findKanbanTaskById(taskId);
@@ -61,6 +67,15 @@ public class TaskServiceImpl implements TaskService {
             kanbanTask.setCompletedDate(LocalDate.now());
         }
         kanbanTask.setState(next_state);
+        if (kanbanTask.getInProject()) {
+            ProjectTaskGroup projectTaskGroup = projectTaskGroupRepository.findByTaskId(taskId);
+            Project project = projectTaskGroup.getProject();
+            if (next_state.equals("done")) {
+                project.setDone(project.getDone() + 1);
+            }
+            projectRepository.save(project);
+        }
+
         kanbanTaskRepository.save(kanbanTask);
         return true;
     }

@@ -209,6 +209,27 @@ public class projectServiceImpl implements ProjectService{
     }
 
     @Override
+    public KanbanTask updateKanbanTask(int projectId, KanbanTaskDto kanbanTaskDto) {
+        Project project = projectRepository.findById(projectId);
+        if (project == null) {
+            return null;
+        }
+        KanbanTask kanbanTask = kanbanTaskRepository.findById(kanbanTaskDto.getTask_id()).orElse(null);
+        if (kanbanTask == null) {
+            return null;
+        }
+        kanbanTask.setTitle(kanbanTaskDto.getTitle());
+        kanbanTask.setDescription(kanbanTaskDto.getDescription());
+        kanbanTask.setDueDate(LocalDate.parse(kanbanTaskDto.getDueDate()));
+        kanbanTask.setCreateDate(LocalDate.parse(kanbanTaskDto.getCreateDate()));
+        kanbanTask.setType(kanbanTaskDto.getType());
+        kanbanTask.setExpired(kanbanTaskDto.getExpired() == null ? false : kanbanTaskDto.getExpired());
+        kanbanTask.setState(kanbanTaskDto.getState());
+        kanbanTaskRepository.save(kanbanTask);
+        return kanbanTask;
+    }
+
+    @Override
     public boolean deleteKanbanTask(int projectId, int taskId) {
         Project project = projectRepository.findById(projectId);
         if (project == null) {
@@ -223,6 +244,9 @@ public class projectServiceImpl implements ProjectService{
         projectTaskGroups.remove(projectTaskGroup);
         project.setProjectTaskGroups(projectTaskGroups);
         project.setTotal(project.getTotal() - 1);
+        if (kanbanTask.getState().equals("done")) {
+            project.setDone(project.getDone() - 1);
+        }
         projectRepository.save(project);
         projectTaskGroupRepository.delete(projectTaskGroup);
         kanbanTaskRepository.delete(kanbanTask);

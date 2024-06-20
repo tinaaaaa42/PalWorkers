@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProjectTaskGroupRepository extends JpaRepository<ProjectTaskGroup, Integer> {
     ProjectTaskGroup findByProjectAndTask(Project project, Task task);
+
+    ProjectTaskGroup findByTaskId(int taskId);
 }

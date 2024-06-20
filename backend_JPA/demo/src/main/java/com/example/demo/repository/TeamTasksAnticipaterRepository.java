@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface TeamTasksAnticipaterRepository extends JpaRepository<TeamTasksAnticipater, Integer> {
     List<TeamTasksAnticipater> findTasksByAnticipater(User Anticipater);
+
+    List<TeamTasksAnticipater> findByTaskId(Integer TaskId);
 }

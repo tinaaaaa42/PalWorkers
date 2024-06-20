@@ -39,6 +39,7 @@ public class projectController {
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
+//        if (user.g)
         return projectService.findByUserIdAndProjectId(userId,projectId);
     }
 

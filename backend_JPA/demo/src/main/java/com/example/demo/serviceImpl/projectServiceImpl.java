@@ -85,6 +85,10 @@ public class projectServiceImpl implements ProjectService{
         projectDto.setTotal(project.getTotal());
         projectDto.setState(project.getState());
         projectDto.setDone(project.getDone());
+        if (project.getTeam() != null) {
+            projectDto.setTeamProject(true);
+        }
+
         Set<ProjectTaskDto> projectTaskDtos = new HashSet<>();
         Set<ProjectTaskGroup> projectTaskGroups = project.getProjectTaskGroups();
         for (ProjectTaskGroup projectTaskGroup : projectTaskGroups) {
@@ -95,7 +99,34 @@ public class projectServiceImpl implements ProjectService{
             ProjectTaskDto projectTaskDto = new ProjectTaskDto();
             projectTaskDto.setTask(task);
             projectTaskDto.setState(state);
-            projectTaskDtos.add(projectTaskDto);
+
+            if (project.getTeam() != null) {
+                Team team = project.getTeam();
+                int teamId = team.getId();
+                TeamMember teamMember = teamMemberRepository.findByteamIdAndUserId(teamId,userId);
+                boolean isLeader = teamMember.getLeader();
+                if (isLeader) {
+                    projectTaskDtos.add(projectTaskDto);
+                }
+                else {
+                    boolean flag = false;
+                    List<TeamTasksAnticipater> teamTasksAnticipaters = teamTasksAnticipaterRepository.findByTaskId(taskId);
+                    for (TeamTasksAnticipater teamTasksAnticipater : teamTasksAnticipaters) {
+                        int cmp_userId = teamTasksAnticipater.getAnticipater().getId();
+                        if (cmp_userId == userId) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (flag) {
+                        projectTaskDtos.add(projectTaskDto);
+                    }
+                }
+            }
+            else {
+                projectTaskDtos.add(projectTaskDto);
+            }
+//            projectTaskDtos.add(projectTaskDto);
         }
         projectDto.setProjectsTasks(projectTaskDtos);
         return projectDto;

@@ -68,7 +68,7 @@ public class projectController {
         if (user == null) {
             throw new RuntimeException("User not logged in");
         }
-        return projectService.addKanbanTask(projectId, kanbanTaskDto);
+        return projectService.addKanbanTask(projectId, kanbanTaskDto, user);
     }
 
     @PutMapping(value = "api/project/task")

@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class projectServiceImpl implements ProjectService{
@@ -42,6 +39,15 @@ public class projectServiceImpl implements ProjectService{
 
     @Autowired
     private TeamMemberRepository teamMemberRepository;
+
+    @Autowired
+    private TaskTagRepository taskTagRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<ProjectDto> findAllByUserId(int userId) {
         List<Project> projects = projectRepository.findAllByUserIdAndCompleted(userId,false);
@@ -179,7 +185,7 @@ public class projectServiceImpl implements ProjectService{
     }
 
     @Override
-    public KanbanTask addKanbanTask(int projectId, KanbanTaskDto kanbanTaskDto) {
+    public KanbanTask addKanbanTask(int projectId, KanbanTaskDto kanbanTaskDto, User user) {
         Project project = projectRepository.findById(projectId);
         if (project == null) {
             return null;
@@ -193,6 +199,65 @@ public class projectServiceImpl implements ProjectService{
         kanbanTask.setExpired(kanbanTaskDto.getExpired() == null ? false : kanbanTaskDto.getExpired());
         kanbanTask.setState(kanbanTaskDto.getState());
         kanbanTask.setCompleted(false);
+        kanbanTask.setInProject(true);
+
+        List<Team> teams = new ArrayList<>();
+        for (Integer teamId : kanbanTaskDto.getTeamIds()) {
+            Team team = teamRepository.findTeamById(teamId);
+            if (team == null) {
+                throw new IllegalArgumentException("Team not found");
+            }
+            teams.add(team);
+            kanbanTask.setTeam(team);
+        }
+
+        if (kanbanTaskDto.getTeamIds() != null && kanbanTaskDto.getTeamIds().size() == 0) {
+            kanbanTask.setUser(user);
+        }
+        kanbanTaskRepository.save(kanbanTask);
+        Set<TeamTasksLeader> teamTasksLeaders = new LinkedHashSet<>();
+        for (Team team : teams) {
+            TeamTasksLeader teamTasksLeader = new TeamTasksLeader();
+            teamTasksLeader.setTask(kanbanTask);
+            teamTasksLeader.setLeader(user);
+            teamTasksLeaderRepository.save(teamTasksLeader);
+            teamTasksLeaders.add(teamTasksLeader);
+        }
+        kanbanTask.setTeamTasksLeaders(teamTasksLeaders);
+
+        Set<TeamTasksAnticipater> teamTasksAnticipaters = new LinkedHashSet<>();
+        for (int userId: kanbanTaskDto.getUserIds()) {
+            User anticipater = userRepository.findUserById(userId);
+            if (anticipater == null) {
+                throw new IllegalArgumentException("User not found");
+            }
+            TeamTasksAnticipater teamTasksAnticipater = new TeamTasksAnticipater();
+            teamTasksAnticipater.setTask(kanbanTask);
+            teamTasksAnticipater.setAnticipater(anticipater);
+            teamTasksAnticipaterRepository.save(teamTasksAnticipater);
+            teamTasksAnticipaters.add(teamTasksAnticipater);
+        }
+        kanbanTask.setTeamTasksAnticipaters(teamTasksAnticipaters);
+
+        Set<TaskTag> tags = new LinkedHashSet<>();
+        if (kanbanTaskDto.getTags() != null) {
+            for (String tagName : kanbanTaskDto.getTags()) {
+                Tag tag = tagRepository.findByName(tagName);
+                if (tag == null) {
+                    tag = new Tag();
+                    tag.setName(tagName);
+                    tagRepository.save(tag);
+                }
+                TaskTag taskTag = new TaskTag();
+                taskTag.setTag(tag);
+                taskTag.setTask(kanbanTask);
+                tags.add(taskTag);
+                taskTagRepository.save(taskTag);
+            }
+        }
+
+        kanbanTask.setTaskTags(tags);
+
         kanbanTaskRepository.save(kanbanTask);
 
         Set<ProjectTaskGroup> projectTaskGroups = project.getProjectTaskGroups();

@@ -99,7 +99,7 @@ public class kanbanServiceImpl implements kanbanTaskService {
             if (type.equals("kanban") && createDate.isBefore(end) && createDate.isAfter(start)) {
                 int task_id = leader_task.getTask().getId();
                 KanbanTask task = taskRepository.findKanbanTaskById(task_id);
-                if (task != null && !(task.getInProject())) {
+                if (task != null && !task.getInProject()) {
                     kanbanTasks.add(task);
                 }
             }

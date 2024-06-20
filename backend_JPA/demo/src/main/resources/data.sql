@@ -168,7 +168,7 @@ INSERT INTO team_tasks_anticipater (task_id, anticipater_id) VALUES
                                                                  (20, 3);
 
 INSERT INTO projects(title, total, done,state, user_id,team_id, completed) VALUES
-                                                                               ('软工大作业',5, 0,'todo',null,4,false);
+                                                                               ('软工大作业',5, 1,'todo',null,4,false);
 
 INSERT INTO project_task_group(task_id, project_id) VALUES
                                                         (16,1),

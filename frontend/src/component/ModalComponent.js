@@ -307,10 +307,12 @@ console.log(DayTasks)
 
     // 获取选定团队的成员
     const members = getTeamMember(selectedTeamName);
-    const member = members.map(team => ({
-      id: team.user.id,
-      name: team.user.username
-    }));
+    const member = members
+      .filter(team => !team.leader) // 过滤掉 team.leader 为 true 的成员
+      .map(team => ({
+        id: team.user.id,
+        name: team.user.username
+      }));
 
     // 获取选定团队的领导
     const leader = members
@@ -509,7 +511,7 @@ console.log(DayTasks)
                         onChange={handleInputtagChange}/>
                   </div>
                   {
-                  !state.tor?(
+                  (!state.tor&&type==="kanban")?(
                   <>
                   <div className="label">
                   <img className='pic' src={process.env.PUBLIC_URL + "/标签.png"}  alt="" ></img>

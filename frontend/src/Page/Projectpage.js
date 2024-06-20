@@ -38,7 +38,7 @@ function Projectpage(){
                 <Navbar tasks={[]} title={"project"}></Navbar>
                 <div className="mainpart">
                     <Header></Header>
-                    <Control projecthandler={handleClick}></Control>
+                    <Control projectId={projectid} projecthandler={handleClick}></Control>
                     <Projtectdetail project={project} HandleUpdate={HandleUpdate}></Projtectdetail>
                 </div>
             </div>

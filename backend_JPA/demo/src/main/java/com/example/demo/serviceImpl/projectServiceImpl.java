@@ -49,6 +49,22 @@ public class projectServiceImpl implements ProjectService{
     @Autowired
     private UserRepository userRepository;
 
+    @Override
+    public boolean getAuthority(int projectId, int userId) {
+        Project project = projectRepository.findById(projectId);
+        Team team = project.getTeam();
+        if (team == null) {
+            return true;
+        }
+        int teamId = team.getId();
+        TeamMember teamMember = teamMemberRepository.findByteamIdAndUserId(teamId,userId);
+        boolean isLeader = teamMember.getLeader();
+        if (isLeader) {
+            return true;
+        }
+        return false;
+    }
+
     public List<ProjectDto> findAllByUserId(int userId) {
         List<Project> projects = projectRepository.findAllByUserIdAndCompleted(userId,false);
         List<ProjectDto> projectDtos = new ArrayList<>();

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.DTO.AuthorityDto;
 import com.example.demo.DTO.KanbanTaskDto;
 import com.example.demo.DTO.ProjectDto;
 import com.example.demo.entity.KanbanTask;
@@ -97,5 +98,19 @@ public class projectController {
             throw new RuntimeException("User not logged in");
         }
         return projectService.deleteProject(projectId);
+    }
+
+
+    @GetMapping(value = "api/project/authorized")
+    public AuthorityDto getAuthority(HttpSession session, @RequestParam int projectId) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        boolean tmp = projectService.getAuthority(projectId,userId);
+        AuthorityDto authorityDto = new AuthorityDto();
+        authorityDto.setIfAuthorized(tmp);
+        return authorityDto;
     }
 }

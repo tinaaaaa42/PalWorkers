@@ -3,8 +3,9 @@ import WeekPicker from "./WeekPicker";
 import MonthPicker from "./MonthPicker";
 import { Tag } from "../Data/data";
 import { useLocation } from "react-router-dom";
-import { Button } from "antd";
-function Control({taskhandler,handleDaySearch,handleWeekSearch,handleKanbanSearch,handleReset,projecthandler}){
+import {Button, message} from "antd";
+import {get_if_authorized} from "../service/project";
+function Control({projectId,taskhandler,handleDaySearch,handleWeekSearch,handleKanbanSearch,handleReset,projecthandler}){
     const location = useLocation();
     const renderPicker = () => {
         switch (location.pathname) {
@@ -18,9 +19,20 @@ function Control({taskhandler,handleDaySearch,handleWeekSearch,handleKanbanSearc
             return null; // 你可以在这里设置一个默认的 Picker 组件
         }
     };
+
+    const proHandle = async () => {
+        const res = await get_if_authorized(projectId);
+        if (res) {
+            projecthandler();
+        }
+        else {
+            message.error("Sorry!You are not authorized to new task in Team Project.")
+            return;
+        }
+    }
     const renderButton=()=>{
         if(location.pathname.includes('/project'))
-        return (<Button type="primary" className="rounded-button projectbutton" onClick={projecthandler} style={{marginLeft:'1100px'}}>
+        return (<Button type="primary" className="rounded-button projectbutton" onClick={proHandle} style={{marginLeft:'1100px'}}>
             New Task
         </Button>);
         switch (location.pathname) {

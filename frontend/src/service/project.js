@@ -33,3 +33,15 @@ export async function delete_project(projectId) {
         console.log(e);
     }
 }
+
+export async function get_if_authorized(projectId) {
+    const url = `${PREFIX}/project/authorized?projectId=${projectId}`;
+    let projects;
+    try {
+        projects = await getJson(url)
+    } catch (e) {
+        console.log(e);
+        projects = null;
+    }
+    return projects.ifAuthorized;
+}

@@ -24,5 +24,5 @@ public interface ProjectService {
     boolean deleteKanbanTask(int projectId, int taskId);
     KanbanTask updateKanbanTask(int projectId, KanbanTaskDto kanbanTaskDto);
     boolean deleteProject(int projectId);
-
+    boolean getAuthority(int projectId,int userId);
 }

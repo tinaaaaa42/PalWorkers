@@ -85,7 +85,7 @@ function Kanbanpage(){
       
           return () => {
             window.removeEventListener('keydown', handleKeyDown);}
-    }, [dates,update]);
+    }, [dates,update,isModalOpen]);
     
     const handleKanbanSearch = (start, end) => {
         setDates([start, end]);

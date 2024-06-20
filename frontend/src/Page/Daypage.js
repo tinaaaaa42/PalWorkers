@@ -4,14 +4,16 @@
  import Daytodo from "../component/daytodocard";
  import Dayphoto from "../component/dayphotocard";
  import "../CSS/app.css"
+ import ModalContext from '../context/ModalContext';
  import Seconddir from "../component/seconddir";
- import {useEffect, useState} from "react";
+ import {useEffect, useState,useContext} from "react";
  import {get_weekly_task} from "../service/weekly_task";
  import {getDailyTask, get_daily_task, deleteDailyTaskWithDate} from "../service/daily_task";
 import Navbar from "../component/Navv";
 import { message } from "antd";
 
  function App() {
+        const { openModal ,isModalOpen} = useContext(ModalContext);
       const [dailyTasks, setDailyTasks] = useState([])
       const [currentDate, setCurrentDate] = useState(new Date()); 
       const [update,Setupdate]=useState(0);
@@ -43,7 +45,7 @@ import { message } from "antd";
         return () => {
           window.removeEventListener('keydown', handleKeyDown);
         };
-      }, [currentDate,update]);
+      }, [currentDate,update,isModalOpen]);
       const handleUpdate=()=>{
         Setupdate(update+1);
       }

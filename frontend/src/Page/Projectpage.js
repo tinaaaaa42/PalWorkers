@@ -23,7 +23,7 @@ function Projectpage(){
     }
     useEffect(() => {
         fetchProject()
-    }, [update]);
+    }, [update,isModalOpen]);
   const handleClick = () => {
         openProjecttask(projectid,"");
 

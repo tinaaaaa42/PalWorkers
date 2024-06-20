@@ -1,4 +1,4 @@
-import {getJson, PREFIX} from "./common";
+import {getJson, PREFIX, del} from "./common";
 
 
 export async function get_all_projects() {
@@ -23,4 +23,13 @@ export async function get_project(projectId) {
         project = null;
     }
     return project;
+}
+
+export async function delete_project(projectId) {
+    const url = `${PREFIX}/project?projectId=${projectId}`;
+    try {
+        await del(url);
+    } catch (e) {
+        console.log(e);
+    }
 }

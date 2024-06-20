@@ -2,7 +2,8 @@ import ProgressBar from "./Progressbar";
 import { useNavigate } from 'react-router-dom';
 import { Button } from "antd";
 import { RightSquareOutlined } from "@ant-design/icons";
-import {advanceKanbanTask, advanceProject, deleteTask} from "../service/advance";
+import {advanceKanbanTask, advanceProject} from "../service/advance";
+import {delete_project} from "../service/project";
 function Projectcard({ project ,HandleUpdate}){
     const navigate = useNavigate();
     const HandleFinish=async(event,id)=>{
@@ -20,7 +21,7 @@ function Projectcard({ project ,HandleUpdate}){
     const HandleDelete=async(event,id)=>{
         event.stopPropagation();
         try{
-            const response=await deleteTask(id);
+            const response=await delete_project(id);
             HandleUpdate();
         }catch{
         }

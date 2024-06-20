@@ -54,7 +54,7 @@ function Profilepage(){
         <Navbar tasks={[]} title={"Profile"} allteam={allteam} teamss={teamNames}></Navbar>
         <div className="mainpart">
         <Header></Header>
-        <UserProfile team={team} week_data={week_data} kanban_data={kanban_data} remindtask={remind_task} ></UserProfile>
+        <UserProfile team={team} week_data={week_data} kanban_data={kanban_data} remindtask={remind_task} handleUpdate={handleUpdate}></UserProfile>
         </div>
     </div>
     </>);

@@ -1,13 +1,15 @@
 import ModalContext from '../context/ModalContext';
+
 import React, { useState,useContext } from 'react';
 import { Projects} from "../Data/data";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button ,Modal} from 'antd';
 import { RightSquareOutlined } from '@ant-design/icons';
 import { advanceKanbanTask, deleteTask } from '../service/advance';
 function Taskcard({task,id,HandleUpdate,taskColor}){
     // const { id,task} = props;
     const { openModal ,isModalOpen} = useContext(ModalContext);
+    
     const location = useLocation();
     const HandleFinish=async(event,id)=>{
         event.stopPropagation();
@@ -18,6 +20,7 @@ function Taskcard({task,id,HandleUpdate,taskColor}){
 
         }
     } 
+    
     const HandleDelete=async(event,id)=>{
       event.stopPropagation();
       try{

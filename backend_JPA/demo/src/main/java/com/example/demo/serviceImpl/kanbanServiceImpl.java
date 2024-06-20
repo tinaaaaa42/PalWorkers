@@ -96,7 +96,7 @@ public class kanbanServiceImpl implements kanbanTaskService {
         for (TeamTasksLeader leader_task : leader_tasks) {
             String type = leader_task.getTask().getType();
             LocalDate createDate = leader_task.getTask().getCreateDate();
-            if (type.equals("kanban") && createDate.isBefore(end) && createDate.isAfter(start)) {
+            if (type.equals("kanban") && (createDate.isBefore(end) || createDate.isEqual(end)) && (createDate.isEqual(start) ||createDate.isAfter(start))) {
                 int task_id = leader_task.getTask().getId();
                 KanbanTask task = taskRepository.findKanbanTaskById(task_id);
                 if (task != null && !task.getInProject()) {
@@ -107,7 +107,7 @@ public class kanbanServiceImpl implements kanbanTaskService {
         for (TeamTasksAnticipater anticipater_task : anticipaters_tasks) {
             String type = anticipater_task.getTask().getType();
             LocalDate createDate = anticipater_task.getTask().getCreateDate();
-            if (type.equals("kanban") && createDate.isBefore(end) && createDate.isAfter(start)) {
+            if (type.equals("kanban") && (createDate.isBefore(end) || createDate.isEqual(end)) && (createDate.isEqual(start) ||createDate.isAfter(start))) {
                 int task_id = anticipater_task.getTask().getId();
                 KanbanTask task = taskRepository.findKanbanTaskById(task_id);
                 if (task != null && !task.getInProject()) {

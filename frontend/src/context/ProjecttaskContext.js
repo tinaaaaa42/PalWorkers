@@ -20,8 +20,10 @@ export const ProjecttaskProvider = ({ children }) => {
 
   const closeProjecttask = () => {
 
+
     setIsProjecttaskOpen(false);
     setRefresh(true);
+
   };
 
   const contextValue = {

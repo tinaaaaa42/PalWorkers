@@ -9,6 +9,7 @@ import com.example.demo.service.teamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +28,15 @@ public class teamServiceImpl implements teamService {
 
     @Override
     public List<TeamMember> findTeamsByUserId(int userId) {
-        return teamMemberRepository.findTeamsByUserId(userId);
+        List<TeamMember> teamMembers =  teamMemberRepository.findTeamsByUserId(userId);
+        List<TeamMember> result = new ArrayList<TeamMember>();
+        for (TeamMember teamMember : teamMembers) {
+            boolean isLeader = teamMember.getLeader();
+            if (isLeader) {
+                result.add(teamMember);
+            }
+        }
+        return result;
     }
 
     @Override

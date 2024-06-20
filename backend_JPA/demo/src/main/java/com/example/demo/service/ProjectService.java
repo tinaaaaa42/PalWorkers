@@ -23,5 +23,6 @@ public interface ProjectService {
     KanbanTask addKanbanTask(int projectId, KanbanTaskDto kanbanTaskDto);
     boolean deleteKanbanTask(int projectId, int taskId);
     KanbanTask updateKanbanTask(int projectId, KanbanTaskDto kanbanTaskDto);
+    boolean deleteProject(int projectId);
 
 }

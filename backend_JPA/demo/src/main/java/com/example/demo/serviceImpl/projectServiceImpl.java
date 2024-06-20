@@ -252,4 +252,15 @@ public class projectServiceImpl implements ProjectService{
         kanbanTaskRepository.delete(kanbanTask);
         return true;
     }
+
+    @Override
+    public boolean deleteProject(int projectId) {
+        Project project = projectRepository.findById(projectId);
+        if (project == null) {
+            return false;
+        }
+
+        projectRepository.delete(project);
+        return true;
+    }
 }

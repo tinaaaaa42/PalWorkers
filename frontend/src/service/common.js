@@ -5,6 +5,9 @@ export const PREFIX = `${BASEURL}/api`;
 
 export async function getJson(url) {
     let res = await fetch(url, { method: "GET", credentials: "include" });
+    if (res.status === 401) {
+      window.location.href = "/login";
+    }
     return res.json();
 }
 

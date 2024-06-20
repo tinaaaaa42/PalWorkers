@@ -15,7 +15,7 @@ import {changeKanbanTask} from "../service/kanbantask_change"
 import TeamSelector from './teamSelector';
 import {get_team}from "../service/team"
 const ModalComponent = () => {
-  const { isModalOpen, closeModal ,type,message,task} = useContext(ModalContext);
+  const {isModalOpen, closeModal ,type,message,task} = useContext(ModalContext);
   //
   const getCurrentDateTime = () => {
     const now = new Date();
@@ -571,7 +571,7 @@ console.log(DayTasks)
                  <>
                   <div className="label">
                                    <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>
-                                     Tag:
+                                     Team:
                                      <Input className='taginfo'
                                          type="text"
                                          name="taskName"
@@ -580,7 +580,7 @@ console.log(DayTasks)
                                    </div>
                     <div className="label">
                                      <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>
-                                       Tag:
+                                       TeamAnticipater:
                                        <Input className='taginfo'
                                            type="text"
                                            name="taskName"

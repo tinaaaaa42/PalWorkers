@@ -10,7 +10,7 @@ import {createProjectTask} from "../service/project_task"
 import TeamSelector from './teamSelector';
 import {get_team}from "../service/team"
 const ProjecttaskComponent = () => {
-  const { isModalOpen, closeProjecttask ,projectId,task} = useContext(ProjecttaskContext);
+  const { isProjecttaskOpen, closeProjecttask ,projectId,task} = useContext(ProjecttaskContext);
 
   const getCurrentDateTime = () => {
     const now = new Date();
@@ -321,7 +321,7 @@ const handleTry=()=>{
   return (
 
     <div className="modal-container">
-      {isModalOpen && (
+      {isProjecttaskOpen && (
 
           <div className="modal-content">
             {/* 表单内容 */}

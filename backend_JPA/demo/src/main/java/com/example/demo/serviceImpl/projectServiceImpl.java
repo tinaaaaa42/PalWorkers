@@ -166,8 +166,11 @@ public class projectServiceImpl implements ProjectService{
         Team team = teamRepository.findById(teamId).orElse(null);
         Project project = new Project();
         project.setTitle(title);
-        project.setUser(user);
-        project.setTeam(team);
+        if (team != null) {
+            project.setTeam(team);
+        } else {
+            project.setUser(user);
+        }
         project.setState("todo");
         project.setTotal(0);
         project.setDone(0);

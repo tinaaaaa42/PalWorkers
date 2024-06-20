@@ -45,23 +45,7 @@ const ProjecttaskComponent = () => {
 
 
     });
-          const fetchTeams = async () => {
-            try {
-              const Teams = await get_team();
-              const formattedTeams = Teams.map(team => ({
-                id: team.team.id,
-                name: team.team.name
-              }));
 
-              setState(prevState => ({
-                ...prevState,
-                teams: formattedTeams,
-                teamData: Teams
-              }));
-            } catch (error) {
-              console.error("Error fetching teams:", error);
-            }
-          };
     function getTeamMember(name){
         const team=state.teamData.find(teamObj=>teamObj.team.name==name);
         if(team){
@@ -232,13 +216,16 @@ const handleTry=()=>{
  React.useEffect(() => {
     const initializeData = async () => {
       try {
-        // 先等待 fetchTeams 完成
-        await fetchTeams();
-console.log(state.teamData)
-        // 根据 task.type 更新状态
-        if (refresh) {
-        console.log(state.teamData)
-         const members = getTeamMember(refresh);
+      if(refresh) { const Teams = await get_team();
+                   const formattedTeams = Teams.map(team => ({
+                      id: team.team.id,
+                      name: team.team.name
+                      }));
+                      console.log(formattedTeams)
+
+        const team=Teams.find(teamObj=>teamObj.team.name==refresh);
+
+         const members = team.team.teamMembers;
                       const member = members
                         .filter(team => !team.leader)
                         .map(team => ({
@@ -258,17 +245,19 @@ console.log(state.teamData)
                          team:refresh,
                          self:false,
                          teamAnticipaters: member,
-                         teamLeaders: leader
+                         teamLeaders: leader,
+                          teams: formattedTeams,
+                           teamData: Teams
                        }));
 
           }
 
-              // 获取选定团队的领导
+
+}
 
 
 
-
-      } catch (error) {
+       catch (error) {
         console.error("Error initializing data:", error);
       }
     };
@@ -276,7 +265,7 @@ console.log(state.teamData)
     // 调用初始化函数
     initializeData();
 
-  }, [state.teamData]);
+  }, []);
  const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -340,7 +329,7 @@ console.log(state.teamData)
                         onChange={handleInputtagChange}/>
                   </div>
                   {
-                  !state.tor?(
+                  refresh?(
                   <>
                   <div className="label">
                   <img className='pic' src={process.env.PUBLIC_URL + "/用户.png"}  alt="" ></img>

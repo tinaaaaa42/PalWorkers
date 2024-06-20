@@ -15,6 +15,21 @@ export async function get_team() {
     return team;
 }
 
+export async function get_all_team() {
+    const url = `${PREFIX}/tasks/all_team`;
+    let team;
+    try {
+        team = await getJson(url);
+    } catch (e) {
+        console.log(e);
+        team = {
+            total: 0,
+            items: []
+        };
+    }
+    return team;
+}
+
 export async function create_team(teamName) {
     console.log(teamName)
     const url = `${PREFIX}/tasks/create_team?teamName=${teamName}`;

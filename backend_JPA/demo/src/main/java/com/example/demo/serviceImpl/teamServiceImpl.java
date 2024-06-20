@@ -40,6 +40,17 @@ public class teamServiceImpl implements teamService {
     }
 
     @Override
+    public List<TeamMember> findAllByUserId(int userId) {
+        List<TeamMember> teamMembers =  teamMemberRepository.findTeamsByUserId(userId);
+        List<TeamMember> result = new ArrayList<TeamMember>();
+        for (TeamMember teamMember : teamMembers) {
+            boolean isLeader = teamMember.getLeader();
+            result.add(teamMember);
+        }
+        return result;
+    }
+
+    @Override
     public String  addTeamByName(String teamName, User user) {
         if (teamRepository.existsByName(teamName)){
             return null;

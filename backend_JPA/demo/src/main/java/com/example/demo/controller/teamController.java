@@ -32,6 +32,16 @@ public class teamController {
         return teamService.findTeamsByUserId(userId);
     }
 
+    @GetMapping(value = "api/tasks/all_team")
+    public List<TeamMember> getAllTeamsByUserId(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return teamService.findAllByUserId(userId);
+    }
+
     @PostMapping(value = "api/tasks/create_team")
     public TeamDto createTeam(@RequestParam String teamName, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -56,6 +66,7 @@ public class teamController {
         if (userId == null) {
             throw new RuntimeException("User not logged in");
         }
+        System.out.println(invitationCode);
         return teamService.joinTeam(invitationCode, user);
     }
 }

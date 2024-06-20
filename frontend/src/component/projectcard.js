@@ -21,7 +21,11 @@ function Projectcard({ project ,HandleUpdate}){
     const HandleDelete=async(event,id)=>{
         event.stopPropagation();
         try{
-            const response=await delete_project(id);
+            let result=window.confirm("请确认删除");
+            if(result){
+                const response=await delete_project(id);
+            }
+            
             HandleUpdate();
         }catch{
         }

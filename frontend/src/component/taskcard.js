@@ -3,7 +3,7 @@ import ModalContext from '../context/ModalContext';
 import React, { useState,useContext } from 'react';
 import { Projects} from "../Data/data";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button ,Modal} from 'antd';
+import { Button ,Modal, message} from 'antd';
 import { RightSquareOutlined } from '@ant-design/icons';
 import { advanceKanbanTask, deleteTask } from '../service/advance';
 function Taskcard({task,id,HandleUpdate,taskColor}){
@@ -24,8 +24,14 @@ function Taskcard({task,id,HandleUpdate,taskColor}){
     const HandleDelete=async(event,id)=>{
       event.stopPropagation();
       try{
-          const response=await deleteTask(id);
-          HandleUpdate();
+            let result=window.confirm("请确认删除");
+            if(result){
+                const response=await deleteTask(id);
+                HandleUpdate();
+            }else {
+                message.error("删除失败");
+            }
+            
       }catch{
       }
     }

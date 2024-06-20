@@ -1,7 +1,7 @@
 import {getJson, PREFIX} from "./common";
 
 export async function get_username() {
-    const url = `${PREFIX}/api/user/username`;
+    const url = `${PREFIX}/user/username`;
     let username;
     try {
         username = await getJson(url)
@@ -9,5 +9,5 @@ export async function get_username() {
         console.log(e)
         username = "UNDEFINED"
     }
-    return username;
+    return username.username;
 }

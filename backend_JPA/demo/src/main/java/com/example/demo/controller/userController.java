@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-
+import com.example.demo.DTO.usernameDto;
 import com.example.demo.DTO.RegisterDto;
 import com.example.demo.entity.User;
 import com.example.demo.service.userService;
@@ -25,11 +25,13 @@ public class userController {
 
 
     @GetMapping(value = "api/user/username")
-    public String getUsername(HttpSession session) {
+    public usernameDto getUsername(HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             return null;
         }
-        return user.getUsername();
+        usernameDto usernameDto = new usernameDto();
+        usernameDto.setUsername(user.getUsername());
+        return usernameDto;
     }
 }

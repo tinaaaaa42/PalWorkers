@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Modal, Calendar } from 'antd';
 import { CurUser } from "../Data/data.js";
 import "../iconfont2/iconfont.css";
+import { get_username } from "../service/user.js";
 
 function Header() {
     const today = new Date();
@@ -9,11 +10,20 @@ function Header() {
     const month = today.getMonth() + 1;
     const day = today.getDate();
     const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
-    
+    const [name,setName]=useState("Vincent");
     const [quote, setQuote] = useState("");
-    const [welcomeMessage, setWelcomeMessage] = useState(`Welcome back, ${CurUser.username}`);
+    const [welcomeMessage, setWelcomeMessage] = useState(`Welcome back, ${name}`);
     const [isCalendarVisible, setIsCalendarVisible] = useState(false);  // 控制日历弹窗的状态
-
+    
+    const Getname=async()=>{
+        const username=await get_username();
+        console.log(username);
+        setName(username);
+        setWelcomeMessage(`Welcome back, ${username}`)
+    }
+    useEffect(()=>{
+        Getname();
+    },[])
     const handleQuoteChange = () => {
         const quotes = [
             "All we have is now.",

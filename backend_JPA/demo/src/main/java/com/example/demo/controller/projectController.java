@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-
+import com.example.demo.DTO.teamOrPrivateDto;
 import com.example.demo.DTO.AuthorityDto;
 import com.example.demo.DTO.KanbanTaskDto;
 import com.example.demo.DTO.ProjectDto;
@@ -112,5 +112,15 @@ public class projectController {
         AuthorityDto authorityDto = new AuthorityDto();
         authorityDto.setIfAuthorized(tmp);
         return authorityDto;
+    }
+
+    @GetMapping(value = "api/project/teamOrPrivate")
+    public teamOrPrivateDto getteamOrPrivate(HttpSession session, @RequestParam int projectId) {
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        if (userId == null) {
+            throw new RuntimeException("User not logged in");
+        }
+        return projectService.getTeamOrPrivateDto(projectId,userId);
     }
 }

@@ -4,6 +4,7 @@ package com.example.demo.serviceImpl;
 import com.example.demo.DTO.KanbanTaskDto;
 import com.example.demo.DTO.ProjectDto;
 import com.example.demo.DTO.ProjectTaskDto;
+import com.example.demo.DTO.teamOrPrivateDto;
 import com.example.demo.entity.*;
 import com.example.demo.repository.*;
 import com.example.demo.service.ProjectService;
@@ -48,6 +49,21 @@ public class projectServiceImpl implements ProjectService{
 
     @Autowired
     private UserRepository userRepository;
+
+    public teamOrPrivateDto getTeamOrPrivateDto(int projectId, int userId) {
+        Project project = projectRepository.findById(projectId);
+        Team team = project.getTeam();
+        String tmp;
+        if (team == null) {
+            tmp = null;
+        }
+        else {
+            tmp = team.getName();
+        }
+        teamOrPrivateDto teamOrPrivateDto = new teamOrPrivateDto();
+        teamOrPrivateDto.setTeamName(tmp);
+        return teamOrPrivateDto;
+    }
 
     @Override
     public boolean getAuthority(int projectId, int userId) {

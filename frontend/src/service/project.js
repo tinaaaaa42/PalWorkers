@@ -45,3 +45,15 @@ export async function get_if_authorized(projectId) {
     }
     return projects.ifAuthorized;
 }
+
+export async function get_if_teamProject(projectId) {
+    const url = `${PREFIX}/project/teamOrPrivate?projectId=${projectId}`;
+    let projects;
+    try {
+        projects = await getJson(url)
+    } catch (e) {
+        console.log(e);
+        projects = null;
+    }
+    return projects.teamName;
+}

@@ -419,6 +419,9 @@ public class TaskServiceImpl implements TaskService {
             else if (type.equals("review")) {
                 set_type = "Review";
             }
+            else {
+                continue;
+            }
             monthStatistic.setType(set_type);
             monthStatistic.setValue(statistics.get(type));
             monthlyStatistics.add(monthStatistic);

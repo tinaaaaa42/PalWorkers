@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-
+import com.example.demo.DTO.teamOrPrivateDto;
 import com.example.demo.DTO.KanbanTaskDto;
 import com.example.demo.DTO.ProjectDto;
 import com.example.demo.entity.KanbanTask;
@@ -25,4 +25,5 @@ public interface ProjectService {
     KanbanTask updateKanbanTask(int projectId, KanbanTaskDto kanbanTaskDto);
     boolean deleteProject(int projectId);
     boolean getAuthority(int projectId,int userId);
+    teamOrPrivateDto getTeamOrPrivateDto(int projectId,int userId);
 }
